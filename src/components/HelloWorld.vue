@@ -1,13 +1,16 @@
 <script setup lang="ts">
+import { useDiscreteApi } from "@/hooks/useDiscreteApi";
 import { ref } from "vue";
 import heroImg from "../assets/hero.png";
 import viteLogo from "../assets/vite.svg";
 import vueLogo from "../assets/vue.svg";
 
+const { message } = useDiscreteApi();
 const count = ref(0);
 </script>
 
 <template>
+    <n-button type="primary" @click="message.info('Hello World')"> Primary </n-button>
     <section id="center">
         <div class="hero">
             <img :src="heroImg" class="base" width="170" height="179" alt="" />
