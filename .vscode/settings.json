@@ -1,0 +1,32 @@
+{
+    // 1. 基础自动格式化开关（针对 oxfmt）
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+
+    // 2. 核心补充：开启保存时自动修复 Linter 错误（针对 oxlint）
+    "editor.codeActionsOnSave": {
+        "source.fixAll.oxc": "explicit" // 👈 关键：保存时不仅格式化，还让 oxlint 自动修复错误
+    },
+
+    // 3. 针对各语言的独立配置
+    "[vue]": {
+        "editor.defaultFormatter": "oxc.oxc-vscode"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "oxc.oxc-vscode"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "oxc.oxc-vscode"
+    },
+    "[css]": {
+        "editor.defaultFormatter": "oxc.oxc-vscode"
+    },
+
+    // 4. Oxc 核心开关（确保两路引擎同时开启）
+    "oxc.enable": true,
+    "oxc.enable.oxfmt": true, // 激活格式化引擎 (Oxfmt)
+    "oxc.enable.oxlint": true, // 明确激活错误检测引擎 (Oxlint)
+
+    // 5. 设置 Oxlint 的实时检测时机
+    "oxc.lint.run": "onType" // 推荐：敲代码时就实时标记错误波浪线，保存时直接触发修复
+}

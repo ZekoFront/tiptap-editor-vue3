@@ -1,0 +1,17 @@
+{
+    "$schema": "./node_modules/oxlint/configuration_schema.json",
+    // 启用的插件列表
+    "plugins": ["eslint", "typescript", "unicorn", "oxc", "vue", "vitest"],
+    // 定义代码的运行环境，影响全局变量的可用性
+    "env": {
+        "browser": true
+    },
+    //  按类别设置规则的严重级别
+    "categories": {
+        "correctness": "error"
+    },
+    "rules": {
+        "unicorn/quote-style": "off",
+        "quotes": ["error", "single"]
+    }
+}
