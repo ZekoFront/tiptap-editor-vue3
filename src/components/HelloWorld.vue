@@ -10,7 +10,7 @@ const count = ref(0);
 </script>
 
 <template>
-    <n-button type="primary" @click="message.info('Hello World')"> Primary </n-button>
+    <n-button type="primary" @click="message.info('Hello World')">Primary</n-button>
     <section id="center">
         <div class="hero">
             <img :src="heroImg" class="base" width="170" height="179" alt="" />
