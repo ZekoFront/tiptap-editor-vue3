@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import RichText from "@/text/editor.vue";
 </script>
 
 <template>
-    <HelloWorld />
+    <RichText ref="richText" />
 </template>
