@@ -1,3 +1,4 @@
+<!-- 主组件（迁移自 src/text/editor.vue） -->
 <template>
     <div>
         <AddImageIcon class="icon"></AddImageIcon>
