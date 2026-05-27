@@ -1,35 +1,13 @@
-import TaskIcon from '@/components/task/TaskIcon.vue';
-import { Editor } from "@tiptap/vue-3";
-import { TaskItem as TiptapTaskItem } from '@tiptap/extension-list';
+import { TaskItem as TiptapTaskItem } from "@tiptap/extension-list";
 
-const TaskItem = TiptapTaskItem.extend({
-    content: 'block',
-    name: 'customTask',
-    addOptions() {
-        return {
-            HTMLAttributes: {},
-            nested: true,
-            taskListTypeName: 'taskList',
-            ...this.parent?.(),
-            onClick: ({ editor }:{editor:Editor}) => {
-                return {
-                    component: TaskIcon,
-                    componentProps: {
-                        editor,
-                        isActive: editor.isActive('taskItem'),
-                        isReadonly: !editor.isEditable,
-                        icons: '',
-                        tipText: '任务列表',
-                        command: () => {
-                           
-                        }
-                    }
-                }
-            }
-        }
-    },
-}).configure({
+/**
+ * TaskItem 必须与 TaskList 一起注册，否则只会渲染成普通无序列表。
+ * @see https://tiptap.dev/docs/editor/extensions/nodes/task-item
+ * @see https://tiptap.dev/docs/editor/extensions/nodes/task-list
+ */
+const TaskItem = TiptapTaskItem.configure({
     nested: true,
-})
+    taskListTypeName: "taskList"
+});
 
-export { TaskItem }
+export { TaskItem };

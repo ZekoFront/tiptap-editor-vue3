@@ -21,11 +21,7 @@
                 <div class="custom-drag-handle" />
             </drag-handle>
 
-            <EditorContent
-                :editor="editor"
-                :editable="editable"
-                :content-class="props.editorContentClass"
-            />
+            <EditorContent :editor="editor" :editable="editable" :content-class="props.editorContentClass" />
         </div>
     </div>
 </template>
@@ -197,8 +193,4 @@ const computePositionConfig = computed(() => {
         placement: rtl.value ? "right-start" : "left-start"
     } as any;
 });
-
-const toggleNested = () => {
-    nested.value = !nested.value;
-};
 </script>

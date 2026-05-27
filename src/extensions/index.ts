@@ -17,6 +17,7 @@ import { TextAlignment } from "./marks/TextAlignment";
 import { Underline } from "./marks/Underline";
 import { Table } from "./table/Table";
 import { TaskItem } from "./task/TaskItem";
+import { TaskList } from "./task/TaskList";
 import { Heading } from "./title/Heading";
 import { BackgroundColor } from "./utils/BackgroundColor";
 import { Blockquote } from "./utils/Blockquote";
@@ -48,6 +49,7 @@ export const extensionsArray = [
     Table,
     Link,
     Image,
+    TaskList,
     TaskItem,
     // Emojis,
     Clear
@@ -77,5 +79,6 @@ export * from "./code/CodeBlockLowlight";
 export * from "./table/Table";
 export * from "./link/Link";
 export * from "./marks/TextAlignment";
+export * from "./task/TaskList";
 export * from "./task/TaskItem";
 export * from "./emoji/Emoji";

@@ -437,3 +437,8 @@
         caret-color: transparent;
     }
 }
+
+[data-type="taskList"] [data-checked="true"] > div > p:first-child {
+    text-decoration: line-through;
+    color: var(--gray-4);
+}
