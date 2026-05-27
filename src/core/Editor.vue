@@ -16,17 +16,17 @@
             :defaultConfig="defaultConfig"
         />
 
-        <drag-handle v-if="editor" :editor="editor" :nested="false" :compute-position-config="computePositionConfig">
-            <div class="custom-drag-handle" />
-        </drag-handle>
+        <div v-if="props.isEnabledContent && editor" class="vue3-tiptap-editor__body">
+            <drag-handle :editor="editor" :nested="false" :compute-position-config="computePositionConfig">
+                <div class="custom-drag-handle" />
+            </drag-handle>
 
-        <EditorContent
-            v-if="props.isEnabledContent && editor"
-            :editor="editor"
-            :editable="editable"
-            :wrapper-class="props.editorContentClass"
-            :content-class="props.editorContentClass"
-        />
+            <EditorContent
+                :editor="editor"
+                :editable="editable"
+                :content-class="props.editorContentClass"
+            />
+        </div>
     </div>
 </template>
 

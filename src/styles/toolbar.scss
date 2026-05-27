@@ -13,6 +13,7 @@
 
 .vue3-tiptap-editor > .vue3-tiptap-editor__toolbar {
     display: flex;
+    flex-shrink: 0;
     flex-wrap: wrap;
     align-items: center;
     background: var(--gray-1);

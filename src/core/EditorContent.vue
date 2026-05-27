@@ -164,7 +164,12 @@ defineExpose({
 
 <style lang="scss" scoped>
 .tev3-editor-content {
+    display: flex;
+    flex-direction: column;
     width: 100%;
+    height: 100%;
+    min-height: 100%;
+    box-sizing: border-box;
 
     &[data-readonly="true"] {
         :deep(.ProseMirror) {
@@ -174,7 +179,9 @@ defineExpose({
     }
 
     :deep(.ProseMirror) {
+        flex: 1;
         outline: none;
+        min-height: 100%;
     }
 }
 </style>

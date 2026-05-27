@@ -1,23 +1,30 @@
-/* 此处样式，打包后和组件内部样式会重合，解决：要么引入打包的样式，要么引入组件样式，不能都引入 */
+/* 编辑器整体布局：撑满父容器，内容区独立滚动 */
 .vue3-tiptap-editor {
-    border: 1px solid #f2f2f2;
-    /* box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.1); */
-    /* font-size: 1rem; */
-    color: #333;
-    height: 100%;
-    width: 100%;
-    min-height: 350px;
-    overflow: auto;
-}
-
-.vue3-tiptap-editor > .tiptap-editor__body {
     display: flex;
-    flex-wrap: nowrap;
-    height: calc(100% - 40px);
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    min-height: var(--tev3-editor-min-height, 350px);
+    border: 1px solid var(--tev3-editor-border, #f2f2f2);
+    border-radius: var(--tev3-editor-radius, 6px);
+    color: #333;
+    background: var(--tev3-editor-bg, #fff);
+    overflow: hidden;
 }
 
-.vue3-tiptap-editor > .tiptap-editor__body > .tiptap-editor__content {
+/* 内容区：占满剩余高度，内边距 + 溢出滚动 */
+.vue3-tiptap-editor__body {
+    position: relative;
     flex: 1;
-    overflow-y: auto;
-    padding: 0 0.4rem;
+    /* flex 子项要滚动必须设 min-height: 0，否则会撑开父容器 */
+    min-height: 0;
+    overflow: auto;
+    padding: var(--tev3-editor-padding, 12px 16px);
+}
+
+/* 内容渲染容器撑满滚动区域 */
+.vue3-tiptap-editor__body > .tev3-editor-content {
+    height: 100%;
+    min-height: 100%;
 }

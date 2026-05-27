@@ -1,15 +1,20 @@
-/* 滚动条样式美化 */
-::-webkit-scrollbar {
-	width: 6px;
-	height: 6px;
-	background:#F7F7F7;
-}
+/* 滚动条样式：仅作用于编辑器内容区 */
+.vue3-tiptap-editor__body {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(69, 147, 251, 0.37) #f7f7f7;
 
-/* 滚动槽 */
-::-webkit-scrollbar-track {
-	border-radius:10px;
-}
+    &::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+        background: #f7f7f7;
+    }
 
-::-webkit-scrollbar-thumb {
-	background-color: rgba(69,147,251, 0.37);
+    &::-webkit-scrollbar-track {
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(69, 147, 251, 0.37);
+        border-radius: 10px;
+    }
 }

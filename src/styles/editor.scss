@@ -404,14 +404,14 @@
 }
 
 .ProseMirror {
-    padding: 1rem 1rem 1rem 0;
-
-    * {
-        margin-top: 0.75em;
-    }
+    padding: 0;
+    // 会影响图片选中效果
+    // * {
+    //     margin-top: 0.75em;
+    // }
 
     > * {
-        margin-inline-start: 3rem;
+        margin-inline-start: 1rem;
     }
 
     .ProseMirror-widget * {
