@@ -38,7 +38,7 @@ const props = defineProps({
     onClose: {
         type: Function,
         default: () => {
-            return (val: boolean) => void {};
+            return () => void {};
         }
     }
 });

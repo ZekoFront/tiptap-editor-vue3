@@ -3,9 +3,6 @@
         :class="['vue3-tiptap-editor__toolbar', { 'vue3-tiptap-editor-enabled': !editor.isEditable }]"
         data-vue3-tiptap-editor-btn="true"
     >
-        <!-- 测试图标 -->
-        <!-- <ErrorImage></ErrorImage> -->
-
         <component
             v-for="(item, index) in cusComponentIcon"
             v-bind="item.componentProps"
