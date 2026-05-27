@@ -5,31 +5,42 @@
             v-if="props.isShowToolbar && editor"
             :class="[editorToolkitClass]"
             :editor="editor"
-            :characterCount="characterCount"
-            :defaultConfig="defaultConfig"
+            :character-count="characterCount"
+            :default-config="defaultConfig"
+            :contents-active="isShowContent"
+            @toggle-contents="isShowContent = !isShowContent"
         />
 
-        <div v-if="props.isEnabledContent && editor" class="vue3-tiptap-editor__body">
-            <drag-handle :editor="editor" :nested="false" :compute-position-config="computePositionConfig">
-                <div class="custom-drag-handle" />
-            </drag-handle>
+        <div v-if="props.isEnabledContent && editor" class="vue3-tiptap-editor__main">
+            <div ref="editorBodyRef" class="vue3-tiptap-editor__body">
+                <drag-handle :editor="editor" :nested="false" :compute-position-config="computePositionConfig">
+                    <div class="custom-drag-handle" />
+                </drag-handle>
 
-            <EditorContent
+                <EditorContent
+                    :editor="editor"
+                    :editable="editable"
+                    :content-class="props.editorContentClass"
+                    @contextmenu="onContextmenu"
+                />
+            </div>
+
+            <ContentsNav
+                v-model:is-show-content="isShowContent"
                 :editor="editor"
-                :editable="editable"
-                :content-class="props.editorContentClass"
-                @contextmenu="onContextmenu"
+                :scroll-container="editorBodyRef"
+                :nav-class="editorContentsNavClass"
             />
         </div>
 
-        <BubbleMenus :editor="editor" v-if="editor"></BubbleMenus>
-        <ContextMenus v-if="editor" ref="contextMenuRef" :editor="editor"></ContextMenus>
+        <BubbleMenus v-if="editor" :editor="editor" />
+        <ContextMenus v-if="editor" ref="contextMenuRef" :editor="editor" />
     </div>
 </template>
 
 <script setup lang="ts">
-// 菜单
 import BubbleMenus from "@/components/bubble-menu/index.vue";
+import ContentsNav from "@/components/layout/Contents.vue";
 import ContextMenus from "@/components/table/ContextMenu.vue";
 import Toolbar from "@/components/toolbar/Toolbar.vue";
 import { extensionsArray } from "@/extensions";
@@ -59,6 +70,9 @@ const emit = defineEmits<{
     (e: "content-error", payload: { editor: Editor; error: Error }): void;
 }>();
 
+const isShowContent = ref(false);
+const editorBodyRef = ref<HTMLElement | null>(null);
+
 const baseExtensions = [
     StarterKit.configure({
         bold: false,
@@ -76,8 +90,6 @@ const baseExtensions = [
         undoRedo: false
     }),
     NodeRange.configure({
-        // allow to select only on depth 0
-        // depth: 0,
         key: null
     }),
     CharacterCount.configure({
@@ -193,7 +205,6 @@ const computePositionConfig = computed(() => {
     } as any;
 });
 
-/** 须与模板 `<ContextMenus ref="contextMenuRef">` 对应，否则右键菜单拿不到 open */
 const contextMenuRef = ref<{ open: (p: { left: number; top: number; e: MouseEvent }) => void } | null>(null);
 const { onContextmenu } = useContextMenu(editor, contextMenuRef);
 </script>

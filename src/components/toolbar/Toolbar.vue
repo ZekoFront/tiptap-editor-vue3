@@ -14,7 +14,11 @@
         </component>
         <NTooltip placement="top" trigger="hover">
             <template #trigger>
-                <button class="toolbar-icon--btn" @click="updateContent">
+                <button
+                    class="toolbar-icon--btn"
+                    :class="{ 'toolbar-icon--active': contentsActive }"
+                    @click="toggleContents"
+                >
                     <Icons.ContentIcon class="icon"></Icons.ContentIcon>
                 </button>
             </template>
@@ -46,9 +50,11 @@ import { Icons } from "@/assets/icons";
 import { Editor } from "@tiptap/core";
 import { saveAs } from "file-saver";
 import { asBlob } from "html-docx-js-typescript";
-// 段落
-const emits = defineEmits(["onIsShowContent"]);
 const props = defineProps({
+    contentsActive: {
+        type: Boolean,
+        default: false
+    },
     characterCount: {
         type: [Number, String] as PropType<number | string>,
         default: 10000
@@ -95,7 +101,11 @@ const exportDocx = () => {
         });
 };
 
-const updateContent = () => {
-    emits("onIsShowContent", true);
+const emit = defineEmits<{
+    (e: "toggle-contents"): void;
+}>();
+
+const toggleContents = () => {
+    emit("toggle-contents");
 };
 </script>

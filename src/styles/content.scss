@@ -1,5 +1,7 @@
 .vue3-tiptap-editor {
     .vue3-tiptap-editor__navigation {
+        display: flex;
+        flex-direction: column;
         width: 0px;
         flex: 0 0 0px;
         transition: all 0.3s ease-out;
@@ -24,7 +26,9 @@
             }
         }
         .navigation-directory {
-            overflow-y: scroll;
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
             .directory-container {
                 list-style-type: none;
                 // padding-left: 10px;
@@ -38,11 +42,21 @@
                     width: 2px;
                     background-color: #e5e8ed;
                 }
+                .directory-item__empty {
+                    color: #999;
+                    cursor: default;
+                    &:hover {
+                        text-decoration: none;
+                        color: #999 !important;
+                    }
+                }
+
                 .directory-item__cell {
                     color: #333;
                     padding: 0;
                     margin: 0;
-                    height: 20px;
+                    min-height: 20px;
+                    line-height: 20px;
                     cursor: pointer;
                     &:hover {
                         text-decoration: underline;

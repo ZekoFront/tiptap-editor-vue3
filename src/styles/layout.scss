@@ -13,10 +13,19 @@
     overflow: hidden;
 }
 
+/* 工具栏下方：左侧编辑区 + 右侧目录 */
+.vue3-tiptap-editor__main {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
 /* 内容区：占满剩余高度，内边距 + 溢出滚动 */
 .vue3-tiptap-editor__body {
     position: relative;
     flex: 1;
+    min-width: 0;
     /* flex 子项要滚动必须设 min-height: 0，否则会撑开父容器 */
     min-height: 0;
     overflow: auto;
