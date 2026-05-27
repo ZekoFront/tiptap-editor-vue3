@@ -1,44 +1,44 @@
-import type { Editor } from '@tiptap/vue-3'
-import { UndoRedo } from '@tiptap/extensions'
-import ButtonIcon from '../components/ButtonIcon.vue'
+import { Icons } from "@/assets/icons";
+import ButtonIcon from "@/components/toolbar/ButtonIcon.vue";
+import { UndoRedo } from "@tiptap/extensions";
+import type { Editor } from "@tiptap/vue-3";
 
 const History = UndoRedo.extend({
     addOptions() {
         return {
             ...this.parent?.(),
-            onClick: ({ editor }:{editor:Editor}) => {
+            onClick: ({ editor }: { editor: Editor }) => {
                 return [
                     {
                         component: ButtonIcon,
                         componentProps: {
-                            isActive: editor && editor.can().chain().focus().redo().run() || false,
+                            isActive: (editor && editor.can().chain().focus().redo().run()) || false,
                             isReadonly: !editor.isEditable,
-                            icons: 'redo-icon',
-                            tipText: '重做',
-                            shortcutKeys: 'Ctrl+Z',
+                            icons: Icons.RedoIcon,
+                            tipText: "重做",
+                            shortcutKeys: "Ctrl+Z",
                             command: () => {
-                                editor.commands.redo()
+                                editor.commands.redo();
                             }
                         }
                     },
                     {
                         component: ButtonIcon,
                         componentProps: {
-                            isActive: editor && editor.can().chain().focus().undo().run() || false,
+                            isActive: (editor && editor.can().chain().focus().undo().run()) || false,
                             isReadonly: !editor.isEditable,
-                            icons: 'undo-icon',
-                            tipText: '撤销',
-                            shortcutKeys: 'Ctrl+Shift+Z',
+                            icons: Icons.UndoIcon,
+                            tipText: "撤销",
+                            shortcutKeys: "Ctrl+Shift+Z",
                             command: () => {
-                                editor.commands.undo()
+                                editor.commands.undo();
                             }
                         }
                     }
-                ]
+                ];
             }
-        }
-    },
-})
+        };
+    }
+});
 
-
-export { History }
+export { History };

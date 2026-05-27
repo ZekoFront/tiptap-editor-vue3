@@ -1,6 +1,7 @@
-import type { Editor } from '@tiptap/vue-3'
-import TiptapUnderline from '@tiptap/extension-underline'
-import ButtonIcon from '../components/ButtonIcon.vue'
+import { Icons } from "@/assets/icons";
+import ButtonIcon from "@/components/toolbar/ButtonIcon.vue";
+import TiptapUnderline from "@tiptap/extension-underline";
+import type { Editor } from "@tiptap/vue-3";
 
 const Underline = TiptapUnderline.extend({
     addOptions() {
@@ -8,24 +9,23 @@ const Underline = TiptapUnderline.extend({
             HTMLAttributes: {},
             ...this.parent?.(),
             bubble: true,
-            onClick: ({ editor }:{editor:Editor}) => {
+            onClick: ({ editor }: { editor: Editor }) => {
                 return {
                     component: ButtonIcon,
                     componentProps: {
-                        isActive: editor.isActive('underline'),
+                        isActive: editor.isActive("underline"),
                         isReadonly: !editor.isEditable,
-                        icons: 'underline-icon',
-                        tipText: '下划线',
-                        shortcutKeys: 'Ctrl+U',
+                        icons: Icons.UnderlineIcon,
+                        tipText: "下划线",
+                        shortcutKeys: "Ctrl+U",
                         command: () => {
-                            editor.commands.toggleUnderline()
+                            editor.commands.toggleUnderline();
                         }
                     }
-                }
+                };
             }
-        }
-    },
-})
+        };
+    }
+});
 
-
-export { Underline }
+export { Underline };

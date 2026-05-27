@@ -1,12 +1,12 @@
-import type { Editor } from '@tiptap/vue-3'
-import TiptapCodeBlock from '@tiptap/extension-code-block'
-import ButtonIcon from '../components/ButtonIcon.vue'
+import ButtonIcon from "@/components/toolbar/ButtonIcon.vue";
+import TiptapCodeBlock from "@tiptap/extension-code-block";
+import type { Editor } from "@tiptap/vue-3";
 
 const CodeBlock = TiptapCodeBlock.extend({
     addOptions() {
         return {
             HTMLAttributes: {},
-            languageClassPrefix: 'language-',
+            languageClassPrefix: "language-",
             // 是否允许按向下键跳出代码块
             exitOnArrowDown: true,
             exitOnTripleEnter: true,
@@ -14,24 +14,23 @@ const CodeBlock = TiptapCodeBlock.extend({
             enableTabIndentation: true,
             tabSize: 4,
             ...this.parent?.(),
-            onClick: ({ editor }:{editor:Editor}) => {
+            onClick: ({ editor }: { editor: Editor }) => {
                 return {
                     component: ButtonIcon,
                     componentProps: {
-                        isActive: editor.isActive('codeBlock'),
+                        isActive: editor.isActive("codeBlock"),
                         isReadonly: !editor.isEditable,
-                        icons: 'code-block-icon',
-                        tipText: '代码块',
-                        shortcutKeys: 'Ctrl+Alt+C',
+                        icons: "code-block-icon",
+                        tipText: "代码块",
+                        shortcutKeys: "Ctrl+Alt+C",
                         command: () => {
-                            editor.commands.toggleCodeBlock()
+                            editor.commands.toggleCodeBlock();
                         }
                     }
-                }
+                };
             }
-        }
-    },
-})
+        };
+    }
+});
 
-
-export { CodeBlock }
+export { CodeBlock };

@@ -1,30 +1,30 @@
-import type { Editor } from '@tiptap/vue-3'
-import TipTapHorizontalRule from '@tiptap/extension-horizontal-rule'
-import ButtonIcon from '../components/ButtonIcon.vue'
+import { Icons } from "@/assets/icons";
+import ButtonIcon from "@/components/toolbar/ButtonIcon.vue";
+import TipTapHorizontalRule from "@tiptap/extension-horizontal-rule";
+import type { Editor } from "@tiptap/vue-3";
 
 const HorizontalRule = TipTapHorizontalRule.extend({
     addOptions() {
         return {
             HTMLAttributes: {},
-            nextNodeType: 'paragraph',
+            nextNodeType: "paragraph",
             ...this.parent?.(),
-            onClick: ({ editor }:{editor:Editor}) => {
+            onClick: ({ editor }: { editor: Editor }) => {
                 return {
                     component: ButtonIcon,
                     componentProps: {
-                        isActive: editor.isActive('horizontalRule'),
+                        isActive: editor.isActive("horizontalRule"),
                         isReadonly: !editor.isEditable,
-                        icons: 'horizontal-rule-icon',
-                        tipText: '水平分隔符',
+                        icons: Icons.HorizontalRuleIcon,
+                        tipText: "水平分隔符",
                         command: () => {
-                            editor.commands.setHorizontalRule()
+                            editor.commands.setHorizontalRule();
                         }
                     }
-                }
+                };
             }
-        }
-    },
-})
+        };
+    }
+});
 
-
-export { HorizontalRule }
+export { HorizontalRule };

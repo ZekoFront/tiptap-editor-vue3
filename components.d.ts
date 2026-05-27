@@ -11,7 +11,30 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AddLinkButton: typeof import('./src/components/link/AddLinkButton.vue')['default']
+    BackgroundColorPopover: typeof import('./src/components/color/BackgroundColorPopover.vue')['default']
+    BubbleMenu: typeof import('./src/components/bubble-menu/index.vue')['default']
+    ButtonIcon: typeof import('./src/components/toolbar/ButtonIcon.vue')['default']
+    CodeBlockLowlight: typeof import('./src/components/toolbar/CodeBlockLowlight.vue')['default']
+    ColorPopover: typeof import('./src/components/color/ColorPopover.vue')['default']
+    Contents: typeof import('./src/components/layout/Contents.vue')['default']
+    ContextMenu: typeof import('./src/components/table/ContextMenu.vue')['default']
+    EmojiIcon: typeof import('./src/components/emoji/EmojiIcon.vue')['default']
+    HeadingPopselect: typeof import('./src/components/text/HeadingPopselect.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
+    ImageBubbleMenu: typeof import('./src/components/bubble-menu/ImageBubbleMenu.vue')['default']
+    ImageIcon: typeof import('./src/components/image/ImageIcon.vue')['default']
+    ImageNodeViewWrapper: typeof import('./src/components/image/ImageNodeViewWrapper.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
+    NPopover: typeof import('naive-ui')['NPopover']
+    NTooltip: typeof import('naive-ui')['NTooltip']
+    Paragraph: typeof import('./src/components/paragraph/index.vue')['default']
+    TableIcon: typeof import('./src/components/table/TableIcon.vue')['default']
+    TaskIcon: typeof import('./src/components/task/TaskIcon.vue')['default']
+    TextAlignPopselect: typeof import('./src/components/text/TextAlignPopselect.vue')['default']
+    TextLineHeightPopselect: typeof import('./src/components/text/TextLineHeightPopselect.vue')['default']
+    Toolbar: typeof import('./src/components/toolbar/Toolbar.vue')['default']
+    Toolkit: typeof import('./src/components/toolbar/Toolkit.vue')['default']
+    UploadImageModal: typeof import('./src/components/image/UploadImageModal.vue')['default']
   }
 }

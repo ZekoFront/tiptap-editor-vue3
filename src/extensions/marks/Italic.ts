@@ -1,6 +1,7 @@
-import type { Editor } from '@tiptap/vue-3'
-import TiptapItalic from '@tiptap/extension-italic'
-import ButtonIcon from '../components/ButtonIcon.vue'
+import { Icons } from "@/assets/icons";
+import ButtonIcon from "@/components/toolbar/ButtonIcon.vue";
+import TiptapItalic from "@tiptap/extension-italic";
+import type { Editor } from "@tiptap/vue-3";
 
 const Italic = TiptapItalic.extend({
     addOptions() {
@@ -8,24 +9,23 @@ const Italic = TiptapItalic.extend({
             HTMLAttributes: {},
             ...this.parent?.(),
             bubble: true,
-            onClick: ({ editor }:{editor:Editor}) => {
+            onClick: ({ editor }: { editor: Editor }) => {
                 return {
                     component: ButtonIcon,
                     componentProps: {
-                        isActive: editor.isActive('italic'),
+                        isActive: editor.isActive("italic"),
                         isReadonly: !editor.isEditable,
-                        icons: 'italic-icon',
-                        shortcutKeys: 'Ctrl+I',
-                        tipText: '斜体',
+                        icons: Icons.ItalicIcon,
+                        shortcutKeys: "Ctrl+I",
+                        tipText: "斜体",
                         command: () => {
-                            editor.commands.toggleItalic()
+                            editor.commands.toggleItalic();
                         }
                     }
-                }
+                };
             }
-        }
-    },
-})
+        };
+    }
+});
 
-
-export { Italic }
+export { Italic };

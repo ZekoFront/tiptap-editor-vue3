@@ -1,6 +1,6 @@
 import ColorPopover from "@/components/color/ColorPopover.vue";
 import { COLOR_DEFAULT } from "@/utils";
-import { Editor, getMarkRange } from "@tiptap/core";
+import { Editor } from "@tiptap/core";
 import TiptapColor from "@tiptap/extension-color";
 import { TextStyle } from "@tiptap/extension-text-style";
 import { Plugin, PluginKey } from "@tiptap/pm/state";

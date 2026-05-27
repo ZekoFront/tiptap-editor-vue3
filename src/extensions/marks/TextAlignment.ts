@@ -1,53 +1,52 @@
-import type { Editor } from '@tiptap/vue-3'
-import TiptapTextAlign from '@tiptap/extension-text-align'
-import TextAlignPopselect from '@/components/text/TextAlignPopselect.vue'
+import TextAlignPopselect from "@/components/text/TextAlignPopselect.vue";
+import TiptapTextAlign from "@tiptap/extension-text-align";
+import type { Editor } from "@tiptap/vue-3";
 
 const alignList = [
     {
         label: "左对齐",
-        value: "left",
+        value: "left"
     },
     {
         label: "居中对齐",
-        value: "center",
+        value: "center"
     },
     {
         label: "右对齐",
-        value: "right",
+        value: "right"
     },
     {
         label: "两端对齐",
-        value: "justify",
-    },
-]
+        value: "justify"
+    }
+];
 
 const TextAlignment = TiptapTextAlign.extend({
-    name: 'extensionTextAlign',
+    name: "extensionTextAlign",
     addOptions() {
         return {
             //@ts-ignore
             ...this.parent?.(),
             bubble: true,
-            onClick: ({ editor }:{editor:Editor}) => {
+            onClick: ({ editor }: { editor: Editor }) => {
                 return {
                     component: TextAlignPopselect,
                     componentProps: {
-                        isActive: editor.isActive('extensionTextAlign'),
+                        isActive: editor.isActive("extensionTextAlign"),
                         isReadonly: !editor.isEditable,
                         editor,
                         alignments: alignList,
-                        tipText: '文本对齐方式',
-                        command: (alignment:string) => {
-                            editor.commands.setTextAlign(alignment)
+                        tipText: "文本对齐方式",
+                        command: (alignment: string) => {
+                            editor.commands.setTextAlign(alignment);
                         }
                     }
-                }
+                };
             }
-        }
+        };
     }
 }).configure({
-    types: ['heading','paragraph'],
-})
+    types: ["heading", "paragraph"]
+});
 
-
-export { TextAlignment }
+export { TextAlignment };

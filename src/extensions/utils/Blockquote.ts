@@ -1,6 +1,7 @@
-import type { Editor } from '@tiptap/vue-3'
-import TiptapBlockquote from '@tiptap/extension-blockquote'
-import ButtonIcon from '../components/ButtonIcon.vue'
+import { Icons } from "@/assets/icons";
+import ButtonIcon from "@/components/toolbar/ButtonIcon.vue";
+import TiptapBlockquote from "@tiptap/extension-blockquote";
+import type { Editor } from "@tiptap/vue-3";
 
 const Blockquote = TiptapBlockquote.extend({
     addOptions() {
@@ -8,23 +9,22 @@ const Blockquote = TiptapBlockquote.extend({
             HTMLAttributes: {},
             ...this.parent?.(),
             bubble: true,
-            onClick: ({ editor } : { editor: Editor }) => {
+            onClick: ({ editor }: { editor: Editor }) => {
                 return {
                     component: ButtonIcon,
                     componentProps: {
-                        isActive: editor.isActive('blockquote'),
+                        isActive: editor.isActive("blockquote"),
                         isReadonly: !editor.isEditable,
-                        icons: 'blockquote-icon',
-                        tipText: '引用',
+                        icons: Icons.BlockquoteIcon,
+                        tipText: "引用",
                         command: () => {
-                            editor.commands.toggleBlockquote()
+                            editor.commands.toggleBlockquote();
                         }
                     }
-                }
+                };
             }
-        }
-    },
-})
+        };
+    }
+});
 
-
-export { Blockquote }
+export { Blockquote };

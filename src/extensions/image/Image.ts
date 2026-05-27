@@ -1,63 +1,59 @@
+import ImageIcon from "@/components/image/ImageIcon.vue";
+import ImageNodeViewWrapper from "@/components/image/ImageNodeViewWrapper.vue";
+import { DEFAULT_IMAGE_DISPLAY, DEFAULT_IMAGE_URL_REGEX, ImageDisplay } from "@/utils";
 // 自定义图片插件
 // 创建一个新节点image
-import { Editor } from '@tiptap/core';
-import { VueNodeViewRenderer } from '@tiptap/vue-3'
-import ImageNodeViewWrapper from '@/components/image/ImageNodeViewWrapper.vue'
-import { Image as TiptapImage } from '@tiptap/extension-image'
-import ImageIcon from '@/components/image/ImageIcon.vue'
-import { DEFAULT_IMAGE_DISPLAY, DEFAULT_IMAGE_HEIGHT, DEFAULT_IMAGE_URL_REGEX, DEFAULT_IMAGE_WIDTH, ImageDisplay } from '@/utils'
+import { Editor } from "@tiptap/core";
+import { Image as TiptapImage } from "@tiptap/extension-image";
+import { VueNodeViewRenderer } from "@tiptap/vue-3";
 
 export const Image = TiptapImage.extend({
-    inline () {
-        return true
+    inline() {
+        return true;
     },
     group() {
-        return 'inline';
+        return "inline";
     },
     addAttributes() {
         return {
             ...this.parent?.(),
             // 这样配置后，更新属性，才会触发编辑器update事件
-            width: { 
+            width: {
                 // default: DEFAULT_IMAGE_WIDTH,
                 default: null, // 默认值为 null，表示不强制设定宽度
-                parseHTML: (element) =>  {
-                    const width = element.style.width||element.getAttribute('width')||null
-                    return width===null?null:parseInt(width, 10)
+                parseHTML: element => {
+                    const width = element.style.width || element.getAttribute("width") || null;
+                    return width === null ? null : parseInt(width, 10);
                 },
-                renderHTML: (attributes) => {
-                    return { width: attributes.width }
-                },
+                renderHTML: attributes => {
+                    return { width: attributes.width };
+                }
             },
-            height: { 
+            height: {
                 // default: DEFAULT_IMAGE_HEIGHT,
                 default: null, // 默认值为 null，表示不强制设定宽度
-                parseHTML: (element) => {
-                    const height = element.style.height || element.getAttribute('height') || null;
+                parseHTML: element => {
+                    const height = element.style.height || element.getAttribute("height") || null;
                     return height == null ? null : parseInt(height, 10);
                 },
-                renderHTML: (attributes) => {
+                renderHTML: attributes => {
                     return {
                         height: attributes.height
                     };
-                },
+                }
             },
             display: {
                 default: DEFAULT_IMAGE_DISPLAY,
-                parseHTML: (element) => {
+                parseHTML: element => {
                     const { cssFloat, display } = element.style;
-                    let dp =
-                        element.getAttribute('data-display') ||
-                        element.getAttribute('display');
+                    let dp = element.getAttribute("data-display") || element.getAttribute("display");
                     if (dp) {
-                        dp = /(inline|block|left|right)/.test(dp)
-                        ? dp
-                        : ImageDisplay.INLINE;
-                    } else if (cssFloat === 'left' && !display) {
+                        dp = /(inline|block|left|right)/.test(dp) ? dp : ImageDisplay.INLINE;
+                    } else if (cssFloat === "left" && !display) {
                         dp = ImageDisplay.FLOAT_LEFT;
-                    } else if (cssFloat === 'right' && !display) {
+                    } else if (cssFloat === "right" && !display) {
                         dp = ImageDisplay.FLOAT_RIGHT;
-                    } else if (!cssFloat && display === 'block') {
+                    } else if (!cssFloat && display === "block") {
                         dp = ImageDisplay.BREAK_TEXT;
                     } else {
                         dp = ImageDisplay.INLINE;
@@ -65,43 +61,43 @@ export const Image = TiptapImage.extend({
 
                     return dp;
                 },
-                renderHTML: (attributes) => {
+                renderHTML: attributes => {
                     return {
-                        ['data-display']: attributes.display,
+                        ["data-display"]: attributes.display
                     };
-                },
-            },
-        }
+                }
+            }
+        };
     },
-    addOptions () {
+    addOptions() {
         return {
             HTMLAttributes: {},
             allowBase64: true,
             resize: false,
             ...this.parent?.(),
             inline: true,
-            onClick: ({ editor }:{ editor: Editor }) => {
+            onClick: ({ editor }: { editor: Editor }) => {
                 return {
                     component: ImageIcon,
                     componentProps: {
-                        isActive: editor.isActive('image'),
+                        isActive: editor.isActive("image"),
                         isReadonly: !editor.isEditable,
-                        icons: 'image-icon',
-                        tipText: '添加图片',
+                        icons: "image-icon",
+                        tipText: "添加图片",
                         editor: editor,
-                        urlPattern: DEFAULT_IMAGE_URL_REGEX,
+                        urlPattern: DEFAULT_IMAGE_URL_REGEX
                     }
-                }
+                };
             }
-        }
+        };
     },
     parseHTML() {
-        return [{ tag: 'img[src]' }]
+        return [{ tag: "img[src]" }];
     },
     renderHTML({ HTMLAttributes }) {
-        return ['img', HTMLAttributes]
+        return ["img", HTMLAttributes];
     },
     addNodeView() {
-        return VueNodeViewRenderer(ImageNodeViewWrapper)
+        return VueNodeViewRenderer(ImageNodeViewWrapper);
     }
-})
+});

@@ -1,6 +1,7 @@
-import type { Editor } from '@tiptap/vue-3'
-import TiptapHighlight from '@tiptap/extension-highlight'
-import ButtonIcon from '../components/ButtonIcon.vue'
+import { Icons } from "@/assets/icons";
+import ButtonIcon from "@/components/toolbar/ButtonIcon.vue";
+import TiptapHighlight from "@tiptap/extension-highlight";
+import type { Editor } from "@tiptap/vue-3";
 
 const Highlight = TiptapHighlight.extend({
     addOptions() {
@@ -8,48 +9,47 @@ const Highlight = TiptapHighlight.extend({
             HTMLAttributes: {},
             multicolor: true,
             ...this.parent?.(),
-            onClick: ({ editor }:{editor:Editor}) => {
+            onClick: ({ editor }: { editor: Editor }) => {
                 return {
                     component: ButtonIcon,
                     componentProps: {
-                        isActive: editor.isActive('highlight'),
+                        isActive: editor.isActive("highlight"),
                         isReadonly: !editor.isEditable,
-                        icons: 'highlight-icon',
-                        tipText: '高亮',
+                        icons: Icons.HighlightIcon,
+                        tipText: "高亮",
                         command: () => {
-                            editor.commands.toggleHighlight()
+                            editor.commands.toggleHighlight();
                         }
                     }
-                }
+                };
             }
-        }
+        };
     },
     addAttributes() {
         return {
             ...this.parent?.(),
             // 不直接渲染，仅存储值
             myColor: {
-                default: '#fafa27',
-                renderHTML: () => ({}) 
+                default: "#fafa27",
+                renderHTML: () => ({})
             },
             color: {
-                renderHTML:(attributes:Record<string, any>) => {
+                renderHTML: (attributes: Record<string, any>) => {
                     return {
                         style: `color:#333;background-color:#fafa27;`
-                    }
+                    };
                 }
             },
-            // 这样添加属性会自动与其他属性合并渲染到当前标签                                                                                                                              
+            // 这样添加属性会自动与其他属性合并渲染到当前标签
             padding: {
-                renderHTML(attributes:Record<string, any>) {
+                renderHTML(attributes: Record<string, any>) {
                     return {
                         style: `padding: 1px;`
-                    }
+                    };
                 }
-            },
-        }
-    },
-})
+            }
+        };
+    }
+});
 
-
-export { Highlight }
+export { Highlight };

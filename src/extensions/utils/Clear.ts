@@ -1,7 +1,8 @@
+import { Icons } from "@/assets/icons";
+import ButtonIcon from "@/components/toolbar/ButtonIcon.vue";
+import { useDiscreteApi } from "@/hooks/useDiscreteApi.ts";
 import { Extension } from "@tiptap/core";
 import { Editor } from "@tiptap/vue-3";
-import { useDiscreteApi } from "../../hooks/useDiscreteApi.ts";
-import ButtonIcon from "../components/ButtonIcon.vue";
 
 const { dialog } = useDiscreteApi();
 const Clear = Extension.create({
@@ -15,7 +16,7 @@ const Clear = Extension.create({
                     componentProps: {
                         isActive: editor.isActive("extensionClear"),
                         isReadonly: !editor.isEditable,
-                        icons: "clear-icon",
+                        icons: Icons.ClearIcon,
                         tipText: "清空文档",
                         command: () => {
                             dialog.warning({

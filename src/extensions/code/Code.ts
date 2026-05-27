@@ -1,29 +1,29 @@
-import type { Editor } from '@tiptap/vue-3'
-import TiptapCode from '@tiptap/extension-code'
-import ButtonIcon from '../components/ButtonIcon.vue'
+import { Icons } from "@/assets/icons";
+import ButtonIcon from "@/components/toolbar/ButtonIcon.vue";
+import TiptapCode from "@tiptap/extension-code";
+import type { Editor } from "@tiptap/vue-3";
 
 const Code = TiptapCode.extend({
     addOptions() {
         return {
             HTMLAttributes: {},
             ...this.parent?.(),
-            onClick: ({ editor }:{editor:Editor}) => {
+            onClick: ({ editor }: { editor: Editor }) => {
                 return {
                     component: ButtonIcon,
                     componentProps: {
-                        isActive: editor.isActive('code'),
+                        isActive: editor.isActive("code"),
                         isReadonly: !editor.isEditable,
-                        icons: 'code-bg-icon',
-                        tipText: '文本标签',
+                        icons: Icons.CodeBgIcon,
+                        tipText: "文本标签",
                         command: () => {
-                            editor.commands.toggleCode()
+                            editor.commands.toggleCode();
                         }
                     }
-                }
+                };
             }
-        }
-    },
-})
+        };
+    }
+});
 
-
-export { Code }
+export { Code };

@@ -1,6 +1,7 @@
-import type { Editor } from '@tiptap/vue-3'
-import TiptapStrike from '@tiptap/extension-strike'
-import ButtonIcon from '../components/ButtonIcon.vue'
+import { Icons } from "@/assets/icons";
+import ButtonIcon from "@/components/toolbar/ButtonIcon.vue";
+import TiptapStrike from "@tiptap/extension-strike";
+import type { Editor } from "@tiptap/vue-3";
 
 const Strike = TiptapStrike.extend({
     addOptions() {
@@ -8,24 +9,23 @@ const Strike = TiptapStrike.extend({
             HTMLAttributes: {},
             ...this.parent?.(),
             bubble: true,
-            onClick: ({ editor }:{editor:Editor}) => {
+            onClick: ({ editor }: { editor: Editor }) => {
                 return {
                     component: ButtonIcon,
                     componentProps: {
-                        isActive: editor.isActive('strike'),
+                        isActive: editor.isActive("strike"),
                         isReadonly: !editor.isEditable,
-                        icons: 'strike-icon',
-                        tipText: '删除线',
-                        shortcutKeys: 'Ctrl+Shift+S',
+                        icons: Icons.StrikeIcon,
+                        tipText: "删除线",
+                        shortcutKeys: "Ctrl+Shift+S",
                         command: () => {
-                            editor.commands.toggleStrike()
+                            editor.commands.toggleStrike();
                         }
                     }
-                }
+                };
             }
-        }
-    },
-})
+        };
+    }
+});
 
-
-export { Strike }
+export { Strike };

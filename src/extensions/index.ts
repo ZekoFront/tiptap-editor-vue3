@@ -49,7 +49,7 @@ export const extensionsArray = [
     Link,
     Image,
     TaskItem,
-    Emojis,
+    // Emojis,
     Clear
 ];
 

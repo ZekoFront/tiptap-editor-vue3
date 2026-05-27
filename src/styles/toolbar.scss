@@ -1,0 +1,56 @@
+/* 样式包裹，避免宿主项目样式覆盖 */
+.vue3-tiptap-editor > .vue3-tiptap-editor__toolbar > .toolbar-icon--btn {
+    display: flex;
+    align-items: center;
+    padding: 0.5em 0.5em;
+    outline: none;
+    border: none;
+    border-radius: 0.2em;
+    cursor: pointer;
+    height: 3em;
+    border: none;
+}
+
+.vue3-tiptap-editor > .vue3-tiptap-editor__toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    background: var(--gray-1);
+}
+.vue3-tiptap-editor > .vue3-tiptap-editor__toolbar.vue3-tiptap-editor-enabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    user-select: none;
+    pointer-events: none;
+}
+.vue3-tiptap-editor > .vue3-tiptap-editor__toolbar > .history-icon {
+    fill: #666;
+}
+.vue3-tiptap-editor > .vue3-tiptap-editor__toolbar > .toolbar-icon--active {
+    svg,
+    path {
+        fill: var(--theme-color);
+    }
+}
+.vue3-tiptap-editor > .vue3-tiptap-editor__toolbar > .toolbar-icon--readonly {
+    svg,
+    path {
+        fill: var(--gray-5);
+    }
+}
+.vue3-tiptap-editor > .vue3-tiptap-editor__toolbar > svg:focus,
+svg:active {
+    border: 0;
+    outline: none;
+}
+
+.vue3-tiptap-editor > .vue3-tiptap-editor__toolbar > .toolbar-icon--btn > svg {
+    width: 1.3em;
+    flex: 0 0 1.3em;
+    height: 1.2em;
+}
+.vue3-tiptap-editor > .vue3-tiptap-editor__toolbar > .toolbar-icon__wrap > .toolbar-icon--btn > svg {
+    width: 1.3em;
+    flex: 0 0 1.3em;
+    height: 1.2em;
+}

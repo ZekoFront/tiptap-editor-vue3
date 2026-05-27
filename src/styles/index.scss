@@ -1,4 +1,5 @@
-@import "./editor.scss";
-@import "./layout.scss";
-@import "./root.scss";
-@import "./scrolls.scss";
+@use "./editor.scss";
+@use "./layout.scss";
+@use "./root.scss";
+@use "./toolbar.scss";
+@use "./scrolls.scss";

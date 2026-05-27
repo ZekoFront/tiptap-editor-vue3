@@ -1,6 +1,7 @@
-import type { Editor } from '@tiptap/vue-3'
-import TiptapBold from '@tiptap/extension-bold'
-import ButtonIcon from '../components/ButtonIcon.vue'
+import { Icons } from "@/assets/icons";
+import ButtonIcon from "@/components/toolbar/ButtonIcon.vue";
+import TiptapBold from "@tiptap/extension-bold";
+import type { Editor } from "@tiptap/vue-3";
 
 const Bold = TiptapBold.extend({
     addOptions() {
@@ -8,24 +9,23 @@ const Bold = TiptapBold.extend({
             HTMLAttributes: {},
             ...this.parent?.(),
             bubble: true,
-            onClick: ({ editor }:{editor:Editor}) => {
+            onClick: ({ editor }: { editor: Editor }) => {
                 return {
                     component: ButtonIcon,
                     componentProps: {
-                        isActive: editor.isActive('bold'),
+                        isActive: editor.isActive("bold"),
                         isReadonly: !editor.isEditable,
-                        icons: 'bold-icon',
-                        tipText: '加粗',
-                        shortcutKeys: 'Ctrl+B',
+                        icons: Icons.BoldIcon,
+                        tipText: "加粗",
+                        shortcutKeys: "Ctrl+B",
                         command: () => {
-                            editor.commands.toggleBold()
+                            editor.commands.toggleBold();
                         }
                     }
-                }
+                };
             }
-        }
-    },
-})
+        };
+    }
+});
 
-
-export { Bold }
+export { Bold };

@@ -1,28 +1,29 @@
-import { VueNodeViewRenderer, type Editor } from '@tiptap/vue-3'
-import TiptapCodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
-import ButtonIcon from '../components/ButtonIcon.vue'
-import CodeBlockComponent from '@/components/CodeBlockLowlight.vue'
-import css from 'highlight.js/lib/languages/css'
-import js from 'highlight.js/lib/languages/javascript'
-import ts from 'highlight.js/lib/languages/typescript'
-import html from 'highlight.js/lib/languages/xml'
-import { all, createLowlight } from 'lowlight'
+import { Icons } from "@/assets/icons";
+import ButtonIcon from "@/components/toolbar/ButtonIcon.vue";
+import CodeBlockComponent from "@/components/toolbar/CodeBlockLowlight.vue";
+import TiptapCodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import { VueNodeViewRenderer, type Editor } from "@tiptap/vue-3";
+import css from "highlight.js/lib/languages/css";
+import js from "highlight.js/lib/languages/javascript";
+import ts from "highlight.js/lib/languages/typescript";
+import html from "highlight.js/lib/languages/xml";
+import { all, createLowlight } from "lowlight";
 
 // create a lowlight instance
-const lowlights = createLowlight(all)
+const lowlights = createLowlight(all);
 
 // you can also register languages
-lowlights.register('html', html)
-lowlights.register('css', css)
-lowlights.register('js', js)
-lowlights.register('ts', ts)
+lowlights.register("html", html);
+lowlights.register("css", css);
+lowlights.register("js", js);
+lowlights.register("ts", ts);
 
 const CodeBlockLowlight = TiptapCodeBlockLowlight.extend({
     addOptions() {
         return {
             HTMLAttributes: {},
             lowlight: lowlights,
-            languageClassPrefix: 'language-',
+            languageClassPrefix: "language-",
             exitOnTripleEnter: true,
             exitOnArrowDown: true,
             defaultLanguage: null,
@@ -30,27 +31,26 @@ const CodeBlockLowlight = TiptapCodeBlockLowlight.extend({
             tabSize: 4,
             ...this.parent?.(),
             bubble: true,
-            onClick: ({ editor }:{editor:Editor}) => {
+            onClick: ({ editor }: { editor: Editor }) => {
                 return {
                     component: ButtonIcon,
                     componentProps: {
-                        isActive: editor.isActive('codeBlockLowlight'),
+                        isActive: editor.isActive("codeBlockLowlight"),
                         isReadonly: !editor.isEditable,
-                        icons: 'code-block-icon',
-                        tipText: '代码块',
-                        shortcutKeys: 'Ctrl+Alt+C',
+                        icons: Icons.CodeBlockIcon,
+                        tipText: "代码块",
+                        shortcutKeys: "Ctrl+Alt+C",
                         command: () => {
-                            editor.commands.toggleCodeBlock()
+                            editor.commands.toggleCodeBlock();
                         }
                     }
-                }
+                };
             }
-        }
+        };
     },
     addNodeView() {
-        return VueNodeViewRenderer(CodeBlockComponent)
+        return VueNodeViewRenderer(CodeBlockComponent);
     }
-}).configure({lowlight:lowlights})
+}).configure({ lowlight: lowlights });
 
-
-export { CodeBlockLowlight }
+export { CodeBlockLowlight };

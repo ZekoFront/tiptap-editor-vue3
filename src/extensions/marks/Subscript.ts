@@ -1,37 +1,37 @@
-import type { Editor } from '@tiptap/vue-3'
-import TiptapSubscript from '@tiptap/extension-subscript'
-import ButtonIcon from '../components/ButtonIcon.vue'
+import { Icons } from "@/assets/icons";
+import ButtonIcon from "@/components/toolbar/ButtonIcon.vue";
+import TiptapSubscript from "@tiptap/extension-subscript";
+import type { Editor } from "@tiptap/vue-3";
 
 const Subscript = TiptapSubscript.extend({
-    name: 'Subscript',
+    name: "Subscript",
     addOptions() {
         return {
             HTMLAttributes: {},
             ...this.parent?.(),
-            onClick: ({ editor }:{editor:Editor}) => {
+            onClick: ({ editor }: { editor: Editor }) => {
                 return {
                     component: ButtonIcon,
                     componentProps: {
-                        isActive: editor.isActive('Subscript'),
+                        isActive: editor.isActive("Subscript"),
                         isReadonly: !editor.isEditable,
-                        icons: 'subscript-icon',
-                        tipText: '下标',
+                        icons: Icons.SubscriptIcon,
+                        tipText: "下标",
                         command: () => {
-                            editor.commands.toggleSubscript()
+                            editor.commands.toggleSubscript();
                         }
                     }
-                }
+                };
             }
-        }
+        };
     },
-    addAttributes(){
+    addAttributes() {
         return {
-            class:{
-                default: 'custom-subscript-class'
+            class: {
+                default: "custom-subscript-class"
             }
-        }
+        };
     }
-})
+});
 
-
-export { Subscript }
+export { Subscript };

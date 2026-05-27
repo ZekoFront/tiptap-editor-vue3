@@ -1,37 +1,37 @@
-import type { Editor } from '@tiptap/vue-3'
-import TiptapSuperscript from '@tiptap/extension-superscript'
-import ButtonIcon from '../components/ButtonIcon.vue'
+import { Icons } from "@/assets/icons";
+import ButtonIcon from "@/components/toolbar/ButtonIcon.vue";
+import TiptapSuperscript from "@tiptap/extension-superscript";
+import type { Editor } from "@tiptap/vue-3";
 
 const Superscript = TiptapSuperscript.extend({
-    name: 'Superscript',
+    name: "Superscript",
     addOptions() {
         return {
             HTMLAttributes: {},
             ...this.parent?.(),
-            onClick: ({ editor }:{editor:Editor}) => {
+            onClick: ({ editor }: { editor: Editor }) => {
                 return {
                     component: ButtonIcon,
                     componentProps: {
-                        isActive: editor.isActive('Superscript'),
+                        isActive: editor.isActive("Superscript"),
                         isReadonly: !editor.isEditable,
-                        icons: 'superscript-icon',
-                        tipText: '上标',
+                        icons: Icons.SuperscriptIcon,
+                        tipText: "上标",
                         command: () => {
-                            editor.commands.toggleSuperscript()
+                            editor.commands.toggleSuperscript();
                         }
                     }
-                }
+                };
             }
-        }
+        };
     },
-    addAttributes(){
+    addAttributes() {
         return {
             // class:{
             //     default: 'custom-superscript-class'
             // }
-        }
+        };
     }
-})
+});
 
-
-export { Superscript }
+export { Superscript };

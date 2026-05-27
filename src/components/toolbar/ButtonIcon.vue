@@ -1,0 +1,54 @@
+<template>
+    <NTooltip placement="top" trigger="hover" v-if="icons">
+        <template #trigger>
+            <button :class="iconClass" @click="handle">
+                <component :is="icons" />
+            </button>
+        </template>
+        <p style="text-align: center; line-height: 1; font-size: 14px">{{ tipText }}</p>
+        <p v-if="shortcutKeys" style="color: grey; line-height: 1; margin: 0; font-size: 12px">{{ shortcutKeys }}</p>
+    </NTooltip>
+</template>
+
+<script setup lang="ts" name="ButtonIcon">
+import { Void } from "@/utils";
+import { NTooltip } from "naive-ui";
+import type { Component } from "vue";
+
+// 此处不能解构，解构后computed无法监听属性变化
+// { isActive, command } = props
+const props = defineProps({
+    isActive: {
+        type: Boolean,
+        default: false
+    },
+    isReadonly: {
+        type: Boolean,
+        default: false
+    },
+    icons: {
+        type: Object as PropType<Component>,
+        default: () => ({})
+    },
+    tipText: {
+        type: String,
+        default: "暂无提示"
+    },
+    shortcutKeys: String,
+    command: {
+        type: Function,
+        default: Void
+    }
+});
+
+const iconClass = computed(() => ({
+    "toolbar-icon--btn": true,
+    "toolbar-icon--active ": props.isActive,
+    "toolbar-icon--readonly": props.isReadonly
+}));
+
+// 设置文本样式
+function handle() {
+    !props.isReadonly && props.command();
+}
+</script>
