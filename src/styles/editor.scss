@@ -370,6 +370,9 @@
 }
 
 .vue3-tiptap-editor {
+    .tiptap-link-text-mark {
+        cursor: pointer;
+    }
     .custom-drag-handle {
         &::after {
             display: flex;

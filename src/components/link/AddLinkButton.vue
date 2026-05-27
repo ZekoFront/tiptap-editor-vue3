@@ -99,7 +99,8 @@ const onPositiveClick = () => {
     if (linkValue.value && openOnClick.value) {
         props.editor.commands.setLink({
             href: linkValue.value,
-            target: "_blank"
+            target: "_blank",
+            class: "tiptap-link-text-mark"
         });
     } else {
         props.editor.commands.setLink({ href: linkValue.value });
