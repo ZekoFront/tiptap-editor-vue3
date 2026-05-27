@@ -21,22 +21,33 @@
                 <div class="custom-drag-handle" />
             </drag-handle>
 
-            <EditorContent :editor="editor" :editable="editable" :content-class="props.editorContentClass" />
+            <EditorContent
+                :editor="editor"
+                :editable="editable"
+                :content-class="props.editorContentClass"
+                @contextmenu="onContextmenu"
+            />
         </div>
+
+        <BubbleMenus :editor="editor" v-if="editor"></BubbleMenus>
+        <!-- <ContextMenus :editor="editor" ref="contextMenuRef"></ContextMenus> -->
     </div>
 </template>
 
 <script setup lang="ts">
+// 菜单
+import BubbleMenus from "@/components/bubble-menu/index.vue";
+import ContentsNav from "@/components/layout/Contents.vue";
+import ContextMenus from "@/components/table/ContextMenu.vue";
 import Toolbar from "@/components/toolbar/Toolbar.vue";
-import { extensionsArray, Table } from "@/extensions";
+import { extensionsArray } from "@/extensions";
+import { useContextMenu } from "@/hooks/useContextMenu";
 import { DragHandle } from "@tiptap/extension-drag-handle-vue-3";
-import Image from "@tiptap/extension-image";
 import NodeRange from "@tiptap/extension-node-range";
-import { TableKit } from "@tiptap/extension-table";
 import { CharacterCount, Placeholder } from "@tiptap/extensions";
 import StarterKit from "@tiptap/starter-kit";
 import type { Editor } from "@tiptap/vue-3";
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { editorProps } from "./editor-props";
 import EditorContent from "./EditorContent.vue";
 import { useEditor } from "./useEditor";
@@ -55,8 +66,6 @@ const emit = defineEmits<{
     (e: "before-create", payload: { editor: Editor }): void;
     (e: "content-error", payload: { editor: Editor; error: Error }): void;
 }>();
-
-const nested = ref(true);
 
 const baseExtensions = [
     StarterKit.configure({
@@ -79,8 +88,6 @@ const baseExtensions = [
         // depth: 0,
         key: null
     }),
-    // Table,
-    // TableKit,
     CharacterCount.configure({
         limit: Number(props.characterCount || 10000)
     }),
@@ -194,7 +201,5 @@ const computePositionConfig = computed(() => {
     } as any;
 });
 
-const toggleNested = () => {
-    nested.value = !nested.value;
-};
+const { onContextmenu } = useContextMenu(editor as ShallowRef<Editor>);
 </script>

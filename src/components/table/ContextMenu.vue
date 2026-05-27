@@ -1,46 +1,44 @@
 <template>
-<n-dropdown
-    placement="bottom-start"
-    trigger="manual"
-    :x="xRef"
-    :y="yRef"
-    :options="menuList"
-    :show="showDropdown"
-    :on-clickoutside="onClickoutside"
-    @select="handleSelect"
-/>
+    <n-dropdown
+        placement="bottom-start"
+        trigger="manual"
+        :x="xRef"
+        :y="yRef"
+        :options="menuList"
+        :show="showDropdown"
+        :on-clickoutside="onClickoutside"
+        @select="handleSelect"
+    />
 </template>
 
 <script lang="ts" setup name="ContextMenu">
-import { computed, inject, nextTick, ref } from "vue";
-import { NDropdown } from 'naive-ui'
-import { useNaiveDiscrete } from "@/hooks/navie-ui";
+import { type ITableContextMenuItem } from "@/typings/index";
 import { Editor, Extension } from "@tiptap/vue-3";
-import { ITableContextMenuItem } from '@/typings/index'
-import { DropdownMixedOption, DropdownOption } from "naive-ui/es/dropdown/src/interface";
+import { NDropdown } from "naive-ui";
+import { type DropdownMixedOption, type DropdownOption } from "naive-ui/es/dropdown/src/interface";
+import { computed, nextTick, ref } from "vue";
 
-const { message } = useNaiveDiscrete();
 const props = defineProps({
     editor: {
-      type: Editor,
-      required: true,
+        type: Object as PropType<Editor | null>,
+        required: true
     },
     isVisible: {
         type: Boolean,
-        default: false,
+        default: false
     },
     coordsX: {
         type: Number,
-        default: 0,
+        default: 0
     },
     coordsY: {
         type: Number,
-        default: 0,
+        default: 0
     },
     onClose: {
-        type:Function,
+        type: Function,
         default: () => {
-            return (val:boolean) => void {}
+            return (val: boolean) => void {};
         }
     }
 });
@@ -48,16 +46,16 @@ const props = defineProps({
 const showDropdown = ref(props.isVisible);
 const xRef = ref(0);
 const yRef = ref(0);
- 
-function handleSelect(key: string | number, option:DropdownOption) {
-    const item = option as ITableContextMenuItem
+
+function handleSelect(key: string | number, option: DropdownOption) {
+    const item = option as ITableContextMenuItem;
     if (item.command) {
-        item.command()
+        item.command();
     }
     showDropdown.value = false;
     // message.info(String(key));
 }
-function open({ left, top, e }:{left:number;top:number, e:MouseEvent}) {
+function open({ left, top, e }: { left: number; top: number; e: MouseEvent }) {
     e.preventDefault();
     showDropdown.value = false;
     nextTick().then(() => {
@@ -68,26 +66,27 @@ function open({ left, top, e }:{left:number;top:number, e:MouseEvent}) {
 }
 
 const menuList = computed(() => {
-    let arr:ITableContextMenuItem[] = []
-    const { extensions } = props.editor.extensionManager
-    const table = extensions.find(el => el.name === 'table') as Extension
+    let arr: ITableContextMenuItem[] = [];
+    if (!props.editor) return [];
+    const { extensions } = props.editor.extensionManager;
+    const table = extensions.find(el => el.name === "table") as Extension;
     if (table) {
         const { onClick } = table.options;
-        if (typeof onClick === 'function') {
-            const opt = onClick({ editor:props.editor });
-            arr = opt.componentProps.options
-        } else arr = []
+        if (typeof onClick === "function") {
+            const opt = onClick({ editor: props.editor });
+            arr = opt.componentProps.options;
+        } else arr = [];
     }
-    return arr as DropdownMixedOption[]
-})
+    return arr as DropdownMixedOption[];
+});
 
 function onClickoutside() {
     // message.info("clickoutside");
     showDropdown.value = false;
-    props.onClose(showDropdown.value)
+    props.onClose(showDropdown.value);
 }
 defineExpose({
     open,
     onClickoutside
-})
+});
 </script>

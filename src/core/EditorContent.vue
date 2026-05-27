@@ -14,26 +14,15 @@
             v-if="innerEditor"
             :editor="innerEditor"
             :class="contentClass"
+            @contextmenu="emit('contextmenu', $event)"
         />
     </div>
 </template>
 
 <script setup lang="ts">
 import StarterKit from "@tiptap/starter-kit";
-import {
-    Editor,
-    EditorContent as TiptapEditorContent,
-    type AnyExtension,
-    type JSONContent
-} from "@tiptap/vue-3";
-import {
-    computed,
-    onBeforeUnmount,
-    onMounted,
-    shallowRef,
-    watch,
-    type PropType
-} from "vue";
+import { Editor, EditorContent as TiptapEditorContent, type AnyExtension, type JSONContent } from "@tiptap/vue-3";
+import { computed, onBeforeUnmount, onMounted, shallowRef, watch, type PropType } from "vue";
 
 type ContentValue = string | JSONContent | null;
 type ClassValue = string | any[] | Record<string, any>;
@@ -79,6 +68,7 @@ const props = defineProps({
 const emit = defineEmits<{
     (e: "update", payload: { editor: Editor; html: string; json: JSONContent }): void;
     (e: "ready", editor: Editor): void;
+    (e: "contextmenu", event: MouseEvent): void;
 }>();
 
 const internalEditor = shallowRef<Editor | null>(null);
@@ -161,27 +151,3 @@ defineExpose({
     blur: () => innerEditor.value?.commands.blur()
 });
 </script>
-
-<style lang="scss" scoped>
-.tev3-editor-content {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    min-height: 100%;
-    box-sizing: border-box;
-
-    &[data-readonly="true"] {
-        :deep(.ProseMirror) {
-            cursor: default;
-            outline: none;
-        }
-    }
-
-    :deep(.ProseMirror) {
-        flex: 1;
-        outline: none;
-        min-height: 100%;
-    }
-}
-</style>

@@ -369,76 +369,82 @@
     padding: 6px 10px;
 }
 
-.custom-drag-handle {
-    &::after {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 1rem;
-        height: 1.25rem;
-        content: "⠿";
-        font-weight: 700;
-        cursor: grab;
-        background: #0d0d0d10;
-        color: #0d0d0d50;
-        border-radius: 0.25rem;
+.vue3-tiptap-editor {
+    .custom-drag-handle {
+        &::after {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 1rem;
+            height: 1.25rem;
+            content: "⠿";
+            font-weight: 700;
+            cursor: grab;
+            background: #0d0d0d10;
+            color: #0d0d0d50;
+            border-radius: 0.25rem;
+        }
     }
-}
 
-.ProseMirror-selectednode,
-.ProseMirror-selectednoderange {
-    position: relative;
+    .ProseMirror-selectednode,
+    .ProseMirror-selectednoderange {
+        position: relative;
+        z-index: 10;
 
-    &::before {
-        position: absolute;
-        pointer-events: none;
-        z-index: -1;
-        content: "";
-        top: -0.25rem;
-        left: -0.25rem;
-        right: -0.25rem;
-        bottom: -0.25rem;
+        &::before {
+            position: absolute;
+            pointer-events: none;
+            z-index: -1;
+            content: "";
+            top: -0.5rem;
+            bottom: -0.5rem;
+            left: -0.25rem;
+            right: -0.25rem;
+            background-color: #70cff850 !important; // 增强权重确保生效
+            border-radius: 0.2rem;
+        }
+    }
+
+    .ProseMirror {
+        position: relative;
+        outline: none;
+
+        > * {
+            margin-inline-start: 1rem;
+            position: relative;
+            overflow: visible !important;
+        }
+
+        * {
+            margin-top: 0.75em;
+        }
+
+        .ProseMirror-widget * {
+            margin-top: auto;
+        }
+
+        ul,
+        ol {
+            padding-inline: 1rem;
+        }
+    }
+
+    ::selection {
         background-color: #70cff850;
-        border-radius: 0.2rem;
-    }
-}
-
-.ProseMirror {
-    padding: 0;
-    // 会影响图片选中效果
-    // * {
-    //     margin-top: 0.75em;
-    // }
-
-    > * {
-        margin-inline-start: 1rem;
     }
 
-    .ProseMirror-widget * {
-        margin-top: auto;
+    .ProseMirror-noderangeselection {
+        *::selection {
+            background: transparent;
+        }
+
+        * {
+            caret-color: transparent;
+        }
     }
 
-    ul,
-    ol {
-        padding-inline: 1rem;
+    [data-type="taskList"] [data-checked="true"] > div > p:first-child {
+        text-decoration: line-through;
+        color: var(--gray-4);
     }
-}
-
-::selection {
-    background-color: #70cff850;
-}
-
-.ProseMirror-noderangeselection {
-    *::selection {
-        background: transparent;
-    }
-
-    * {
-        caret-color: transparent;
-    }
-}
-
-[data-type="taskList"] [data-checked="true"] > div > p:first-child {
-    text-decoration: line-through;
-    color: var(--gray-4);
 }
