@@ -410,7 +410,6 @@
 .ProseMirror {
     position: relative;
     outline: none;
-    padding: 1rem 1rem 1rem 0;
 
     // 关键：确保所有子块级元素在选中时不会裁剪高亮伪元素
     > * {
