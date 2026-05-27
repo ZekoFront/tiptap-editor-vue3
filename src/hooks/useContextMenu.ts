@@ -1,27 +1,30 @@
-import { Editor } from "@tiptap/vue-3";
-import { ref } from "vue";
-// 统一处理编辑器右键菜单
-export const useContextMenu = (editor: ShallowRef<Editor>) => {
-    const contextMenuRef = ref<{ open: ({ left, top, e }: { left: number; top: number; e: MouseEvent }) => {} } | null>(
-        null
-    );
+import type { Editor } from "@tiptap/vue-3";
+import { type Ref, type ShallowRef } from "vue";
 
+type ContextMenuExpose = {
+    open: (payload: { left: number; top: number; e: MouseEvent }) => void;
+};
+
+/**
+ * 编辑区右键：请先在父组件中 `const contextMenuRef = ref<ContextMenuExpose | null>(null)`，
+ * 将其绑定到 ContextMenu：`ref="contextMenuRef"`，再传入本 hook。
+ */
+export const useContextMenu = (
+    editor: ShallowRef<Editor | null>,
+    contextMenuRef: Ref<ContextMenuExpose | null>
+) => {
     const onContextmenu = (event: MouseEvent) => {
-        // 获取选中文本
-        console.log(editor, contextMenuRef, 32211);
-        const { from, to } = editor.value.state.selection;
-        // 获取光标所在屏幕坐标，这个坐标显示右键菜单会导致不精准，因为光标始终保持在一个开始位置，而不是点击位置
-        // 更换点击坐标来显示菜单
-        const coords = editor.value.view.coordsAtPos(from);
-        if (contextMenuRef.value && editor.value.isActive("table")) {
-            event.preventDefault();
-            // 处理其他业务
-            contextMenuRef.value.open({ e: event, left: event.clientX, top: event.clientY });
-        }
+        const inst = editor.value;
+        const menu = contextMenuRef.value;
+        if (!inst || !menu) return;
+
+        if (!inst.isActive("table")) return;
+
+        event.preventDefault();
+        menu.open({ e: event, left: event.clientX, top: event.clientY });
     };
 
     return {
-        contextMenuRef,
         onContextmenu
     };
 };

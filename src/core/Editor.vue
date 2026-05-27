@@ -30,14 +30,13 @@
         </div>
 
         <BubbleMenus :editor="editor" v-if="editor"></BubbleMenus>
-        <!-- <ContextMenus :editor="editor" ref="contextMenuRef"></ContextMenus> -->
+        <ContextMenus v-if="editor" ref="contextMenuRef" :editor="editor"></ContextMenus>
     </div>
 </template>
 
 <script setup lang="ts">
 // 菜单
 import BubbleMenus from "@/components/bubble-menu/index.vue";
-import ContentsNav from "@/components/layout/Contents.vue";
 import ContextMenus from "@/components/table/ContextMenu.vue";
 import Toolbar from "@/components/toolbar/Toolbar.vue";
 import { extensionsArray } from "@/extensions";
@@ -47,7 +46,7 @@ import NodeRange from "@tiptap/extension-node-range";
 import { CharacterCount, Placeholder } from "@tiptap/extensions";
 import StarterKit from "@tiptap/starter-kit";
 import type { Editor } from "@tiptap/vue-3";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { editorProps } from "./editor-props";
 import EditorContent from "./EditorContent.vue";
 import { useEditor } from "./useEditor";
@@ -185,7 +184,7 @@ const initialContent = `
           <p>By following these guidelines, you'll create applications that are easier to maintain, test, and extend over time.</p>
         `;
 
-const { editor, editable, rtl, toggleEditable, toggleRtl } = useEditor({
+const { editor, editable, rtl } = useEditor({
     extensions: () => (props.extensions.length > 0 ? props.extensions : baseExtensions),
     content: () => initialContent,
     editable: () => props.isEditable,
@@ -201,5 +200,7 @@ const computePositionConfig = computed(() => {
     } as any;
 });
 
-const { onContextmenu } = useContextMenu(editor as ShallowRef<Editor>);
+/** 须与模板 `<ContextMenus ref="contextMenuRef">` 对应，否则右键菜单拿不到 open */
+const contextMenuRef = ref<{ open: (p: { left: number; top: number; e: MouseEvent }) => void } | null>(null);
+const { onContextmenu } = useContextMenu(editor, contextMenuRef);
 </script>

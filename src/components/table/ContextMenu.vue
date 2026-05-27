@@ -16,12 +16,12 @@ import { type ITableContextMenuItem } from "@/typings/index";
 import { Editor, Extension } from "@tiptap/vue-3";
 import { NDropdown } from "naive-ui";
 import { type DropdownMixedOption, type DropdownOption } from "naive-ui/es/dropdown/src/interface";
-import { computed, nextTick, ref } from "vue";
+import { computed, nextTick, ref, type PropType } from "vue";
 
 const props = defineProps({
     editor: {
         type: Object as PropType<Editor | null>,
-        required: true
+        default: null
     },
     isVisible: {
         type: Boolean,

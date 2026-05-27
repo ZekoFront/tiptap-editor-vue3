@@ -52,7 +52,7 @@ const Table = TiptapTable.extend({
                         }
                     },
                     {
-                        label: "向后添加行",
+                        label: "向前添加行",
                         key: "addRowBefore",
                         command: function () {
                             editor.commands.addRowBefore();
