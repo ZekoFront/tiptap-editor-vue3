@@ -388,30 +388,39 @@
 .ProseMirror-selectednode,
 .ProseMirror-selectednoderange {
     position: relative;
+    // 关键：强制块级元素在选中时产生层级上下文，防止多行高亮被彼此遮挡
+    z-index: 10;
 
     &::before {
         position: absolute;
         pointer-events: none;
+        // 关键：将层级设为 -1 并确保不被裁剪
         z-index: -1;
         content: "";
-        top: -0.25rem;
+        // 增大外扩范围，确保上下两行的淡蓝色能完美“粘”在一起不留白缝
+        top: -0.5rem;
+        bottom: -0.5rem;
         left: -0.25rem;
         right: -0.25rem;
-        bottom: -0.25rem;
-        background-color: #70cff850;
+        background-color: #70cff850 !important; // 增强权重确保生效
         border-radius: 0.2rem;
     }
 }
 
 .ProseMirror {
-    padding: 0;
-    // 会影响图片选中效果
-    // * {
-    //     margin-top: 0.75em;
-    // }
+    position: relative;
+    outline: none;
+    padding: 1rem 1rem 1rem 0;
 
+    // 关键：确保所有子块级元素在选中时不会裁剪高亮伪元素
     > * {
         margin-inline-start: 1rem;
+        position: relative;
+        overflow: visible !important;
+    }
+
+    * {
+        margin-top: 0.75em;
     }
 
     .ProseMirror-widget * {
