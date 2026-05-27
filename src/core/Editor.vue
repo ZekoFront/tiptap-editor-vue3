@@ -193,4 +193,8 @@ const computePositionConfig = computed(() => {
         placement: rtl.value ? "right-start" : "left-start"
     } as any;
 });
+
+const toggleNested = () => {
+    nested.value = !nested.value;
+};
 </script>

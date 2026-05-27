@@ -32,12 +32,12 @@
             <span>导出docx</span>
         </NTooltip>
 
-        <!-- <button class="toolbar-icon--btn">
+        <button class="toolbar-icon--btn">
             <span style="color: var(--theme-color); font-weight: bold">{{
                 editor.storage.characterCount.characters()
             }}</span>
             <span>&nbsp;/&nbsp;{{ characterCount }}</span>
-        </button> -->
+        </button>
 
         <!-- 自定义行高会段落冲突，暂时注释 -->
         <!-- <ParagraphUI></ParagraphUI> -->
