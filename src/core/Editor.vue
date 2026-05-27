@@ -1,13 +1,6 @@
 <!-- 主组件（迁移自 src/text/editor.vue） -->
 <template>
     <div :class="['vue3-tiptap-editor', editorWrapperClass]">
-        <!-- <div v-if="props.isShowToolbar && editor" class="control-group" :class="props.editorToolkitClass">
-            <div class="button-group">
-                <button :class="{ 'is-active': editable }" @click="toggleEditable">Toggle editable</button>
-                <button :class="{ 'is-active': nested }" @click="toggleNested">Toggle nested drag handle</button>
-                <button :class="{ 'is-active': rtl }" @click="toggleRtl">Toggle RTL editor</button>
-            </div>
-        </div> -->
         <Toolbar
             v-if="props.isShowToolbar && editor"
             :class="[editorToolkitClass]"

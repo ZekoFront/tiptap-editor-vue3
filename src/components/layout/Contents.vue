@@ -1,220 +1,127 @@
 <template>
-<div 
-   :class="[
-      'vue3-tiptap-editor__navigation', 
-      { 'is-active': isShowContent }
-   ]">
-   <div class="navigation-header">
-      <span>文档目录</span>
-      <NIcon class="close-nav" size="25" @click="closeContents">
-           <Dismiss20Filled></Dismiss20Filled>
-      </NIcon>
-   </div>
-   <div class="navigation-directory">
-      <!-- <p>文档目录：</p> -->
-      <ul id="directory-container" class="directory-container"></ul>
-   </div>
-</div>    
+    <div :class="['vue3-tiptap-editor__navigation', { 'is-active': isShowContent }]">
+        <div class="navigation-header">
+            <span>文档目录</span>
+            <NIcon class="close-nav" size="25" @click="closeContents">
+                <Dismiss20Filled></Dismiss20Filled>
+            </NIcon>
+        </div>
+        <div class="navigation-directory">
+            <!-- <p>文档目录：</p> -->
+            <ul id="directory-container" class="directory-container"></ul>
+        </div>
+    </div>
 </template>
 
 <script setup lang="ts">
-import { NIcon } from 'naive-ui'
-import { Dismiss20Filled } from '@vicons/fluent'
-import { Editor } from '@tiptap/vue-3'
-import { ensureHeadingIds } from '@/utils'
+import { ensureHeadingIds } from "@/utils";
+import { Editor } from "@tiptap/vue-3";
+import { Dismiss20Filled } from "@vicons/fluent";
+import { NIcon } from "naive-ui";
 
 const props = defineProps({
-   editor: {
-      type: Editor,
-      required: true,
-   }
-})
-
-const isShowContent = defineModel<boolean>("isShowContent", {
-   default: true,
-   required: true,
+    editor: {
+        type: Editor,
+        required: true
+    }
 });
 
-props.editor.on('update', ({ editor, transaction }) => {
-   nextTick(() => {
-      // const { state } = editor;
-      // const { selection } = state;
-      // const { $from } = selection;
-      // let node = $from.node();
-      // if (node.type.name === 'heading') {
-      //    updateDirectory()
-      // }
-      // 粘贴内容比如wps文档标题，会丢失id，所以这里手动添加id
-      if (!transaction.docChanged) return;
-      const hasModifiedState = ensureHeadingIds(editor);
+const isShowContent = defineModel<boolean>("isShowContent", {
+    default: true,
+    required: true
+});
 
-      if (hasModifiedState) {
-         return;
-      }
+props.editor.on("update", ({ editor, transaction }) => {
+    nextTick(() => {
+        // const { state } = editor;
+        // const { selection } = state;
+        // const { $from } = selection;
+        // let node = $from.node();
+        // if (node.type.name === 'heading') {
+        //    updateDirectory()
+        // }
+        // 粘贴内容比如wps文档标题，会丢失id，所以这里手动添加id
+        if (!transaction.docChanged) return;
+        const hasModifiedState = ensureHeadingIds(editor);
 
-      updateDirectory();
-   })
-})
+        if (hasModifiedState) {
+            return;
+        }
+
+        updateDirectory();
+    });
+});
 
 const updateDirectory = () => {
-   const container = document.querySelector('.tiptap-editor__content')
-   if (!container) return
-   // 标题 DOM 容器
-   const headerContainer = document.getElementById('directory-container') as HTMLElement
-   const headers = Array.from(container.querySelectorAll('h1, h2, h3, h4, h5, h6'))
+    const container = document.querySelector(".tiptap-editor__content");
+    if (!container) return;
+    // 标题 DOM 容器
+    const headerContainer = document.getElementById("directory-container") as HTMLElement;
+    const headers = Array.from(container.querySelectorAll("h1, h2, h3, h4, h5, h6"));
 
-   if (headers&&headers.length === 0) {
-      headerContainer.innerHTML = `<li>暂无数据</li>`
-      return
-   }
+    if (headers && headers.length === 0) {
+        headerContainer.innerHTML = `<li>暂无数据</li>`;
+        return;
+    }
 
-   headerContainer.innerHTML = headers.map((item, index) => {
-      const elementID = item.getAttribute('id') || ""
-      // 不能直接修改dom节点属性，否则一直触发更新事件
-      // item.setAttribute('id', elementID)
-      const type = parseInt(item.tagName.slice(1));
-      return `<li id="${elementID}" class="directory-item__cell" type="header${type}">${removeBrTags(item.innerHTML)}</li>`
-   }).join('')
+    headerContainer.innerHTML = headers
+        .map((item, index) => {
+            const elementID = item.getAttribute("id") || "";
+            // 不能直接修改dom节点属性，否则一直触发更新事件
+            // item.setAttribute('id', elementID)
+            const type = parseInt(item.tagName.slice(1));
+            return `<li id="${elementID}" class="directory-item__cell" type="header${type}">${removeBrTags(item.innerHTML)}</li>`;
+        })
+        .join("");
 
-   headerContainer.onmousedown = (event:any) => {
-      event.preventDefault()
-      const target = event.target as HTMLElement;
-      // 向上查找最近的 li 元素，确保在容器内
-      const targetLi = target.closest('li');
-      if (!targetLi || !headerContainer.contains(targetLi)) return;
-      const hId = targetLi.id
-      // 滚动到标题
-      const targetElement = document.querySelector(`#${hId}`);
-      if (targetElement) {
-         targetElement.scrollIntoView({
-            behavior: "smooth",
-            block: 'start',
-            inline: 'nearest'
-         });
-      }
-   }
+    headerContainer.onmousedown = (event: any) => {
+        event.preventDefault();
+        const target = event.target as HTMLElement;
+        // 向上查找最近的 li 元素，确保在容器内
+        const targetLi = target.closest("li");
+        if (!targetLi || !headerContainer.contains(targetLi)) return;
+        const hId = targetLi.id;
+        // 滚动到标题
+        const targetElement = document.querySelector(`#${hId}`);
+        if (targetElement) {
+            targetElement.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+                inline: "nearest"
+            });
+        }
+    };
 
-   // @ts-ignore
-   const li = headerContainer.childNodes
-   for (let i = 0; i < li.length; i++) {
-      // @ts-ignore
-      li[i].onclick = () => {
-         // @ts-ignore
-         li.forEach(item => {
+    // @ts-ignore
+    const li = headerContainer.childNodes;
+    for (let i = 0; i < li.length; i++) {
+        // @ts-ignore
+        li[i].onclick = () => {
             // @ts-ignore
-            item.setAttribute('class', 'directory-item__cell')
-         })
-         // @ts-ignore
-         li[i].setAttribute('class', 'directory-item__cell active')
-      }
-   }
-}
-
+            li.forEach(item => {
+                // @ts-ignore
+                item.setAttribute("class", "directory-item__cell");
+            });
+            // @ts-ignore
+            li[i].setAttribute("class", "directory-item__cell active");
+        };
+    }
+};
 
 const closeContents = () => {
-   isShowContent.value = !isShowContent.value
-}
+    isShowContent.value = !isShowContent.value;
+};
 
-function removeBrTags(html:string) {
-   // 匹配各种形式的br标签：<br>、<br/>、<br />等
-   const brRegex = /<br\s*\/?>/gi;
-   // 用空字符串替换所有匹配到的br标签
-   return html.replace(brRegex, '');
+function removeBrTags(html: string) {
+    // 匹配各种形式的br标签：<br>、<br/>、<br />等
+    const brRegex = /<br\s*\/?>/gi;
+    // 用空字符串替换所有匹配到的br标签
+    return html.replace(brRegex, "");
 }
 
 onMounted(() => {
-   nextTick(() => {
-      updateDirectory()
-   })
-})
+    nextTick(() => {
+        updateDirectory();
+    });
+});
 </script>
-
-<style lang="scss">
- .vue3-tiptap-editor__navigation {
-   width: 0px;
-   flex: 0 0 0px;
-   transition: all 0.3s ease-out;
-   overflow: hidden;
-   white-space: nowrap;
-   /* height: 100%; */
-   &.is-active {
-      width: 318px;
-      flex: 0 0 318px;
-      padding: 0 10px;
-      border-left: 1px solid #f2f2f2;
-   }
-   .navigation-header {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px 0;
-      .close-nav:hover {
-         background-color: #dddcdc;
-      } 
-      .close-nav {
-         cursor: pointer;
-      }
-   }
-   .navigation-directory {
-      overflow-y: scroll;
-      .directory-container {
-         list-style-type: none;
-         // padding-left: 10px;
-         position: relative;
-         &:after {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 2px;
-            background-color: #e5e8ed;
-         }
-         .directory-item__cell {
-            color: #333;
-            padding: 0;
-            margin: 0;
-            height: 20px;
-            cursor: pointer;
-            &:hover {
-               text-decoration: underline;
-               color: #2b4bf3 !important;
-            }
-         }
-      
-         .directory-item__cell[type="header1"] {
-            font-weight: bold;
-            font-size: 14px;
-         }
-         .directory-item__cell[type="header2"] {
-            padding-left: 2px;
-            color: #666;
-            font-size: 13px;
-            font-weight: bold;
-         }
-         .directory-item__cell[type="header3"],
-         .directory-item__cell[type="header4"],
-         .directory-item__cell[type="header5"],
-         .directory-item__cell[type="header6"] {
-            color: #999;
-            font-size: 12px;
-            padding-left: 15px;
-         }
-
-         .active {
-            color: #2b4bf3 !important;
-            position: relative;
-            &:after {
-               position: absolute;
-               top: 0;
-               left: -16px;
-               content: "";
-               width: 2px;
-               height: 100%;
-               z-index: 2;
-               background: #2b4bf3;
-            }
-         }
-      }
-   }
-}
-</style>
