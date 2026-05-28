@@ -1,42 +1,22 @@
-import type { Editor } from '@tiptap/vue-3'
-import Emoji from '@tiptap/extension-emoji'
-import EmojiIcon from '@/components/emoji/EmojiIcon.vue'
+import { suggestion } from "@/components/emoji/suggestion";
+import Emoji, { gitHubEmojis } from "@tiptap/extension-emoji";
 
 const Emojis = Emoji.extend({
     addOptions() {
         return {
-            HTMLAttributes: {},
-            emojis: [],
-            enableEmoticons: false,
-            forceFallbackImages: false,
-            enableSuggestion: false,
-            suggestion: {
-                char: ':',
-                minChars: 2,
-                allowedPrefixes: [''],
-                allowedSuffixes: [''],
-            },
             ...this.parent?.(),
+            HTMLAttributes: {},
+            emojis: gitHubEmojis,
+            enableEmoticons: true,
+            forceFallbackImages: false,
+            enableSuggestion: true,
             bubble: true,
-            onClick: ({ editor }:{editor:Editor}) => {
-                return {
-                    component: EmojiIcon,
-                    componentProps: {
-                        isActive: editor.isActive('bold'),
-                        isReadonly: !editor.isEditable,
-                        icons: 'emoji-icon',
-                        tipText: '表情',
-                        shortcutKeys: 'Ctrl+B',
-                        editor: editor,
-                        command: () => {
-                            // editor.commands.toggleBold()
-                        }
-                    }
-                }
-            }
-        }
-    },
-})
+            suggestion: {}
+        };
+    }
+});
 
-
-export { Emojis }
+Emojis.configure({
+    suggestion: suggestion
+});
+export { Emojis };

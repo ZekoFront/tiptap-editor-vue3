@@ -1,6 +1,6 @@
 import { Code } from "./code/Code";
 import { CodeBlockLowlight } from "./code/CodeBlockLowlight";
-import { Emojis } from "./emoji/Emoji";
+// import { Emojis } from "./emoji/Emoji";
 import { Image } from "./image/Image";
 import { Link } from "./link/Link";
 import { BulletList } from "./list/BulletList";
