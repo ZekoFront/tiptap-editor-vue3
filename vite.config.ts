@@ -65,7 +65,7 @@ export default defineConfig({
             }
         },
         lib: {
-            entry: "src/text/editor.ts",
+            entry: "src/index.ts",
             name: "TiptapEditorVue3",
             // 输出文件名 (xm-common-ui.js, xm-common-ui.umd.js)
             fileName: format => `tiptap-editor-vue3.${format}.js`

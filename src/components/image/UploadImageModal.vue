@@ -19,7 +19,7 @@
                         <div class="list-image-item" v-for="(item, index) in currentImages">
                             <img :src="item" :alt="item" />
                             <NIcon class="delete-icon" size="21" color="#ed4014" title="删除图片">
-                                <Icons.DeleteIcon @click="removeImage(item, index)"></Icons.DeleteIcon>
+                                <Icons.DeleteIcon @click="removeImage(index)"></Icons.DeleteIcon>
                             </NIcon>
                         </div>
                     </div>
@@ -72,7 +72,7 @@ const isErrorTip = ref(true);
 const tipText = ref("图片地址格式错误，请重新输入正确图片地址");
 const tabPane = ref("upload");
 const currentImages = ref<string[]>([]);
-const fileList = ref<FileList>({ length: 0, item: index => null });
+const fileList = ref<FileList[]>([]);
 
 const onUpdatedTab = (val: string) => {
     tabPane.value = val;
@@ -109,9 +109,9 @@ const onPositiveClick = () => {
         if (!fileList.value) return;
 
         for (let i = 0; i < fileList.value.length; i++) {
-            formData.append("file", fileList.value[i]);
+            formData.append("file", fileList.value[i] as unknown as Blob);
             if (!props.defaultConfig) {
-                innerUploadImage(fileList.value[i]);
+                innerUploadImage(fileList.value[i] as unknown as File);
             }
         }
         if (props.defaultConfig) {
@@ -129,14 +129,14 @@ const onPositiveClick = () => {
 const onChangeFile = (evt: Event) => {
     const input = evt.target as HTMLInputElement;
     const files = input.files as FileList;
-    fileList.value = files;
+    fileList.value = files as unknown as FileList[];
     for (let i = 0; i < files.length; i++) {
         const ImageUrl = URL.createObjectURL(new Blob([files[i]]));
         currentImages.value.push(ImageUrl);
     }
 };
 
-const removeImage = (item: string, index: number) => {
+const removeImage = (index: number) => {
     currentImages.value.splice(index, 1);
 };
 
@@ -151,7 +151,7 @@ const innerUploadImage = async (file: File) => {
 
 const initialize = () => {
     currentImages.value.length = 0;
-    fileList.value = { length: 0, item: index => null };
+    fileList.value = [];
     imageLink.value = "";
     isVisible.value = true;
     tabPane.value = "upload";

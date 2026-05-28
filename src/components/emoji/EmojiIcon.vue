@@ -23,6 +23,7 @@
 <script setup lang="ts">
 import { Icons } from "@/assets/icons";
 import { Editor } from "@tiptap/vue-3";
+// @ts-ignore
 import "vue3-emoji-picker/css";
 import EmojiPicker, { type EmojiExt } from "vue3-emoji-picker";
 

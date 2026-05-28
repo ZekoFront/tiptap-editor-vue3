@@ -29,7 +29,7 @@
                 @mouseleave.stop="onMouseleave"
                 @mouseup.stop="onMouseup"
             >
-                <span class="table-drawing-td__item" v-for="(item, index) in 100" :key="index"></span>
+                <span class="table-drawing-td__item" v-for="item in 100" :key="item.toString()"></span>
                 <div ref="maskRef" class="table-mask__wrap"></div>
             </div>
         </div>
@@ -74,8 +74,7 @@ const tablePopoverRef = useTemplateRef<InstanceType<typeof NPopover> | null>("ta
 let startTop = 0,
     endTop = 0,
     startLeft = 0,
-    endLeft = 0,
-    selectedCells = [];
+    endLeft = 0;
 const isMouseDown = ref(false);
 
 const handleTable = () => {
@@ -99,7 +98,7 @@ const handleTable = () => {
     tablePopoverRef.value.setShow(false);
 };
 
-const onMousedown = (evt: MouseEvent) => {
+const onMousedown = () => {
     if (tableFilterWrapRef.value) {
         isMouseDown.value = true;
         // const { top, left } = tableFilterWrapRef.value.getBoundingClientRect();
@@ -123,10 +122,10 @@ const onMousemove = (evt: MouseEvent) => {
         calculateSelectedCells(evt);
     }
 };
-const onMouseleave = (evt: MouseEvent) => {
+const onMouseleave = () => {
     resetPosition();
 };
-const onMouseup = (evt: MouseEvent) => {
+const onMouseup = () => {
     resetPosition();
 };
 function resetPosition() {
@@ -146,8 +145,6 @@ function calculateSelectedCells(evt: MouseEvent) {
         const { top, left } = tableFilterWrapRef.value.getBoundingClientRect();
         const childrenList = tableFilterWrapRef.value.children;
 
-        // 鼠标移动触发时，先清空数据
-        selectedCells = [];
         let minRow = 10,
             maxRow = 0,
             minCol = 10,
@@ -186,9 +183,6 @@ function calculateSelectedCells(evt: MouseEvent) {
                 if (child.className !== "table-mask__wrap") {
                     child.style.background = "rgba(24, 160, 88, 0.1)";
                     // child.style.color = "#18a058"
-                    // 获取选中的子元素索引
-                    // selectedCells.push(i+1)
-                    // console.log(selectedCells);
                     // 行索引
                     const row = Math.floor(i / 10);
                     // 列索引

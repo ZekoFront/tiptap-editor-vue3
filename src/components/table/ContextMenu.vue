@@ -50,7 +50,7 @@ const yRef = ref(0);
 function handleSelect(key: string | number, option: DropdownOption) {
     const item = option as ITableContextMenuItem;
     if (item.command) {
-        item.command();
+        item.command(key);
     }
     showDropdown.value = false;
     // message.info(String(key));

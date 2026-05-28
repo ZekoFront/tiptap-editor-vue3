@@ -34,7 +34,7 @@ const Highlight = TiptapHighlight.extend({
                 renderHTML: () => ({})
             },
             color: {
-                renderHTML: (attributes: Record<string, any>) => {
+                renderHTML: () => {
                     return {
                         style: `color:#333;background-color:#fafa27;`
                     };
@@ -42,7 +42,7 @@ const Highlight = TiptapHighlight.extend({
             },
             // 这样添加属性会自动与其他属性合并渲染到当前标签
             padding: {
-                renderHTML(attributes: Record<string, any>) {
+                renderHTML() {
                     return {
                         style: `padding: 1px;`
                     };
