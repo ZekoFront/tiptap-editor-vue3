@@ -33,7 +33,7 @@
             />
         </div>
 
-        <BubbleMenus v-if="editor" :editor="editor" />
+        <BubbleMenus v-if="editor" :editor="editor" :customDubbleMenus="customDubbleMenus" />
         <ContextMenus v-if="editor" ref="contextMenuRef" :editor="editor" />
     </div>
 </template>

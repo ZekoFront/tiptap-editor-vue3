@@ -1,5 +1,6 @@
 // props / defaults / 校验 单独抽离
 
+import type { IDubbleMenu } from "@/typings";
 import type { AnyExtension } from "@tiptap/vue-3";
 import type { ExtractPropTypes, PropType } from "vue";
 
@@ -33,6 +34,10 @@ export const editorProps = {
     placeholder: {
         type: String,
         default: "请输入内容..."
+    },
+    customDubbleMenus: {
+        type: Array as PropType<IDubbleMenu[]>,
+        default: () => []
     },
     editorWrapperClass: {
         type: [String, Array, Object] as PropType<ClassValue>,

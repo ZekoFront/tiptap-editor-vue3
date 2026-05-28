@@ -4,47 +4,26 @@
             class="bubble-menu editor-inner-bubble--menu"
             v-if="editor.isActive('paragraph') && !editor.isActive('image')"
         >
-            <button
-                title="粗体"
-                class="menu-button"
-                @click="editor.chain().focus().toggleBold().run()"
-                :class="{ 'is-active': editor.isActive('bold') }"
-            >
-                <Icons.BoldIcon class="menu-icon"></Icons.BoldIcon>
-            </button>
-            <button
-                title="斜体"
-                class="menu-button"
-                @click="editor.chain().focus().toggleItalic().run()"
-                :class="{ 'is-active': editor.isActive('italic') }"
-            >
-                <Icons.ItalicIcon class="menu-icon"></Icons.ItalicIcon>
-            </button>
-            <button
-                title="删除线"
-                class="menu-button"
-                @click="editor.chain().focus().toggleStrike().run()"
-                :class="{ 'is-active': editor.isActive('strike') }"
-            >
-                <Icons.StrikeIcon class="menu-icon"></Icons.StrikeIcon>
-            </button>
-
-            <template v-if="editor.isActive('link')">
+            <template v-for="item in dubbleMenusList">
+                <template v-if="item.type === 'link'">
+                    <button
+                        v-if="editor.isActive('link')"
+                        :title="item.title"
+                        class="menu-button"
+                        @click="item.command()"
+                        :class="{ 'is-active': editor.isActive(item.type) }"
+                    >
+                        <component :is="item.icon" class="menu-icon"></component>
+                    </button>
+                </template>
                 <button
-                    title="打开链接"
+                    v-else
+                    :title="item.title"
                     class="menu-button"
-                    @click="openLinkUrl"
-                    :class="{ 'is-active': editor.isActive('strike') }"
+                    @click="item.command()"
+                    :class="{ 'is-active': editor.isActive(item.type) }"
                 >
-                    <Icons.OpenLinkIcon class="menu-icon"></Icons.OpenLinkIcon>
-                </button>
-                <button
-                    title="删除链接"
-                    class="menu-button"
-                    @click="cancelLinkUrl"
-                    :class="{ 'is-active': editor.isActive('strike') }"
-                >
-                    <Icons.CancelLinkIcon class="menu-icon"></Icons.CancelLinkIcon>
+                    <component :is="item.icon" class="menu-icon"></component>
                 </button>
             </template>
         </div>
@@ -52,15 +31,69 @@
 </template>
 <script setup lang="ts" name="ParagraphMenu">
 import { Icons } from "@/assets/icons";
+import type { IDubbleMenu } from "@/typings";
 import { Editor } from "@tiptap/core";
 import { BubbleMenu } from "@tiptap/vue-3/menus";
 
-const { editor } = defineProps({
+const { editor, customDubbleMenus } = defineProps({
     editor: {
         type: Editor,
         required: true
+    },
+    customDubbleMenus: {
+        type: Array as PropType<IDubbleMenu[]>,
+        default: () => []
     }
 });
+
+const dubbleMenusList = computed(() => {
+    return Array.isArray(customDubbleMenus) && customDubbleMenus.length > 0
+        ? [...customDubbleMenus]
+        : defaultDubbleMenusList.value;
+});
+
+const defaultDubbleMenusList = shallowRef<IDubbleMenu[]>([
+    {
+        title: "粗体",
+        icon: Icons.BoldIcon,
+        type: "bold",
+        command: () => {
+            editor.commands.toggleBold();
+        }
+    },
+    {
+        title: "斜体",
+        icon: Icons.ItalicIcon,
+        type: "italic",
+        command: () => {
+            editor.commands.toggleItalic();
+        }
+    },
+    {
+        title: "删除线",
+        icon: Icons.StrikeIcon,
+        type: "strike",
+        command: () => {
+            editor.commands.toggleStrike();
+        }
+    },
+    {
+        title: "打开链接",
+        icon: Icons.OpenLinkIcon,
+        type: "link",
+        command: () => {
+            openLinkUrl();
+        }
+    },
+    {
+        title: "删除链接",
+        icon: Icons.CancelLinkIcon,
+        type: "link",
+        command: () => {
+            cancelLinkUrl();
+        }
+    }
+]);
 
 // 打开链接
 const openLinkUrl = () => {

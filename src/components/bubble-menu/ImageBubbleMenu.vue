@@ -121,13 +121,14 @@ const handleCrop = (val: string) => {
     } else {
         showCropModal.value = false;
         // 裁剪图片
-        cropperRef.value &&
+        if (cropperRef.value) {
             cropperRef.value.getCropBlob(async (data: any) => {
                 const cropUrl = URL.createObjectURL(new Blob([data]));
                 props.updateAttrs({
                     src: cropUrl
                 });
             });
+        }
     }
 };
 

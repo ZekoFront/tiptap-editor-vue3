@@ -44,11 +44,19 @@ interface HTMLVue3TiptapEditorElement {
     destroy: () => void;
 }
 
+interface IDubbleMenu {
+    title: string;
+    icon: any;
+    type: string;
+    command: () => void;
+}
+
 export type {
     TableContextMenuItem,
     ITableContextMenuItem,
     EditorProps,
     ContextMenuItem,
     ContextMenuOptions,
-    HTMLVue3TiptapEditorElement
+    HTMLVue3TiptapEditorElement,
+    IDubbleMenu
 };

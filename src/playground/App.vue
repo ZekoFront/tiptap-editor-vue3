@@ -1,16 +1,42 @@
 <template>
     <div class="playground">
+        <!-- 
+           :custom-dubble-menus="defaultDubbleMenusList" 自定义文本悬浮菜单列表，如果不传则使用默认列表
+        -->
         <RichText ref="richText" @ready="onReady" />
     </div>
 </template>
 
 <script setup lang="ts">
+// import { Icons } from "@/assets/icons";
 import RichText from "@/core/Editor.vue";
+// import type { IDubbleMenu } from "@/typings";
 import type { Editor } from "@tiptap/vue-3";
 
-const onReady = (editor: Editor) => {
+let editor: Editor;
+const onReady = (e: Editor) => {
+    editor = e;
     console.log(editor, "ready");
 };
+
+// const defaultDubbleMenusList = shallowRef<IDubbleMenu[]>([
+//     {
+//         title: "粗体",
+//         icon: Icons.BoldIcon,
+//         type: "bold",
+//         command: () => {
+//             editor.commands.toggleBold();
+//         }
+//     },
+//     {
+//         title: "斜体",
+//         icon: Icons.ItalicIcon,
+//         type: "italic",
+//         command: () => {
+//             editor.commands.toggleItalic();
+//         }
+//     }
+// ]);
 </script>
 
 <style>
