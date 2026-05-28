@@ -41,7 +41,6 @@ export default defineConfig({
             }
         ]
     },
-    base: "/tiptap-editor-vue3/",
     build: {
         minify: true,
         rolldownOptions: {

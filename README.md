@@ -253,10 +253,21 @@ export type * from "./typings";
 ```bash
 pnpm dev          # 启动本地 playground
 pnpm build        # 构建库（vue-tsc -b && vite build）
+pnpm build:demo   # 构建 playground 演示站（GitHub Pages）
+pnpm preview:demo # 本地预览演示站构建结果
 pnpm fmt          # 格式化
 pnpm lint         # 代码检查
-pnpm preview      # 预览构建结果
 ```
+
+## 在线演示（GitHub Pages）
+
+演示地址：**https://zekofront.github.io/tiptap-editor-vue3/**
+
+> 注意：项目 Pages 部署在子路径 `/tiptap-editor-vue3/`，访问根域名 `https://zekofront.github.io/` 无法打开本演示。
+
+仓库已配置 `.github/workflows/deploy-pages.yml`，推送 `main` 分支后会自动构建并发布 `dist-demo`。
+
+**GitHub 仓库需设置**：`Settings` → `Pages` → **Source 选择 `GitHub Actions`**（不要选 “Deploy from branch” 并指向仓库根目录，否则会直接发布源码 `index.html`，浏览器会去请求不存在的 `/src/playground/main.ts`）。
 
 ## 参考链接
 

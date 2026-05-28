@@ -37,6 +37,8 @@
     "scripts": {
         "dev": "vite",
         "build": "vue-tsc -b && vite build && vue-tsc -p tsconfig.build.json",
+        "build:demo": "vue-tsc -b && vite build --config vite.demo.config.ts",
+        "preview:demo": "vite preview --config vite.demo.config.ts --outDir dist-demo",
         "fmt": "oxfmt src",
         "fmt-check": "oxfmt --check src",
         "fmt-diff": "oxfmt --list-different",
