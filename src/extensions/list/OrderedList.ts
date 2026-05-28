@@ -1,4 +1,5 @@
 import { Icons } from "@/assets/icons";
+import { t } from "@/locales";
 import ButtonIcon from "@/components/toolbar/ButtonIcon.vue";
 import { OrderedList as TiptapOrderedList } from "@tiptap/extension-list";
 import type { Editor } from "@tiptap/vue-3";
@@ -17,7 +18,7 @@ const OrderedList = TiptapOrderedList.extend({
                         isActive: editor.isActive("orderedList"),
                         isReadonly: !editor.isEditable,
                         icons: Icons.OrderedListIcon,
-                        tipText: "有序列表",
+                        tipText: t("toolbar.orderedList"),
                         command: () => {
                             editor.commands.toggleOrderedList();
                         }

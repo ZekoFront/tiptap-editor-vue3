@@ -1,5 +1,6 @@
 // props / defaults / 校验 单独抽离
 
+import type { Tev3Locale } from "@/locales";
 import type { IDubbleMenu } from "@/typings";
 import type { AnyExtension } from "@tiptap/vue-3";
 import type { ExtractPropTypes, PropType } from "vue";
@@ -31,9 +32,14 @@ export const editorProps = {
         type: [Number, String] as PropType<number | string>,
         default: 10000
     },
+    /** 界面语言，影响工具栏提示、表格菜单、占位符等 */
+    locale: {
+        type: String as PropType<Tev3Locale>,
+        default: "zh-CN"
+    },
     placeholder: {
         type: String,
-        default: "请输入内容..."
+        default: undefined
     },
     customDubbleMenus: {
         type: Array as PropType<IDubbleMenu[]>,

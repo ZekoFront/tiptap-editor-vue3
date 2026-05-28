@@ -1,4 +1,5 @@
 import { Icons } from "@/assets/icons";
+import { t } from "@/locales";
 import ButtonIcon from "@/components/toolbar/ButtonIcon.vue";
 import TipTapHorizontalRule from "@tiptap/extension-horizontal-rule";
 import type { Editor } from "@tiptap/vue-3";
@@ -16,7 +17,7 @@ const HorizontalRule = TipTapHorizontalRule.extend({
                         isActive: editor.isActive("horizontalRule"),
                         isReadonly: !editor.isEditable,
                         icons: Icons.HorizontalRuleIcon,
-                        tipText: "水平分隔符",
+                        tipText: t("toolbar.horizontalRule"),
                         command: () => {
                             editor.commands.setHorizontalRule();
                         }

@@ -1,4 +1,5 @@
 import { Icons } from "@/assets/icons";
+import { t } from "@/locales";
 import ButtonIcon from "@/components/toolbar/ButtonIcon.vue";
 import CodeBlockComponent from "@/components/toolbar/CodeBlockLowlight.vue";
 import TiptapCodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
@@ -38,7 +39,7 @@ const CodeBlockLowlight = TiptapCodeBlockLowlight.extend({
                         isActive: editor.isActive("codeBlockLowlight"),
                         isReadonly: !editor.isEditable,
                         icons: Icons.CodeBlockIcon,
-                        tipText: "代码块",
+                        tipText: t("toolbar.codeBlock"),
                         shortcutKeys: "Ctrl+Alt+C",
                         command: () => {
                             editor.commands.toggleCodeBlock();

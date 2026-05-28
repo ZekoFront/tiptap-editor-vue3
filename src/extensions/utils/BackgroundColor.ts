@@ -1,4 +1,5 @@
 import "@tiptap/extension-text-style";
+import { t } from "@/locales";
 import { Icons } from "@/assets/icons";
 import BackgroundColorPopover from "@/components/color/BackgroundColorPopover.vue";
 import { COLOR_DEFAULT } from "@/utils";
@@ -52,7 +53,7 @@ export const BackgroundColor = Extension.create<ColorOptions>({
                         isReadonly: !editor.isEditable,
                         icons: Icons.BackgroundColorIcon,
                         colors: COLOR_DEFAULT,
-                        tipText: "字体背景色"
+                        tipText: t("toolbar.backgroundColor")
                     }
                 };
             }

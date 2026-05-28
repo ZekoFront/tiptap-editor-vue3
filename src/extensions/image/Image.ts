@@ -1,4 +1,5 @@
 import ImageIcon from "@/components/image/ImageIcon.vue";
+import { t } from "@/locales";
 import ImageNodeViewWrapper from "@/components/image/ImageNodeViewWrapper.vue";
 import { DEFAULT_IMAGE_DISPLAY, DEFAULT_IMAGE_URL_REGEX, ImageDisplay } from "@/utils";
 // 自定义图片插件
@@ -83,7 +84,7 @@ export const Image = TiptapImage.extend({
                         isActive: editor.isActive("image"),
                         isReadonly: !editor.isEditable,
                         icons: "image-icon",
-                        tipText: "添加图片",
+                        tipText: t("toolbar.image"),
                         editor: editor,
                         urlPattern: DEFAULT_IMAGE_URL_REGEX
                     }

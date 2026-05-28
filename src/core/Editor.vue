@@ -3,6 +3,7 @@
     <div :class="['vue3-tiptap-editor', editorWrapperClass]">
         <Toolbar
             v-if="props.isShowToolbar && editor"
+            :key="localeKey"
             :class="[editorToolkitClass]"
             :editor="editor"
             :character-count="characterCount"
@@ -26,6 +27,7 @@
             </div>
 
             <ContentsNav
+                :key="localeKey"
                 v-model:is-show-content="isShowContent"
                 :editor="editor"
                 :scroll-container="editorBodyRef"
@@ -50,13 +52,16 @@ import NodeRange from "@tiptap/extension-node-range";
 import { CharacterCount, Placeholder } from "@tiptap/extensions";
 import StarterKit from "@tiptap/starter-kit";
 import type { Editor } from "@tiptap/vue-3";
-import { computed, ref } from "vue";
+import { DEFAULT_LOCALE, setLocale, t } from "@/locales";
+import { computed, ref, watch } from "vue";
 import { editorProps } from "./editor-props";
 import EditorContent from "./EditorContent.vue";
 import { useEditor } from "./useEditor";
 import { useEditorEvents, type EditorUpdatePayload } from "./useEditorEvents";
 
 const props = defineProps(editorProps);
+
+const localeKey = computed(() => props.locale ?? DEFAULT_LOCALE);
 
 const emit = defineEmits<{
     (e: "ready", editor: Editor): void;
@@ -96,7 +101,7 @@ const baseExtensions = [
         limit: Number(props.characterCount || 10000)
     }),
     Placeholder.configure({
-        placeholder: props.placeholder
+        placeholder: () => props.placeholder ?? t("editor.placeholder")
     }),
     ...extensionsArray
 ];
@@ -198,6 +203,15 @@ const { editor, editable, rtl } = useEditor({
 });
 
 useEditorEvents(editor, { emit: emit as any });
+
+watch(
+    () => props.locale,
+    locale => {
+        setLocale(locale ?? DEFAULT_LOCALE);
+        editor.value?.view.dispatch(editor.value.state.tr);
+    },
+    { immediate: true }
+);
 
 const computePositionConfig = computed(() => {
     return {

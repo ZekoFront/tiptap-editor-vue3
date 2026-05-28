@@ -1,4 +1,5 @@
 import TaskIcon from "@/components/task/TaskIcon.vue";
+import { t } from "@/locales";
 import { TaskList as TiptapTaskList } from "@tiptap/extension-list";
 import type { Editor } from "@tiptap/vue-3";
 
@@ -15,7 +16,7 @@ const TaskList = TiptapTaskList.extend({
                         editor,
                         isActive: editor.isActive("taskList"),
                         isReadonly: !editor.isEditable,
-                        tipText: "任务列表",
+                        tipText: t("toolbar.taskList"),
                         command: () => {
                             editor.chain().focus().toggleTaskList().run();
                         }

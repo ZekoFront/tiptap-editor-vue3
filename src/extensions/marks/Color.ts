@@ -1,4 +1,5 @@
 import ColorPopover from "@/components/color/ColorPopover.vue";
+import { t } from "@/locales";
 import { COLOR_DEFAULT } from "@/utils";
 import { Editor } from "@tiptap/core";
 import TiptapColor from "@tiptap/extension-color";
@@ -16,7 +17,7 @@ const Color = TiptapColor.extend({
                         isActive: editor.isActive("color"),
                         colors: COLOR_DEFAULT,
                         isReadonly: !editor.isEditable,
-                        tipText: "字体颜色"
+                        tipText: t("toolbar.color")
                     }
                 };
             }

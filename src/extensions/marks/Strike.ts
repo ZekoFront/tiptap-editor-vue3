@@ -1,4 +1,5 @@
 import { Icons } from "@/assets/icons";
+import { t } from "@/locales";
 import ButtonIcon from "@/components/toolbar/ButtonIcon.vue";
 import TiptapStrike from "@tiptap/extension-strike";
 import type { Editor } from "@tiptap/vue-3";
@@ -16,7 +17,7 @@ const Strike = TiptapStrike.extend({
                         isActive: editor.isActive("strike"),
                         isReadonly: !editor.isEditable,
                         icons: Icons.StrikeIcon,
-                        tipText: "删除线",
+                        tipText: t("toolbar.strike"),
                         shortcutKeys: "Ctrl+Shift+S",
                         command: () => {
                             editor.commands.toggleStrike();

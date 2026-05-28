@@ -1,7 +1,8 @@
 import { mergeAttributes, Node, textblockTypeInputRule } from '@tiptap/core'
+import { t } from "@/locales";
 import { v4 as uuidV4 } from 'uuid'
 import HeadingPopselect from '@/components/text/HeadingPopselect.vue'
-import { headerData } from '@/utils'
+import { getHeadingLevels } from '@/utils'
 import { Editor } from '@tiptap/vue-3'
 
 /**
@@ -63,8 +64,8 @@ export const Heading = Node.create<HeadingOptions>({
                         isActive: editor.isActive('heading'),
                         isReadonly: !editor.isEditable,
                         editor,
-                        levels: headerData,
-                        tipText: '设置标题',
+                        levels: getHeadingLevels(),
+                        tipText: t("toolbar.heading"),
                     }
                 }
             }

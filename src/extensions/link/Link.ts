@@ -1,4 +1,5 @@
 import AddLink from "@/components/link/AddLinkButton.vue";
+import { t } from "@/locales";
 import { getMarkRange } from "@tiptap/core";
 import type { Editor } from "@tiptap/core";
 import TiptapLink from "@tiptap/extension-link";
@@ -34,7 +35,7 @@ const Link = TiptapLink.extend({
                         isActive: editor.isActive("link"),
                         isReadonly: !editor.isEditable,
                         icons: "bold-icon",
-                        tipText: "超链接"
+                        tipText: t("toolbar.link")
                     }
                 };
             }

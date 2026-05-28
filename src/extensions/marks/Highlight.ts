@@ -1,4 +1,5 @@
 import { Icons } from "@/assets/icons";
+import { t } from "@/locales";
 import ButtonIcon from "@/components/toolbar/ButtonIcon.vue";
 import TiptapHighlight from "@tiptap/extension-highlight";
 import type { Editor } from "@tiptap/vue-3";
@@ -16,7 +17,7 @@ const Highlight = TiptapHighlight.extend({
                         isActive: editor.isActive("highlight"),
                         isReadonly: !editor.isEditable,
                         icons: Icons.HighlightIcon,
-                        tipText: "高亮",
+                        tipText: t("toolbar.highlight"),
                         command: () => {
                             editor.commands.toggleHighlight();
                         }

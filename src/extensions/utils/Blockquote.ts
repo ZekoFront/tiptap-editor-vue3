@@ -1,4 +1,5 @@
 import { Icons } from "@/assets/icons";
+import { t } from "@/locales";
 import ButtonIcon from "@/components/toolbar/ButtonIcon.vue";
 import TiptapBlockquote from "@tiptap/extension-blockquote";
 import type { Editor } from "@tiptap/vue-3";
@@ -16,7 +17,7 @@ const Blockquote = TiptapBlockquote.extend({
                         isActive: editor.isActive("blockquote"),
                         isReadonly: !editor.isEditable,
                         icons: Icons.BlockquoteIcon,
-                        tipText: "引用",
+                        tipText: t("toolbar.blockquote"),
                         command: () => {
                             editor.commands.toggleBlockquote();
                         }

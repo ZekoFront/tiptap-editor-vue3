@@ -1,4 +1,5 @@
 import { Icons } from "@/assets/icons";
+import { t } from "@/locales";
 import ButtonIcon from "@/components/toolbar/ButtonIcon.vue";
 import { UndoRedo } from "@tiptap/extensions";
 import type { Editor } from "@tiptap/vue-3";
@@ -15,7 +16,7 @@ const History = UndoRedo.extend({
                             isActive: (editor && editor.can().chain().focus().redo().run()) || false,
                             isReadonly: !editor.isEditable,
                             icons: Icons.RedoIcon,
-                            tipText: "重做",
+                            tipText: t("toolbar.redo"),
                             shortcutKeys: "Ctrl+Z",
                             command: () => {
                                 editor.commands.redo();
@@ -28,7 +29,7 @@ const History = UndoRedo.extend({
                             isActive: (editor && editor.can().chain().focus().undo().run()) || false,
                             isReadonly: !editor.isEditable,
                             icons: Icons.UndoIcon,
-                            tipText: "撤销",
+                            tipText: t("toolbar.undo"),
                             shortcutKeys: "Ctrl+Shift+Z",
                             command: () => {
                                 editor.commands.undo();

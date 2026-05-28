@@ -22,6 +22,21 @@ export type {
 export { editorProps } from "./core/editor-props";
 export type { EditorProps } from "./core/editor-props";
 
+// 国际化
+export {
+    tev3I18n,
+    t,
+    setLocale,
+    getLocale,
+    installTev3I18n,
+    SUPPORTED_LOCALES,
+    DEFAULT_LOCALE,
+    zhCN,
+    enUS
+} from "./locales";
+export type { Tev3Locale, Tev3MessageSchema } from "./locales";
+export { useTev3I18n } from "./hooks/useTev3I18n.ts";
+
 // 业务类型导出
 export * from "./typings";
 

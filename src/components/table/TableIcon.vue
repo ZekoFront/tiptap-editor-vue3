@@ -11,7 +11,7 @@
                         <Icons.TableIcon />
                     </button>
                 </template>
-                <span>表格</span>
+                <span>{{ tipText }}</span>
             </n-tooltip>
         </template>
         <div class="table-drawing">
@@ -38,6 +38,7 @@
 
 <script lang="ts" setup>
 import { Icons } from "@/assets/icons";
+import { t } from "@/locales";
 import { useDiscreteApi } from "@/hooks/useDiscreteApi";
 import { Editor } from "@tiptap/vue-3";
 import { NTooltip, NPopover } from "naive-ui";
@@ -81,7 +82,7 @@ const handleTable = () => {
     if (!editor.isEditable) return;
     if (tbOptions.column == 0) return;
     if (editor.isActive("table")) {
-        message.info("表格暂时不支持嵌套");
+        message.info(t("tableNotice.nestedNotSupported"));
         return;
     }
     editor

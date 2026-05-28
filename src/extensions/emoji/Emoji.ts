@@ -1,4 +1,5 @@
 import { Icons } from "@/assets/icons";
+import { t } from "@/locales";
 import EmojiIcon from "@/components/emoji/EmojiIcon.vue";
 import { suggestion as emojiSuggestion } from "@/components/emoji/suggestion";
 import Emoji, { gitHubEmojis } from "@tiptap/extension-emoji";
@@ -49,7 +50,7 @@ const Emojis = Emoji.extend({
                         isActive: editor.isActive("emoji"),
                         isReadonly: !editor.isEditable,
                         icons: Icons.EmojiIcon,
-                        tipText: "表情",
+                        tipText: t("toolbar.emoji"),
                         editor: editor,
                         command: () => {
                             // editor.commands.toggleBold()

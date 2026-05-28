@@ -1,4 +1,5 @@
 import { Extension } from "@tiptap/core";
+import { t } from "@/locales";
 import { Editor } from "@tiptap/vue-3";
 import TextLineHeightPopselect from '@/components/text/TextLineHeightPopselect.vue';
 
@@ -90,7 +91,7 @@ export const LineHeight = Extension.create<LineHeightOptions>({
                         isReadonly: !editor.isEditable,
                         editor,
                         lineHeightOptions: lineHeighList,
-                        tipText: '行间距',
+                        tipText: t("toolbar.lineHeight"),
                         command: (alignment:string) => {
                             editor.commands.setLineHeight(alignment)
                         }

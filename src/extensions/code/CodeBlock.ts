@@ -1,4 +1,5 @@
 import ButtonIcon from "@/components/toolbar/ButtonIcon.vue";
+import { t } from "@/locales";
 import TiptapCodeBlock from "@tiptap/extension-code-block";
 import type { Editor } from "@tiptap/vue-3";
 
@@ -21,7 +22,7 @@ const CodeBlock = TiptapCodeBlock.extend({
                         isActive: editor.isActive("codeBlock"),
                         isReadonly: !editor.isEditable,
                         icons: "code-block-icon",
-                        tipText: "代码块",
+                        tipText: t("toolbar.codeBlock"),
                         shortcutKeys: "Ctrl+Alt+C",
                         command: () => {
                             editor.commands.toggleCodeBlock();

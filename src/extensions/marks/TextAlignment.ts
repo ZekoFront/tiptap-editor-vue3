@@ -1,25 +1,16 @@
 import TextAlignPopselect from "@/components/text/TextAlignPopselect.vue";
+import { t } from "@/locales";
 import TiptapTextAlign from "@tiptap/extension-text-align";
 import type { Editor } from "@tiptap/vue-3";
 
-const alignList = [
-    {
-        label: "左对齐",
-        value: "left"
-    },
-    {
-        label: "居中对齐",
-        value: "center"
-    },
-    {
-        label: "右对齐",
-        value: "right"
-    },
-    {
-        label: "两端对齐",
-        value: "justify"
-    }
-];
+function getAlignList() {
+    return [
+        { label: t("textAlign.left"), value: "left" },
+        { label: t("textAlign.center"), value: "center" },
+        { label: t("textAlign.right"), value: "right" },
+        { label: t("textAlign.justify"), value: "justify" }
+    ];
+}
 
 const TextAlignment = TiptapTextAlign.extend({
     name: "extensionTextAlign",
@@ -35,8 +26,8 @@ const TextAlignment = TiptapTextAlign.extend({
                         isActive: editor.isActive("extensionTextAlign"),
                         isReadonly: !editor.isEditable,
                         editor,
-                        alignments: alignList,
-                        tipText: "文本对齐方式",
+                        alignments: getAlignList(),
+                        tipText: t("toolbar.textAlign"),
                         command: (alignment: string) => {
                             editor.commands.setTextAlign(alignment);
                         }

@@ -1,12 +1,14 @@
 import TableIcon from "@/components/table/TableIcon.vue";
+import { t } from "@/locales";
 import type { ITableContextMenuItem } from "@/typings/index";
 import { Editor } from "@tiptap/core";
 import { Table as TiptapTable, TableCell, TableHeader, TableRow } from "@tiptap/extension-table";
 import { h } from "vue";
 
 function renderCustomHeader() {
-    return h("div", { style: { fontWeight: "bold", textAlign: "center" } }, "操作表格");
+    return h("div", { style: { fontWeight: "bold", textAlign: "center" } }, t("table.operations"));
 }
+
 const Table = TiptapTable.extend({
     addOptions() {
         return {
@@ -31,35 +33,35 @@ const Table = TiptapTable.extend({
                         type: "divider"
                     },
                     {
-                        label: "删除表格",
+                        label: t("table.deleteTable"),
                         key: "deleteTable",
                         command: function () {
                             editor.commands.deleteTable();
                         }
                     },
                     {
-                        label: "向前添加列",
+                        label: t("table.addColumnBefore"),
                         key: "addColumnBefore",
                         command: function () {
                             editor.commands.addColumnBefore();
                         }
                     },
                     {
-                        label: "向后添加列",
+                        label: t("table.addColumnAfter"),
                         key: "addColumnAfter",
                         command: function () {
                             editor.commands.addColumnAfter();
                         }
                     },
                     {
-                        label: "向前添加行",
+                        label: t("table.addRowBefore"),
                         key: "addRowBefore",
                         command: function () {
                             editor.commands.addRowBefore();
                         }
                     },
                     {
-                        label: "向后添加行",
+                        label: t("table.addRowAfter"),
                         key: "addRowBAfter",
                         command: function () {
                             editor.commands.addRowAfter();
@@ -70,14 +72,14 @@ const Table = TiptapTable.extend({
                         type: "divider"
                     },
                     {
-                        label: "删除列",
+                        label: t("table.deleteColumn"),
                         key: "deleteColumn",
                         command: function () {
                             editor.commands.deleteColumn();
                         }
                     },
                     {
-                        label: "删除行",
+                        label: t("table.deleteRow"),
                         key: "deleteRow",
                         command: function () {
                             editor.commands.deleteRow();
@@ -88,14 +90,14 @@ const Table = TiptapTable.extend({
                         type: "divider"
                     },
                     {
-                        label: "合并单元格",
+                        label: t("table.mergeCells"),
                         key: "mergeCells",
                         command: function () {
                             editor.commands.mergeCells();
                         }
                     },
                     {
-                        label: "拆分单元格",
+                        label: t("table.splitCell"),
                         key: "splitCell",
                         command: function () {
                             editor.commands.splitCell();
@@ -106,25 +108,25 @@ const Table = TiptapTable.extend({
                         type: "divider"
                     },
                     {
-                        label: "表格头标题",
+                        label: t("table.headerColumn"),
                         key: "headerColumn",
                         children: [
                             {
-                                label: "设置列标题",
+                                label: t("table.toggleHeaderColumn"),
                                 key: "toggleHeaderColumn",
                                 command: function () {
                                     editor.commands.toggleHeaderColumn();
                                 }
                             },
                             {
-                                label: "设置行标题",
+                                label: t("table.toggleHeaderRow"),
                                 key: "toggleHeaderRow",
                                 command: function () {
                                     editor.commands.toggleHeaderRow();
                                 }
                             },
                             {
-                                label: "设置单元格标题",
+                                label: t("table.toggleHeaderCell"),
                                 key: "toggleHeaderCell",
                                 command: function () {
                                     editor.commands.toggleHeaderCell();
@@ -139,7 +141,7 @@ const Table = TiptapTable.extend({
                         options: menuOptions,
                         editor,
                         isReadonly: !editor.isEditable,
-                        tipText: "表格"
+                        tipText: t("toolbar.table")
                     }
                 };
             }
@@ -147,7 +149,6 @@ const Table = TiptapTable.extend({
     },
 
     addExtensions() {
-        // 此处扩展插件顺序：TableRow,TableHeader,TableCell，否则会影响表格选中效果
         return [TableRow, TableHeader, TableCell];
     }
 }).configure({

@@ -3,7 +3,7 @@
         <!-- 
            :custom-dubble-menus="defaultDubbleMenusList" 自定义文本悬浮菜单列表，如果不传则使用默认列表
         -->
-        <RichText ref="richText" @ready="onReady" />
+        <RichText ref="richText" :locale="'en-US'" @ready="onReady" />
     </div>
 </template>
 

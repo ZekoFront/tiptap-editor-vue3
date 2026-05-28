@@ -1,4 +1,5 @@
 import { Icons } from "@/assets/icons";
+import { t } from "@/locales";
 import ButtonIcon from "@/components/toolbar/ButtonIcon.vue";
 import TiptapSuperscript from "@tiptap/extension-superscript";
 import type { Editor } from "@tiptap/vue-3";
@@ -16,7 +17,7 @@ const Superscript = TiptapSuperscript.extend({
                         isActive: editor.isActive("Superscript"),
                         isReadonly: !editor.isEditable,
                         icons: Icons.SuperscriptIcon,
-                        tipText: "上标",
+                        tipText: t("toolbar.superscript"),
                         command: () => {
                             editor.commands.toggleSuperscript();
                         }

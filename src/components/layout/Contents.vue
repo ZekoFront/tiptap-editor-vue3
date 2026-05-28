@@ -1,14 +1,16 @@
 <template>
     <aside :class="['vue3-tiptap-editor__navigation', { 'is-active': isShowContent }, navClass]">
         <div class="navigation-header">
-            <span>文档目录</span>
+            <span>{{ t("contents.title") }}</span>
             <NIcon class="close-nav" size="25" @click="closeContents">
                 <Icons.ContentIcon />
             </NIcon>
         </div>
         <div class="navigation-directory">
             <ul class="directory-container">
-                <li v-if="headings.length === 0" class="directory-item__cell directory-item__empty">暂无标题</li>
+                <li v-if="headings.length === 0" class="directory-item__cell directory-item__empty">
+                    {{ t("contents.empty") }}
+                </li>
                 <li
                     v-for="item in headings"
                     :key="item.id"
@@ -25,6 +27,7 @@
 
 <script setup lang="ts">
 import { Icons } from "@/assets/icons";
+import { useTev3I18n } from "@/hooks/useTev3I18n";
 import { ensureHeadingIds } from "@/utils";
 import type { Editor } from "@tiptap/vue-3";
 import { NIcon } from "naive-ui";
@@ -35,6 +38,8 @@ export interface HeadingItem {
     level: number;
     text: string;
 }
+
+const { t } = useTev3I18n();
 
 const props = defineProps({
     editor: {
@@ -74,7 +79,7 @@ function updateDirectory() {
         .map(el => ({
             id: el.id || "",
             level: Number.parseInt(el.tagName.slice(1), 10),
-            text: stripHtml(el.innerHTML) || "（无标题）"
+            text: stripHtml(el.innerHTML) || t("contents.untitled")
         }))
         .filter(item => item.id);
 }

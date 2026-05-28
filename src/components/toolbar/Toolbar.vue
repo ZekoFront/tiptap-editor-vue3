@@ -22,7 +22,7 @@
                     <Icons.ContentIcon class="icon"></Icons.ContentIcon>
                 </button>
             </template>
-            <span>目录</span>
+            <span>{{ t("toolbar.contents") }}</span>
         </NTooltip>
         <NTooltip placement="top" trigger="hover">
             <template #trigger>
@@ -30,7 +30,7 @@
                     <Icons.DocxIcon class="icon"></Icons.DocxIcon>
                 </button>
             </template>
-            <span>导出docx</span>
+            <span>{{ t("toolbar.exportDocx") }}</span>
         </NTooltip>
 
         <button class="toolbar-icon--btn">
@@ -47,9 +47,12 @@
 
 <script lang="ts" setup name="Toolkit">
 import { Icons } from "@/assets/icons";
+import { useTev3I18n } from "@/hooks/useTev3I18n";
 import { Editor } from "@tiptap/core";
 import { saveAs } from "file-saver";
 import { asBlob } from "html-docx-js-typescript";
+const { t, locale } = useTev3I18n();
+
 const props = defineProps({
     contentsActive: {
         type: Boolean,
@@ -81,6 +84,7 @@ interface CusIconType {
 }
 
 const cusComponentIcon = computed(() => {
+    locale.value;
     const extensions = props.editor.extensionManager.extensions;
     const tiptapExtensions = extensions.reduce<CusIconType[]>((pre, cur) => {
         const { onClick } = cur.options;

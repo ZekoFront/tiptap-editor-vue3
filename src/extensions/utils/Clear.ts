@@ -1,4 +1,5 @@
 import { Icons } from "@/assets/icons";
+import { t } from "@/locales";
 import ButtonIcon from "@/components/toolbar/ButtonIcon.vue";
 import { useDiscreteApi } from "@/hooks/useDiscreteApi.ts";
 import { Extension } from "@tiptap/core";
@@ -17,13 +18,13 @@ const Clear = Extension.create({
                         isActive: editor.isActive("extensionClear"),
                         isReadonly: !editor.isEditable,
                         icons: Icons.ClearIcon,
-                        tipText: "清空文档",
+                        tipText: t("toolbar.clear"),
                         command: () => {
                             dialog.warning({
-                                title: "警告",
-                                content: "你确定要清空全部文档内容吗？",
-                                positiveText: "确定",
-                                negativeText: "取消",
+                                title: t("clear.title"),
+                                content: t("clear.content"),
+                                positiveText: t("clear.confirm"),
+                                negativeText: t("clear.cancel"),
                                 maskClosable: false,
                                 onPositiveClick: () => {
                                     editor.commands.clearContent();

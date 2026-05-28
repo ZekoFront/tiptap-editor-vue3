@@ -1,4 +1,5 @@
 import { Icons } from "@/assets/icons";
+import { t } from "@/locales";
 import ButtonIcon from "@/components/toolbar/ButtonIcon.vue";
 import TiptapUnderline from "@tiptap/extension-underline";
 import type { Editor } from "@tiptap/vue-3";
@@ -16,7 +17,7 @@ const Underline = TiptapUnderline.extend({
                         isActive: editor.isActive("underline"),
                         isReadonly: !editor.isEditable,
                         icons: Icons.UnderlineIcon,
-                        tipText: "下划线",
+                        tipText: t("toolbar.underline"),
                         shortcutKeys: "Ctrl+U",
                         command: () => {
                             editor.commands.toggleUnderline();
