@@ -1,12 +1,17 @@
-<script setup lang="ts">
-import RichText from "@/core/Editor.vue";
-</script>
-
 <template>
     <div class="playground">
-        <RichText ref="richText" />
+        <RichText ref="richText" @ready="onReady" />
     </div>
 </template>
+
+<script setup lang="ts">
+import RichText from "@/core/Editor.vue";
+import type { Editor } from "@tiptap/vue-3";
+
+const onReady = (editor: Editor) => {
+    console.log(editor, "ready");
+};
+</script>
 
 <style>
 html,
