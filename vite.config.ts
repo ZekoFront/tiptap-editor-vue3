@@ -4,7 +4,6 @@ import AutoImport from "unplugin-auto-import/vite";
 import { NaiveUiResolver } from "unplugin-vue-components/resolvers";
 import Components from "unplugin-vue-components/vite";
 import { defineConfig } from "vite";
-import dts from "vite-plugin-dts";
 import svgLoader from "vite-svg-loader";
 
 // https://vite.dev/config/
@@ -14,12 +13,7 @@ export default defineConfig({
         svgLoader({
             defaultImport: "component"
         }),
-        dts({
-            include: ["src"],
-            insertTypesEntry: true,
-            rollupTypes: false,
-            exclude: ["main.ts"]
-        }),
+        // 类型声明由 vue-tsc -p tsconfig.build.json 生成（见 package.json build 脚本）
         AutoImport({
             dts: "./src/typings/auto-imports.d.ts",
             imports: [

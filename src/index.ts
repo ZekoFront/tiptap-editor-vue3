@@ -25,12 +25,9 @@ export type { EditorProps } from "./core/editor-props";
 // 业务类型导出
 export * from "./typings";
 
-// Tiptap 透传
-export * from "@tiptap/vue-3";
-export type * from "@tiptap/vue-3";
-
-// export * from '@tiptap/core'
-// export type * from '@tiptap/core'
+// Tiptap 常用 API 显式导出（避免 export * 导致 d.ts 打包失败）
+export { Editor, EditorContent, NodeViewWrapper, mergeAttributes } from "@tiptap/vue-3";
+export type { Editor as TiptapEditor, JSONContent, Content, AnyExtension } from "@tiptap/vue-3";
 
 // Vue plugin install
 export { install };

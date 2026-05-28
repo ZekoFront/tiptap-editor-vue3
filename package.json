@@ -36,7 +36,7 @@
     },
     "scripts": {
         "dev": "vite",
-        "build": "vue-tsc -b && vite build",
+        "build": "vue-tsc -b && vite build && vue-tsc -p tsconfig.build.json",
         "fmt": "oxfmt src",
         "fmt-check": "oxfmt --check src",
         "fmt-diff": "oxfmt --list-different",
@@ -45,6 +45,7 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "@floating-ui/dom": "^1.6.13",
         "@tiptap/core": "^3.18.0",
         "@tiptap/extension-blockquote": "^3.18.0",
         "@tiptap/extension-bold": "^3.18.0",
@@ -89,8 +90,7 @@
         "vue": "^3.5.34",
         "vue-cropper": "^1.1.4",
         "vue-i18n": "^11.4.4",
-        "vue3-emoji-picker": "^1.1.8",
-        "@floating-ui/dom": "^1.6.13"
+        "vue3-emoji-picker": "^1.1.8"
     },
     "devDependencies": {
         "@types/node": "^24.12.3",
@@ -101,7 +101,6 @@
         "sass-embedded": "^1.100.0",
         "typescript": "~6.0.2",
         "vite": "^8.0.12",
-        "vite-plugin-dts": "^4.5.4",
         "vite-svg-loader": "^5.1.0",
         "vue-tsc": "^3.2.8"
     },

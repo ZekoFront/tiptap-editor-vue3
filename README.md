@@ -6,7 +6,7 @@
 
 - **框架**：Vue 3 (`<script setup>`) + TypeScript
 - **编辑器内核**：Tiptap 3 / ProseMirror
-- **构建工具**：Vite + vite-plugin-dts
+- **构建工具**：Vite
 - **UI 库**：Naive UI
 - **样式**：SCSS（`sass-embedded`）
 - **代码规范**：oxlint + oxfmt
@@ -143,21 +143,21 @@ tiptap-editor-vue3/
 
 Tiptap 扩展只有三种：`Node` / `Mark` / `Extension(behavior)`，**不要按字母混在一起**。
 
-| 子目录 | 用途 | 示例 |
-| --- | --- | --- |
-| `nodes/` | 渲染节点 | image、video、mention、callout |
-| `marks/` | 行内格式 | font-size、line-height、letter-spacing |
-| `functionality/` | 不渲染，只改行为 | trailing-node、indent、shortcuts |
-| `suggestion/` | 基于 `@tiptap/suggestion` 的功能 | @提及、`/` 命令 |
-| `presets/` | 预设组合，便于一行接入 | FullKit、MinimalKit |
+| 子目录           | 用途                             | 示例                                   |
+| ---------------- | -------------------------------- | -------------------------------------- |
+| `nodes/`         | 渲染节点                         | image、video、mention、callout         |
+| `marks/`         | 行内格式                         | font-size、line-height、letter-spacing |
+| `functionality/` | 不渲染，只改行为                 | trailing-node、indent、shortcuts       |
+| `suggestion/`    | 基于 `@tiptap/suggestion` 的功能 | @提及、`/` 命令                        |
+| `presets/`       | 预设组合，便于一行接入           | FullKit、MinimalKit                    |
 
 预设组合用法示例：
 
 ```ts
-import { Editor } from '@tiptap/vue-3'
-import { FullKit } from 'tiptap-editor-vue3/extensions'
+import { Editor } from "@tiptap/vue-3";
+import { FullKit } from "tiptap-editor-vue3/extensions";
 
-new Editor({ extensions: [FullKit] })
+new Editor({ extensions: [FullKit] });
 ```
 
 ### 2. 复杂扩展使用「文件夹」组织
@@ -180,11 +180,11 @@ extensions/nodes/image-resizable/
 
 ```scss
 :root {
-  --tev3-primary: #646cff;
-  --tev3-border: #e5e7eb;
-  --tev3-toolbar-bg: #fff;
-  --tev3-radius: 6px;
-  --tev3-font-size: 14px;
+    --tev3-primary: #646cff;
+    --tev3-border: #e5e7eb;
+    --tev3-toolbar-bg: #fff;
+    --tev3-radius: 6px;
+    --tev3-font-size: 14px;
 }
 ```
 
@@ -192,10 +192,10 @@ extensions/nodes/image-resizable/
 
 ### 4. `core/` vs `components/` 的边界
 
-| 目录 | 职责 | 是否依赖 editor 实例 |
-| --- | --- | --- |
-| `core/` | 编辑器实例容器、生命周期、事件 | ✅ 强依赖 |
-| `components/` | 纯 UI 表现（按钮、菜单、弹窗） | ❌ 通过 props 传入 |
+| 目录          | 职责                           | 是否依赖 editor 实例 |
+| ------------- | ------------------------------ | -------------------- |
+| `core/`       | 编辑器实例容器、生命周期、事件 | ✅ 强依赖            |
+| `components/` | 纯 UI 表现（按钮、菜单、弹窗） | ❌ 通过 props 传入   |
 
 这样以后要单独发一个 `<EditorContent />` 只读视图、或更换 UI 主题都很简单。
 
@@ -208,43 +208,43 @@ extensions/nodes/image-resizable/
 ### 6. `src/index.ts` 导出规范
 
 ```ts
-import install from './install'
+import install from "./install";
 
-export { install as default }
+export { install as default };
 
-export { default as TiptapEditorVue3 } from './core/Editor.vue'
+export { default as TiptapEditorVue3 } from "./core/Editor.vue";
 
-export * from './extensions'
-export * from './utils/image'
-export * from './utils/html'
-export * from './composables'
+export * from "./extensions";
+export * from "./utils/image";
+export * from "./utils/html";
+export * from "./composables";
 
-export type * from './typings'
+export type * from "./typings";
 ```
 
 > ⚠️ 不建议直接 `export * from '@tiptap/vue-3'`，会让产物体积/类型膨胀。**只 re-export 必要的** `Editor` / `EditorContent` / `NodeViewWrapper` 等。
 
 ### 7. 命名约定
 
-| 类型 | 命名风格 | 示例 |
-| --- | --- | --- |
-| Vue 组件 | PascalCase | `Toolbar.vue` |
-| 扩展定义文件 | kebab-case | `font-size.ts` |
-| Composable | `use` 前缀 + camelCase | `useEditor.ts` |
-| 工具函数文件 | camelCase | `image.ts` |
-| 类型 | PascalCase | `EditorProps` |
-| CSS 类前缀 | 统一 `tev3-` 防冲突 | `tev3-toolbar`、`tev3-btn` |
+| 类型         | 命名风格               | 示例                       |
+| ------------ | ---------------------- | -------------------------- |
+| Vue 组件     | PascalCase             | `Toolbar.vue`              |
+| 扩展定义文件 | kebab-case             | `font-size.ts`             |
+| Composable   | `use` 前缀 + camelCase | `useEditor.ts`             |
+| 工具函数文件 | camelCase              | `image.ts`                 |
+| 类型         | PascalCase             | `EditorProps`              |
+| CSS 类前缀   | 统一 `tev3-` 防冲突    | `tev3-toolbar`、`tev3-btn` |
 
 ### 8. 历史目录迁移对照表
 
-| 旧路径 | 新路径 | 说明 |
-| --- | --- | --- |
-| `src/text/editor.vue` | `src/core/Editor.vue` | 主组件改名并迁移 |
-| `src/text/editor.ts` | `src/index.ts` | 库入口 |
-| `src/hooks/` | `src/composables/` | 与 Vue 3 生态命名对齐 |
-| `src/style.css` | `src/styles/index.scss` | 样式集中化 |
-| `src/App.vue`、`src/main.ts` | `src/playground/` | dev 入口与库代码隔离 |
-| `src/components/HelloWorld.vue` | 删除 | Vite 模板残留 |
+| 旧路径                          | 新路径                  | 说明                  |
+| ------------------------------- | ----------------------- | --------------------- |
+| `src/text/editor.vue`           | `src/core/Editor.vue`   | 主组件改名并迁移      |
+| `src/text/editor.ts`            | `src/index.ts`          | 库入口                |
+| `src/hooks/`                    | `src/composables/`      | 与 Vue 3 生态命名对齐 |
+| `src/style.css`                 | `src/styles/index.scss` | 样式集中化            |
+| `src/App.vue`、`src/main.ts`    | `src/playground/`       | dev 入口与库代码隔离  |
+| `src/components/HelloWorld.vue` | 删除                    | Vite 模板残留         |
 
 ---
 
