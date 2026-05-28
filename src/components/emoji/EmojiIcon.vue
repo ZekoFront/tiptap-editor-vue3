@@ -38,8 +38,8 @@ const props = defineProps({
         default: "暂无提示"
     },
     icons: {
-        type: String,
-        default: ""
+        type: Object as PropType<Component>,
+        default: () => ({})
     }
 });
 

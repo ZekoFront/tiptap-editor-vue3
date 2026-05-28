@@ -17,15 +17,21 @@ export const suggestion: Omit<SuggestionOptions<EmojiItem>, "editor"> = {
         // 从 Tiptap 的存储空间获取所有表情数据（需确保已安装并配置了 @tiptap/extension-emoji）
         const emojis = (editor.storage.emoji?.emojis as EmojiItem[]) || [];
 
+        const lowerQuery = query.toLowerCase();
+
         return emojis
-            .filter(({ shortcodes, tags }) => {
-                const lowerQuery = query.toLowerCase();
+            .filter(({ name, shortcodes, tags }) => {
+                if (name.toLowerCase().startsWith(lowerQuery)) return true;
+
                 return (
-                    shortcodes.some(shortcode => shortcode.startsWith(lowerQuery)) ||
-                    tags.some(tag => tag.startsWith(lowerQuery))
+                    shortcodes.some(shortcode => {
+                        const code = shortcode.replace(/^:|:$/g, "");
+                        return code.startsWith(lowerQuery) || code.includes(lowerQuery);
+                    }) ||
+                    tags.some(tag => tag.startsWith(lowerQuery) || tag.includes(lowerQuery))
                 );
             })
-            .slice(0, 5);
+            .slice(0, 10);
     },
 
     render: () => {

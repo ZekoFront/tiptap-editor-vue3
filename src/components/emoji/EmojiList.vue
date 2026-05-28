@@ -61,6 +61,8 @@ export default {
 
 <style lang="scss">
 .emoji-suggestion-items {
+    position: fixed;
+    z-index: 9999;
     background: #ffffff;
     border-radius: 0.5rem;
     box-shadow:

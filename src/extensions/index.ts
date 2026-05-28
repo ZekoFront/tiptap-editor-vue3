@@ -1,6 +1,6 @@
 import { Code } from "./code/Code";
 import { CodeBlockLowlight } from "./code/CodeBlockLowlight";
-// import { Emojis } from "./emoji/Emoji";
+import { Emojis } from "./emoji/Emoji";
 import { Image } from "./image/Image";
 import { Link } from "./link/Link";
 import { BulletList } from "./list/BulletList";
@@ -10,7 +10,6 @@ import { Color } from "./marks/Color";
 import { Highlight } from "./marks/Highlight";
 import { Italic } from "./marks/Italic";
 import { Strike } from "./marks/Strike";
-// ExtCodeBlockLowlight替换了ExtCodeBlock
 import { Subscript } from "./marks/Subscript";
 import { Superscript } from "./marks/Superscript";
 import { TextAlignment } from "./marks/TextAlignment";
@@ -51,7 +50,7 @@ export const extensionsArray = [
     Image,
     TaskList,
     TaskItem,
-    // Emojis,
+    Emojis,
     Clear
 ];
 
