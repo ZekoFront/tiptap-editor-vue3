@@ -1,22 +1,14 @@
 <template>
-    <aside
-        :class="[
-            'vue3-tiptap-editor__navigation',
-            { 'is-active': isShowContent },
-            navClass
-        ]"
-    >
+    <aside :class="['vue3-tiptap-editor__navigation', { 'is-active': isShowContent }, navClass]">
         <div class="navigation-header">
             <span>文档目录</span>
             <NIcon class="close-nav" size="25" @click="closeContents">
-                <Dismiss20Filled />
+                <Icons.ContentIcon />
             </NIcon>
         </div>
         <div class="navigation-directory">
             <ul class="directory-container">
-                <li v-if="headings.length === 0" class="directory-item__cell directory-item__empty">
-                    暂无标题
-                </li>
+                <li v-if="headings.length === 0" class="directory-item__cell directory-item__empty">暂无标题</li>
                 <li
                     v-for="item in headings"
                     :key="item.id"
@@ -32,8 +24,8 @@
 </template>
 
 <script setup lang="ts">
+import { Icons } from "@/assets/icons";
 import { ensureHeadingIds } from "@/utils";
-import { Dismiss20Filled } from "@vicons/fluent";
 import type { Editor } from "@tiptap/vue-3";
 import { NIcon } from "naive-ui";
 import { nextTick, onBeforeUnmount, onMounted, ref, watch, type PropType } from "vue";
@@ -68,18 +60,23 @@ const headings = ref<HeadingItem[]>([]);
 const activeId = ref<string | null>(null);
 
 function stripHtml(html: string) {
-    return html.replace(/<br\s*\/?>/gi, "").replace(/<[^>]+>/g, "").trim();
+    return html
+        .replace(/<br\s*\/?>/gi, "")
+        .replace(/<[^>]+>/g, "")
+        .trim();
 }
 
 function updateDirectory() {
     const root = props.editor.view.dom;
     const nodes = root.querySelectorAll("h1, h2, h3, h4, h5, h6");
 
-    headings.value = Array.from(nodes).map(el => ({
-        id: el.id || "",
-        level: Number.parseInt(el.tagName.slice(1), 10),
-        text: stripHtml(el.innerHTML) || "（无标题）"
-    })).filter(item => item.id);
+    headings.value = Array.from(nodes)
+        .map(el => ({
+            id: el.id || "",
+            level: Number.parseInt(el.tagName.slice(1), 10),
+            text: stripHtml(el.innerHTML) || "（无标题）"
+        }))
+        .filter(item => item.id);
 }
 
 function onEditorUpdate(payload: { transaction: { docChanged: boolean } }) {
@@ -109,7 +106,11 @@ function goToHeading(id: string) {
 
     const pos = findHeadingPos(id);
     if (pos !== null) {
-        props.editor.chain().focus().setTextSelection(pos + 1).run();
+        props.editor
+            .chain()
+            .focus()
+            .setTextSelection(pos + 1)
+            .run();
     }
 
     nextTick(() => {
@@ -119,9 +120,7 @@ function goToHeading(id: string) {
         if (!headingEl || !(scrollEl instanceof HTMLElement)) return;
 
         const offset =
-            headingEl.getBoundingClientRect().top -
-            scrollEl.getBoundingClientRect().top +
-            scrollEl.scrollTop;
+            headingEl.getBoundingClientRect().top - scrollEl.getBoundingClientRect().top + scrollEl.scrollTop;
 
         scrollEl.scrollTo({
             top: Math.max(0, offset - 12),

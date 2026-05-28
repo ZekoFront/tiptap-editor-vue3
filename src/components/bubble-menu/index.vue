@@ -1,6 +1,9 @@
 <template>
     <bubble-menu v-if="editor" :editor="editor" :options="{ placement: 'bottom', offset: 8 }">
-        <div class="bubble-menu editor-inner-bubble--menu" v-if="editor.isActive('paragraph')">
+        <div
+            class="bubble-menu editor-inner-bubble--menu"
+            v-if="editor.isActive('paragraph') && !editor.isActive('image')"
+        >
             <button
                 title="粗体"
                 class="menu-button"
