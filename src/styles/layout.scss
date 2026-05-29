@@ -6,11 +6,15 @@
     width: 100%;
     height: 100%;
     min-height: var(--tev3-editor-min-height, 350px);
-    border: 1px solid var(--tev3-editor-border, #f2f2f2);
+    border: 1px solid var(--tev3-editor-border, #e5e7eb);
     border-radius: var(--tev3-editor-radius, 6px);
-    color: #333;
+    color: var(--tev3-text, #1f2328);
     background: var(--tev3-editor-bg, #fff);
     overflow: hidden;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
 }
 
 /* 工具栏下方：左侧编辑区 + 右侧目录 */

@@ -1,7 +1,7 @@
 <template>
     <n-popover
         content-class="toolbar-emoji-picker__popover"
-        style="width: 300px; background: transparent"
+        style="width: 300px; background-color: transparent; padding: 0px"
         trigger="click"
         placement="bottom"
     >

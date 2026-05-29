@@ -67,17 +67,17 @@
 
     /* Code and preformatted text styles */
     code {
-        background-color: var(--purple-light);
+        background-color: var(--tev3-code-inline-bg, var(--purple-light));
         border-radius: 0.4rem;
-        color: var(--black);
+        color: var(--tev3-code-inline-text, var(--black));
         font-size: 0.85rem;
         padding: 0.25rem 0.3rem;
     }
 
     pre {
-        background: var(--black);
+        background: var(--tev3-code-block-bg, var(--black));
         border-radius: 0.5rem;
-        color: var(--white);
+        color: var(--tev3-code-block-text, #fff);
         font-family: "JetBrainsMono", monospace;
         margin: 1.5rem 0;
         padding: 0.75rem 1rem;
@@ -146,7 +146,7 @@
         border-left: 3px solid var(--theme-color);
         margin: 1.4rem 0;
         padding: 0.5rem 0 0.5rem 0.8rem;
-        background: var(--gray-3);
+        background: var(--tev3-blockquote-bg, var(--gray-3));
     }
 
     hr {
@@ -210,22 +210,25 @@
     }
     /* Bubble menu */
     .bubble-menu {
-        background-color: var(--white);
-        border: 1px solid var(--gray-1);
+        background-color: var(--tev3-popover-bg, var(--white));
+        color: var(--tev3-text);
+        border: 1px solid var(--tev3-divider, var(--gray-1));
         border-radius: 0.7rem;
-        box-shadow: var(--shadow);
+        box-shadow: var(--tev3-shadow, var(--shadow));
         display: flex;
         padding: 0.2rem;
 
         button {
             background-color: unset;
+            color: var(--tev3-text);
 
             &:hover {
-                background-color: var(--gray-3);
+                background-color: var(--tev3-hover-bg, var(--gray-3));
             }
 
             &.is-active {
                 background-color: var(--purple);
+                color: var(--tev3-text-inverse, #fff);
 
                 &:hover {
                     background-color: var(--purple-contrast);
@@ -310,22 +313,24 @@
 
 /* Bubble menu */
 .editor-inner-bubble--menu {
-    background-color: var(--white);
-    border: 1px solid var(--gray-1);
+    background-color: var(--tev3-popover-bg, var(--white));
+    color: var(--tev3-text);
+    border: 1px solid var(--tev3-divider, var(--gray-1));
     border-radius: 0.7rem;
-    box-shadow: var(--shadow);
+    box-shadow: var(--tev3-shadow, var(--shadow));
     display: flex;
     padding: 0.5rem;
 }
 
 .editor-inner-bubble--menu > .menu-button {
     background-color: unset;
+    color: var(--tev3-text);
     border: none;
     font-weight: bold;
     border-radius: 0.2rem;
     padding: 0.2rem 0.5rem;
     &:hover {
-        background-color: var(--gray-3);
+        background-color: var(--tev3-hover-bg, var(--gray-3));
         .menu-icon {
             fill: var(--theme-color);
         }
@@ -337,9 +342,9 @@
         }
         &:hover {
             background-color: var(--theme-color);
-            color: var(--white);
+            color: var(--tev3-text-inverse, #fff);
             .menu-icon {
-                fill: var(--white);
+                fill: var(--tev3-text-inverse, #fff);
             }
         }
     }

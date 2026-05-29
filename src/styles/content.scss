@@ -12,14 +12,15 @@
             width: 318px;
             flex: 0 0 318px;
             padding: 0 10px;
-            border-left: 1px solid #f2f2f2;
+            border-left: 1px solid var(--tev3-divider, #f2f2f2);
         }
         .navigation-header {
             display: flex;
             justify-content: space-between;
             padding: 10px 0;
+            color: var(--tev3-text);
             .close-nav:hover {
-                background-color: #dddcdc;
+                background-color: var(--tev3-hover-bg, #dddcdc);
             }
             .close-nav {
                 cursor: pointer;
@@ -40,19 +41,19 @@
                     top: 0;
                     height: 100%;
                     width: 2px;
-                    background-color: #e5e8ed;
+                    background-color: var(--tev3-border-subtle, #e5e8ed);
                 }
                 .directory-item__empty {
-                    color: #999;
+                    color: var(--tev3-text-muted, #999);
                     cursor: default;
                     &:hover {
                         text-decoration: none;
-                        color: #999 !important;
+                        color: var(--tev3-text-muted, #999) !important;
                     }
                 }
 
                 .directory-item__cell {
-                    color: #333;
+                    color: var(--tev3-text, #333);
                     padding: 0;
                     margin: 0;
                     min-height: 20px;
@@ -60,7 +61,7 @@
                     cursor: pointer;
                     &:hover {
                         text-decoration: underline;
-                        color: #2b4bf3 !important;
+                        color: var(--theme-color, #2b4bf3) !important;
                     }
                 }
 
@@ -70,7 +71,7 @@
                 }
                 .directory-item__cell[type="header2"] {
                     padding-left: 2px;
-                    color: #666;
+                    color: var(--tev3-text-secondary, #666);
                     font-size: 13px;
                     font-weight: bold;
                 }
@@ -78,13 +79,13 @@
                 .directory-item__cell[type="header4"],
                 .directory-item__cell[type="header5"],
                 .directory-item__cell[type="header6"] {
-                    color: #999;
+                    color: var(--tev3-text-tertiary, #999);
                     font-size: 12px;
                     padding-left: 15px;
                 }
 
                 .active {
-                    color: #2b4bf3 !important;
+                    color: var(--theme-color, #2b4bf3) !important;
                     position: relative;
                     &:after {
                         position: absolute;
@@ -94,7 +95,7 @@
                         width: 2px;
                         height: 100%;
                         z-index: 2;
-                        background: #2b4bf3;
+                        background: var(--theme-color, #2b4bf3);
                     }
                 }
             }

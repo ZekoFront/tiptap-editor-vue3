@@ -37,6 +37,11 @@ export {
 export type { Tev3Locale, Tev3MessageSchema } from "./locales";
 export { useTev3I18n } from "./hooks/useTev3I18n.ts";
 
+// 主题
+export { SUPPORTED_THEMES, DEFAULT_THEME, resolveTheme } from "./theme";
+export type { Tev3Theme, Tev3ResolvedTheme } from "./theme";
+export { useTheme } from "./hooks/useTheme";
+
 // 业务类型导出
 export * from "./typings";
 

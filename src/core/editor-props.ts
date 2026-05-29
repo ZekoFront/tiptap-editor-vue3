@@ -1,6 +1,7 @@
 // props / defaults / 校验 单独抽离
 
 import type { Tev3Locale } from "@/locales";
+import type { Tev3Theme } from "@/theme";
 import type { IDubbleMenu } from "@/typings";
 import type { AnyExtension } from "@tiptap/vue-3";
 import type { ExtractPropTypes, PropType } from "vue";
@@ -36,6 +37,11 @@ export const editorProps = {
     locale: {
         type: String as PropType<Tev3Locale>,
         default: "zh-CN"
+    },
+    /** 主题：system 跟随系统 / light 浅色 / dark 深色 */
+    theme: {
+        type: String as PropType<Tev3Theme>,
+        default: "system"
     },
     placeholder: {
         type: String,

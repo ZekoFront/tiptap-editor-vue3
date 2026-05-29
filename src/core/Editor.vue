@@ -1,6 +1,6 @@
 <!-- 主组件（迁移自 src/text/editor.vue） -->
 <template>
-    <div :class="['vue3-tiptap-editor', editorWrapperClass]">
+    <div :class="['vue3-tiptap-editor', editorWrapperClass]" :data-tev3-theme="resolvedTheme">
         <Toolbar
             v-if="props.isShowToolbar && editor"
             :key="localeKey"
@@ -47,6 +47,7 @@ import ContextMenus from "@/components/table/ContextMenu.vue";
 import Toolbar from "@/components/toolbar/Toolbar.vue";
 import { extensionsArray } from "@/extensions";
 import { useContextMenu } from "@/hooks/useContextMenu";
+import { useTheme } from "@/hooks/useTheme";
 import { DragHandle } from "@tiptap/extension-drag-handle-vue-3";
 import NodeRange from "@tiptap/extension-node-range";
 import { CharacterCount, Placeholder } from "@tiptap/extensions";
@@ -62,6 +63,8 @@ import { useEditorEvents, type EditorUpdatePayload } from "./useEditorEvents";
 const props = defineProps(editorProps);
 
 const localeKey = computed(() => props.locale ?? DEFAULT_LOCALE);
+
+const { resolvedTheme } = useTheme(() => props.theme);
 
 const emit = defineEmits<{
     (e: "ready", editor: Editor): void;

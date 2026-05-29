@@ -1,0 +1,155 @@
+/* =========================================================
+ * 主题变量
+ *
+ * - 默认值（root）保留浅色，让组件即使没绑定主题也有合理样式
+ * - .vue3-tiptap-editor[data-tev3-theme="light"]：浅色主题
+ * - .vue3-tiptap-editor[data-tev3-theme="dark"]：深色主题
+ *
+ * 通过编辑器 props 的 `theme` 控制属性值；`system` 模式由 useTheme
+ * 监听 prefers-color-scheme 后映射成 light / dark。
+ * ========================================================= */
+
+@mixin tev3-light {
+    /* 编辑器布局 */
+    --tev3-editor-min-height: 350px;
+    --tev3-editor-padding: 12px 16px;
+    --tev3-editor-radius: 6px;
+
+    /* 表面 */
+    --tev3-editor-bg: #ffffff;
+    --tev3-toolbar-bg: #f7f7f9;
+    --tev3-popover-bg: #ffffff;
+    --tev3-tooltip-bg: rgba(0, 0, 0, 0.85);
+    --tev3-tooltip-text: #ffffff;
+    --tev3-elevated-bg: #ffffff;
+
+    /* 文本 */
+    --tev3-text: #1f2328;
+    --tev3-text-secondary: #4b5563;
+    --tev3-text-tertiary: #8a8a8a;
+    --tev3-text-muted: #999;
+    --tev3-text-inverse: #ffffff;
+
+    /* 边框 */
+    --tev3-editor-border: #e5e7eb;
+    --tev3-divider: #f0f0f0;
+    --tev3-border-subtle: #e5e8ed;
+
+    /* 状态 */
+    --tev3-hover-bg: rgba(61, 37, 20, 0.06);
+    --tev3-active-bg: rgba(24, 160, 88, 0.12);
+    --tev3-selection-bg: rgba(112, 207, 248, 0.45);
+    --tev3-shadow: 0 12px 33px 0 rgba(0, 0, 0, 0.08), 0 3.618px 9.949px 0 rgba(0, 0, 0, 0.05);
+
+    /* 代码块 */
+    --tev3-code-inline-bg: rgba(106, 0, 245, 0.06);
+    --tev3-code-inline-text: #2e2b29;
+    --tev3-code-block-bg: #2e2b29;
+    --tev3-code-block-text: #ffffff;
+    --tev3-blockquote-bg: rgba(61, 37, 20, 0.05);
+
+    /* 滚动条 */
+    --tev3-scrollbar-track: #f7f7f7;
+    --tev3-scrollbar-thumb: rgba(69, 147, 251, 0.37);
+
+    /* 兼容旧变量名（不要再新增使用） */
+    --white: #ffffff;
+    --black: #2e2b29;
+    --black-contrast: #110f0e;
+    --gray-1: rgba(61, 37, 20, 0.05);
+    --gray-2: rgba(61, 37, 20, 0.08);
+    --gray-3: rgba(61, 37, 20, 0.12);
+    --gray-4: rgba(53, 38, 28, 0.3);
+    --gray-5: rgba(28, 25, 23, 0.6);
+    --purple: #6a00f5;
+    --purple-contrast: #5800cc;
+    --purple-light: rgba(88, 5, 255, 0.05);
+    --yellow-contrast: #facc15;
+    --yellow: rgba(250, 204, 21, 0.4);
+    --yellow-light: #fffae5;
+    --red: #ff5c33;
+    --red-light: #ffebe5;
+    --shadow: var(--tev3-shadow);
+    --selected-border: #88ccff;
+    --selected-active-color: var(--tev3-active-bg);
+    --theme-color: #18a058;
+}
+
+@mixin tev3-dark {
+    /* 编辑器布局 */
+    --tev3-editor-min-height: 350px;
+    --tev3-editor-padding: 12px 16px;
+    --tev3-editor-radius: 6px;
+
+    /* 表面（toolbar 比 body 更亮一档，形成层级） */
+    --tev3-editor-bg: #1a1b1f;
+    --tev3-toolbar-bg: #26272d;
+    --tev3-popover-bg: #2c2d34;
+    --tev3-tooltip-bg: rgba(255, 255, 255, 0.92);
+    --tev3-tooltip-text: #1c1c1e;
+    --tev3-elevated-bg: #2c2d34;
+
+    /* 文本（更亮，提升 dark 模式可读性） */
+    --tev3-text: #f0f1f3;
+    --tev3-text-secondary: #d0d1d6;
+    --tev3-text-tertiary: #9ea0a8;
+    --tev3-text-muted: #74767e;
+    --tev3-text-inverse: #1a1b1f;
+
+    /* 边框 */
+    --tev3-editor-border: #3a3b41;
+    --tev3-divider: #34353b;
+    --tev3-border-subtle: #3a3b41;
+
+    /* 状态 */
+    --tev3-hover-bg: rgba(255, 255, 255, 0.08);
+    --tev3-active-bg: rgba(24, 160, 88, 0.25);
+    --tev3-selection-bg: rgba(112, 207, 248, 0.35);
+    --tev3-shadow: 0 12px 33px 0 rgba(0, 0, 0, 0.5), 0 3.618px 9.949px 0 rgba(0, 0, 0, 0.35);
+
+    /* 代码块 */
+    --tev3-code-inline-bg: rgba(170, 130, 255, 0.16);
+    --tev3-code-inline-text: #e8e8ea;
+    --tev3-code-block-bg: #0f0f10;
+    --tev3-code-block-text: #e8e8ea;
+    --tev3-blockquote-bg: rgba(255, 255, 255, 0.05);
+
+    /* 滚动条 */
+    --tev3-scrollbar-track: #1c1c1e;
+    --tev3-scrollbar-thumb: rgba(120, 170, 250, 0.4);
+
+    /* 兼容旧变量名（保持深色相对柔和） */
+    --white: #2a2a2e;
+    --black: #e8e8ea;
+    --black-contrast: #f5f5f7;
+    --gray-1: rgba(255, 255, 255, 0.06);
+    --gray-2: rgba(255, 255, 255, 0.1);
+    --gray-3: rgba(255, 255, 255, 0.16);
+    --gray-4: rgba(255, 255, 255, 0.4);
+    --gray-5: rgba(255, 255, 255, 0.65);
+    --purple: #a98bff;
+    --purple-contrast: #c5b3ff;
+    --purple-light: rgba(170, 130, 255, 0.12);
+    --yellow-contrast: #f6c343;
+    --yellow: rgba(246, 195, 67, 0.35);
+    --yellow-light: rgba(246, 195, 67, 0.12);
+    --red: #ff7c5c;
+    --red-light: rgba(255, 124, 92, 0.15);
+    --shadow: var(--tev3-shadow);
+    --selected-border: #5aa8ff;
+    --selected-active-color: var(--tev3-active-bg);
+    --theme-color: #2dbf75;
+}
+
+/* 默认（无 data-tev3-theme） — 浅色 */
+:root {
+    @include tev3-light;
+}
+
+.vue3-tiptap-editor[data-tev3-theme="light"] {
+    @include tev3-light;
+}
+
+.vue3-tiptap-editor[data-tev3-theme="dark"] {
+    @include tev3-dark;
+}
