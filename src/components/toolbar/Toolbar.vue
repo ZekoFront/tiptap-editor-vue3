@@ -39,9 +39,6 @@
             }}</span>
             <span>&nbsp;/&nbsp;{{ characterCount }}</span>
         </button>
-
-        <!-- 自定义行高会段落冲突，暂时注释 -->
-        <!-- <ParagraphUI></ParagraphUI> -->
     </div>
 </template>
 
@@ -51,7 +48,7 @@ import { useTev3I18n } from "@/hooks/useTev3I18n";
 import { Editor } from "@tiptap/core";
 import { saveAs } from "file-saver";
 import { asBlob } from "html-docx-js-typescript";
-const { t, locale } = useTev3I18n();
+const { t } = useTev3I18n();
 
 const props = defineProps({
     contentsActive: {
@@ -84,7 +81,6 @@ interface CusIconType {
 }
 
 const cusComponentIcon = computed(() => {
-    locale.value;
     const extensions = props.editor.extensionManager.extensions;
     const tiptapExtensions = extensions.reduce<CusIconType[]>((pre, cur) => {
         const { onClick } = cur.options;

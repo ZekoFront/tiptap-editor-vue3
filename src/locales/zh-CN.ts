@@ -60,7 +60,19 @@ export default {
     image: {
         insert: "插入图片",
         linkPlaceholder: "请输入图片链接",
-        linkInvalid: "图片地址格式错误，请重新输入正确图片地址"
+        linkInvalid: "图片地址格式错误，请重新输入正确图片地址",
+        modalTitle: "上传图片",
+        tabUpload: "上传图片",
+        tabLink: "图片链接",
+        confirm: "立即上传",
+        cancel: "取消",
+        empty: "请先选择要上传的图片",
+        delete: "删除图片",
+        chooseFile: "选择文件",
+        fileTypeError: "不支持的文件类型：{name}（仅支持 {accept}）",
+        fileSizeError: "图片不能超过 {size}MB：{name}",
+        fileCountError: "最多只能选择 {count} 张图片",
+        uploadFailed: "图片上传失败"
     },
     link: {
         placeholder: "请输入链接"

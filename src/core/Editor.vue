@@ -48,14 +48,14 @@ import Toolbar from "@/components/toolbar/Toolbar.vue";
 import { extensionsArray } from "@/extensions";
 import { useContextMenu } from "@/hooks/useContextMenu";
 import { useTheme } from "@/hooks/useTheme";
+import { DEFAULT_LOCALE, setLocale, t } from "@/locales";
 import { DragHandle } from "@tiptap/extension-drag-handle-vue-3";
 import NodeRange from "@tiptap/extension-node-range";
 import { CharacterCount, Placeholder } from "@tiptap/extensions";
 import StarterKit from "@tiptap/starter-kit";
-import type { Editor } from "@tiptap/vue-3";
-import { DEFAULT_LOCALE, setLocale, t } from "@/locales";
+import type { Editor, JSONContent } from "@tiptap/vue-3";
 import { computed, ref, watch } from "vue";
-import { editorProps } from "./editor-props";
+import { editorProps, type Tev3ModelValue } from "./editor-props";
 import EditorContent from "./EditorContent.vue";
 import { useEditor } from "./useEditor";
 import { useEditorEvents, type EditorUpdatePayload } from "./useEditorEvents";
@@ -67,6 +67,7 @@ const localeKey = computed(() => props.locale ?? DEFAULT_LOCALE);
 const { resolvedTheme } = useTheme(() => props.theme);
 
 const emit = defineEmits<{
+    (e: "update:modelValue", value: string | JSONContent): void;
     (e: "ready", editor: Editor): void;
     (e: "update", payload: EditorUpdatePayload): void;
     (e: "selection-update", payload: { editor: Editor }): void;
@@ -109,103 +110,40 @@ const baseExtensions = [
     ...extensionsArray
 ];
 
-const initialContent = `
-          <h1>The Complete Guide to Modern Web Development</h1>
-          <p>Web development has evolved significantly over the past decade. What once required multiple tools and complex setups can now be accomplished with modern frameworks and libraries that prioritize developer experience.</p>
-
-          <img src="https://unsplash.it/500/500" alt="Random Image" />
-
-          <p dir="rtl">تجربة سحب هذا النص توضح كيف يجب أن يلتصق شبح السحب بالمؤشر حتى داخل المحتوى من اليمين إلى اليسار.</p>
-
-          <h2>Getting Started</h2>
-          <p>Before diving into the technical details, it's important to understand the foundational concepts that make modern web development possible.</p>
-
-          <blockquote>
-            <p>"The best code is no code at all. Every new line of code you willingly bring into the world is code that has to be debugged, code that has to be read and understood." - Jeff Atwood</p>
-          </blockquote>
-
-          <p>This philosophy guides much of modern development practices, emphasizing simplicity and maintainability over complexity.</p>
-
-          <table>
-          <thead>
-            <tr>
-              <th>Feature</th>
-              <th>Description</th>
-              <th>Example</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Component-Based Architecture</td>
-              <td>Breaks down the UI into reusable components.</td>
-              <td><code>&lt;MyComponent /&gt;</code></td>
-            </tr>
-            <tr>
-              <td>Virtual DOM</td>
-              <td>Improves performance by minimizing direct DOM manipulation.</td>
-              <td><code>&lt;VirtualDOMComponent /&gt;</code></td>
-            </tr>
-          </tbody>
-        </table>
-
-          <hr>
-
-          <h2>Key Technologies</h2>
-          <p>Here are the essential technologies every web developer should be familiar with:</p>
-
-          <ul>
-            <li>HTML5 and semantic markup</li>
-            <li>CSS3 with modern layout techniques
-              <ul>
-                <li>Flexbox for one-dimensional layouts</li>
-                <li>Grid for two-dimensional layouts</li>
-                <li>Custom properties (CSS variables)</li>
-              </ul>
-            </li>
-            <li>JavaScript (ES6+)</li>
-            <li>TypeScript for type safety</li>
-          </ul>
-
-          <h3>Framework Comparison</h3>
-          <p>Choosing the right framework depends on your project requirements:</p>
-
-          <ol>
-            <li>React - Component-based UI library</li>
-            <li>Vue - Progressive framework</li>
-            <li>Angular - Full-featured platform</li>
-            <li>Svelte - Compile-time framework</li>
-          </ol>
-
-          <hr>
-
-          <h2>Best Practices</h2>
-          <p>Following established best practices ensures your code remains maintainable and scalable.</p>
-
-          <blockquote>
-            <p>Always write code as if the person who ends up maintaining it is a violent psychopath who knows where you live.</p>
-          </blockquote>
-
-          <h3>Code Organization</h3>
-          <p>A well-organized codebase is crucial for long-term project success. Consider these principles:</p>
-
-          <ul>
-            <li>Separation of concerns</li>
-            <li>DRY (Don't Repeat Yourself)</li>
-            <li>KISS (Keep It Simple, Stupid)</li>
-          </ul>
-
-          <p>By following these guidelines, you'll create applications that are easier to maintain, test, and extend over time.</p>
-        `;
+/** 内容 v-model 同步：当前由用户输入触发的最近一次值，用于跳过 setContent 引发的回写 */
+const isSameAsCurrent = (next: Tev3ModelValue) => {
+    if (!editor.value) return true;
+    if (next == null || next === "") return editor.value.isEmpty;
+    if (typeof next === "string") return editor.value.getHTML() === next;
+    return JSON.stringify(editor.value.getJSON()) === JSON.stringify(next);
+};
 
 const { editor, editable, rtl } = useEditor({
     extensions: () => (props.extensions.length > 0 ? props.extensions : baseExtensions),
-    content: () => initialContent,
+    content: () => props.modelValue ?? "",
     editable: () => props.isEditable,
     attributes: () => ({ class: props.editorContentClass }),
     editorOptions: () => props.defaultConfig
 });
 
-useEditorEvents(editor, { emit: emit as any });
+useEditorEvents(editor, {
+    emit: emit as any,
+    handlers: {
+        update: ({ editor: inst }: { editor: Editor }) => {
+            const value = props.outputFormat === "json" ? inst.getJSON() : inst.getHTML();
+            emit("update:modelValue", value);
+        }
+    }
+});
+
+watch(
+    () => props.modelValue,
+    next => {
+        if (!editor.value) return;
+        if (isSameAsCurrent(next)) return;
+        editor.value.commands.setContent(next ?? "", { emitUpdate: false } as any);
+    }
+);
 
 watch(
     () => props.locale,

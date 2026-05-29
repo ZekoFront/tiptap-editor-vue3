@@ -20,7 +20,13 @@ export type {
 
 // Props 配置导出（用户自定义封装编辑器时复用）
 export { editorProps } from "./core/editor-props";
-export type { EditorProps } from "./core/editor-props";
+export type {
+    EditorProps,
+    Tev3ModelValue,
+    Tev3OutputFormat,
+    Tev3DefaultConfig,
+    Tev3UploadImageConfig
+} from "./core/editor-props";
 
 // 国际化
 export {

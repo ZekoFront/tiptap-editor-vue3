@@ -12,6 +12,18 @@
 - Full TypeScript types, tree-shakable, Hooks-friendly
 - **Live demo**: https://zekofront.github.io/tiptap-editor-vue3/
 
+## Features
+
+**Text formatting** — Bold · Italic · Underline · Strike · Highlight · Text color · Background color · Subscript · Superscript · Inline code
+
+**Blocks** — Heading (H1–H6) · Paragraph · Bullet list · Ordered list · Task list (checkable) · Blockquote · Horizontal rule · Code block (with syntax highlight via lowlight) · Image · Table · Link · Emoji (`:` trigger)
+
+**Layout** — Text alignment (left / center / right / justify) · Line height · Drag handle (move blocks) · RTL support
+
+**Editor UX** — Top toolbar · Selection bubble menu · Image bubble menu · Table context menu · Outline / table-of-contents sidebar · Placeholder · Character count limit · Undo / redo · Clear document · Export to **DOCX**
+
+**Component-level** — Read-only view (`TiptapEditorView`) · `useEditor` / `useEditorEvents` Hooks for custom UI · Light / dark / system theme · Chinese / English i18n · Customizable bubble menu items · CSS variables for theming
+
 ## Installation
 
 ```bash
@@ -35,6 +47,7 @@ createApp(App).use(TiptapEditorVue3).mount("#app");
 ```vue
 <template>
     <TiptapEditorVue3
+        v-model="content"
         :is-editable="true"
         :character-count="20000"
         locale="zh-CN"
@@ -46,17 +59,24 @@ createApp(App).use(TiptapEditorVue3).mount("#app");
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
 import type { Editor, EditorUpdatePayload } from "tiptap-editor-vue3";
+
+const content = ref("<p>Hello world</p>");
 
 const onReady = (editor: Editor) => console.log("ready", editor);
 const onUpdate = ({ html, json }: EditorUpdatePayload) => console.log(html, json);
 </script>
 ```
 
+> Use `v-model` to two-way bind content. Pass an HTML string (default) or a Tiptap JSON object; toggle the format of `update:modelValue` via the `outputFormat` prop.
+
 ## Props
 
 | Name | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
+| `modelValue` (`v-model`) | `string \| JSONContent \| null` | `""` | Editor content. HTML string or Tiptap JSON |
+| `outputFormat` | `'html' \| 'json'` | `'html'` | Format of the value emitted by `update:modelValue` |
 | `defaultConfig` | `Record<string, any> \| null` | `null` | Extra options forwarded to the underlying `new Editor(...)` |
 | `extensions` | `AnyExtension[]` | `[]` | Custom extensions; falls back to the built-in full set when empty |
 | `isEditable` | `boolean` | `true` | Whether the editor is editable |
@@ -76,6 +96,7 @@ const onUpdate = ({ html, json }: EditorUpdatePayload) => console.log(html, json
 
 | Event | Payload | Description |
 | ----- | ------- | ----------- |
+| `update:modelValue` | `string \| JSONContent` | Content changed (`v-model` sync). HTML string by default, or JSON when `outputFormat="json"` |
 | `ready` | `editor: Editor` | Editor instance is ready (Tiptap `create`) |
 | `update` | `{ editor, html, json }` | Content changed; `html` / `json` are pre-computed |
 | `selection-update` | `{ editor }` | Caret / selection changed |
@@ -97,6 +118,74 @@ interface EditorUpdatePayload {
     json: JSONContent;
 }
 ```
+
+## Image upload
+
+Custom image uploading is configured through `defaultConfig.uploadImage`. The rule is simple:
+
+- If `imageLink` / `customUpload` are **functions**, the modal hands the URL / files to your code and you call `editor.commands.setImage(...)` yourself.
+- Otherwise the editor falls back to the built-in behaviour (URL → `setImage({ src })`, file → base64 → `setImage`).
+
+`accept` / `maxSize` / `maxCount` always run first — invalid files are rejected with a localised toast before your callback is invoked, and clicking "Upload" with nothing selected shows a warning.
+
+```vue
+<template>
+    <TiptapEditorVue3
+        v-model="content"
+        :default-config="defaultConfig"
+        @ready="onReady"
+    />
+</template>
+
+<script setup lang="ts">
+import { shallowRef } from "vue";
+import type { Editor, Tev3DefaultConfig } from "tiptap-editor-vue3";
+
+const editors = shallowRef<Editor | null>(null);
+
+const onReady = (editor: Editor) => {
+    editors.value = editor;
+};
+
+// Custom image upload — must follow this exact shape, otherwise the callbacks won't fire
+const defaultConfig: Tev3DefaultConfig = {
+    uploadImage: {
+        accept: "image/png,image/jpeg,image/webp",
+        maxSize: 5 * 1024 * 1024, // 5 MB per file
+        maxCount: 9,
+        imageLink: (link: string) => {
+            console.log(link, editors.value, "imageLink");
+            editors.value?.commands.setImage({ src: link });
+        },
+        customUpload: async (files) => {
+            console.log(files, editors.value, "customUpload");
+            for (let i = 0; i < files.length; i++) {
+                if (files[i]) setImageOne(files[i] as File);
+            }
+        }
+    }
+};
+
+const setImageOne = (file: File) => {
+    const reader = new FileReader();
+    reader.onload = event => {
+        const base64 = event.target?.result as string;
+        editors.value?.commands.setImage({ src: base64 });
+    };
+    reader.readAsDataURL(file);
+};
+</script>
+```
+
+| Field | Type | Default | Description |
+| ----- | ---- | ------- | ----------- |
+| `accept` | `string` | `image/png,image/jpeg,image/gif,image/webp,image/svg+xml` | HTML `accept` syntax; filters the file picker and validates types |
+| `maxSize` | `number` | `10 * 1024 * 1024` | Max bytes per file. Oversized files are rejected with a toast |
+| `maxCount` | `number` | `Infinity` | Max files per upload session |
+| `imageLink` | `(url: string) => void` | — | Callback for the "Insert by URL" tab. Defined → custom path; otherwise default `setImage({ src })` |
+| `customUpload` | `(files: File[] \| FileList) => void \| Promise<void>` | — | Callback for the "Upload" tab. Defined → custom path; otherwise files are inlined as base64 |
+
+Exported types: `Tev3DefaultConfig`, `Tev3UploadImageConfig`.
 
 ## Theme & i18n
 

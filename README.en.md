@@ -6,8 +6,21 @@
 
 - Batteries included: toolbar, bubble menu, table context menu, outline sidebar, floatable image selection
 - Built-in i18n (Chinese / English, powered by vue-i18n)
+- Light / dark / follow-system theme, fully customisable via CSS variables
 - Full TypeScript types, supports tree-shaking and Hooks-based composition
 - Live demo: **https://zekofront.github.io/tiptap-editor-vue3/**
+
+---
+
+## Features
+
+| Category | Items |
+| -------- | ----- |
+| **Text marks** | Bold, Italic, Underline, Strike, Highlight, Text color, Background color, Subscript, Superscript, Inline code |
+| **Block nodes** | Heading H1–H6, Paragraph, Bullet list, Ordered list, **Task list** (checkable), Blockquote, Horizontal rule, **Code block** (lowlight syntax highlight), Image, Table, Link, **Emoji** (`:` trigger) |
+| **Layout & behaviour** | Text alignment (left / center / right / justify), Line height, Drag handle (move blocks), RTL support |
+| **Editor UX** | Top toolbar, Selection bubble menu, Image bubble menu, Table context menu, Outline / table-of-contents sidebar, Placeholder, Character count limit, Undo / redo, Clear document, Export to **DOCX** |
+| **Component-level** | Read-only view (`TiptapEditorView`), `useEditor` / `useEditorEvents` Hooks, Light / dark / system theme, zh-CN / en-US i18n, Customizable bubble menu items, CSS variables for theming |
 
 ---
 
@@ -45,6 +58,7 @@ app.mount("#app");
 <!-- App.vue -->
 <template>
     <TiptapEditorVue3
+        v-model="content"
         :is-editable="true"
         :character-count="20000"
         locale="en-US"
@@ -55,7 +69,10 @@ app.mount("#app");
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
 import type { Editor, EditorUpdatePayload } from "tiptap-editor-vue3";
+
+const content = ref("<p>Initial content</p>");
 
 const onReady = (editor: Editor) => {
     console.log("editor ready", editor);
@@ -66,6 +83,8 @@ const onUpdate = ({ html, json }: EditorUpdatePayload) => {
 };
 </script>
 ```
+
+> Use `v-model` to two-way bind content. Pass an HTML string (default) or a Tiptap JSON object; toggle the format emitted by `update:modelValue` via the `outputFormat` prop.
 
 ### Option 2: On-demand import
 
@@ -109,6 +128,8 @@ const { editor } = useEditor({
 
 | Name | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
+| `modelValue` (`v-model`) | `string \| JSONContent \| null` | `""` | Editor content. HTML string or Tiptap JSON |
+| `outputFormat` | `'html' \| 'json'` | `'html'` | Format of the value emitted by `update:modelValue` |
 | `defaultConfig` | `Record<string, any> \| null` | `null` | Extra options forwarded to the underlying `new Editor(...)` |
 | `extensions` | `AnyExtension[]` | `[]` | Custom extensions; falls back to the built-in full set when empty |
 | `isEditable` | `boolean` | `true` | Whether the editor is editable |
@@ -132,6 +153,7 @@ const { editor } = useEditor({
 
 | Event | Payload | Description |
 | ----- | ------- | ----------- |
+| `update:modelValue` | `string \| JSONContent` | Content changed (`v-model` sync). HTML string by default, or JSON when `outputFormat="json"` |
 | `ready` | `editor: Editor` | Fired once the editor instance is ready (equivalent to Tiptap's `create`) |
 | `update` | `{ editor, html, json }` | Content changed; `html` / `json` are pre-computed |
 | `selection-update` | `{ editor }` | Caret / selection changed |
@@ -153,6 +175,77 @@ interface EditorUpdatePayload {
     json: JSONContent;
 }
 ```
+
+---
+
+## Image upload
+
+All image-upload customisation lives under `defaultConfig.uploadImage`. The rule is simple:
+
+- If `imageLink` / `customUpload` are **functions**, the modal hands the URL / files to your code and you call `editor.commands.setImage(...)` yourself.
+- Otherwise the editor falls back to its built-in behaviour (URL → `setImage({ src })`, file → base64 → `setImage`).
+
+`accept` / `maxSize` / `maxCount` always run first — invalid files are rejected with a localised toast before your callback is invoked, and clicking "Upload" with nothing selected shows a warning.
+
+> Custom image upload — **the structure below must be respected exactly, otherwise the callbacks won't fire**:
+
+```vue
+<template>
+    <TiptapEditorVue3
+        v-model="content"
+        :default-config="defaultConfig"
+        @ready="onReady"
+    />
+</template>
+
+<script setup lang="ts">
+import { shallowRef } from "vue";
+import type { Editor, Tev3DefaultConfig } from "tiptap-editor-vue3";
+
+const editors = shallowRef<Editor | null>(null);
+
+const onReady = (editor: Editor) => {
+    editors.value = editor;
+};
+
+const defaultConfig: Tev3DefaultConfig = {
+    uploadImage: {
+        accept: "image/png,image/jpeg,image/webp",
+        maxSize: 5 * 1024 * 1024, // 5 MB per file
+        maxCount: 9,
+        imageLink: (link: string) => {
+            console.log(link, editors.value, "imageLink");
+            editors.value?.commands.setImage({ src: link });
+        },
+        customUpload: async (files) => {
+            console.log(files, editors.value, "customUpload");
+            for (let i = 0; i < files.length; i++) {
+                if (files[i]) setImageOne(files[i] as File);
+            }
+        }
+    }
+};
+
+const setImageOne = (file: File) => {
+    const reader = new FileReader();
+    reader.onload = event => {
+        const base64 = event.target?.result as string;
+        editors.value?.commands.setImage({ src: base64 });
+    };
+    reader.readAsDataURL(file);
+};
+</script>
+```
+
+| Field | Type | Default | Description |
+| ----- | ---- | ------- | ----------- |
+| `accept` | `string` | `image/png,image/jpeg,image/gif,image/webp,image/svg+xml` | HTML `accept` syntax; filters the file picker and validates types |
+| `maxSize` | `number` | `10 * 1024 * 1024` | Max bytes per file. Oversized files are rejected with a toast |
+| `maxCount` | `number` | `Infinity` | Max files per upload session |
+| `imageLink` | `(url: string) => void` | — | "Insert by URL" callback. Defined → custom path; otherwise default `setImage({ src })` |
+| `customUpload` | `(files: File[] \| FileList) => void \| Promise<void>` | — | "Upload" callback. Defined → custom path; otherwise files are inlined as base64 |
+
+Exported types: `Tev3DefaultConfig`, `Tev3UploadImageConfig`.
 
 ---
 

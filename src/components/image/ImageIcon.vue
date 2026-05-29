@@ -5,7 +5,7 @@
                 <Icons.AddImageIcon />
             </button>
         </template>
-        <span>添加图片</span>
+        <span>{{ tipText }}</span>
     </NTooltip>
 
     <UploadImageModal ref="UploadImageRef" :editor="editor" :defaultConfig="defaultConfig" :urlPattern="urlPattern">
@@ -14,6 +14,7 @@
 
 <script setup lang="ts" name="ImageIcon">
 import { Icons } from "@/assets/icons";
+import { t } from "@/locales";
 import { Editor } from "@tiptap/core";
 import { NTooltip } from "naive-ui";
 import UploadImageModal from "./UploadImageModal.vue";
@@ -38,7 +39,7 @@ const props = defineProps({
     },
     tipText: {
         type: String,
-        default: "暂无提示"
+        default: () => t("common.noTip")
     },
     editor: {
         type: Editor,
@@ -61,6 +62,8 @@ interface UploadImageType {
 const UploadImageRef = ref<UploadImageType | null>(null);
 const handleUploadImg = () => {
     if (!props.editor.isEditable) return;
-    UploadImageRef.value && UploadImageRef.value.initialize();
+    if (UploadImageRef.value) {
+        UploadImageRef.value.initialize();
+    }
 };
 </script>

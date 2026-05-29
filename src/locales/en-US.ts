@@ -60,7 +60,19 @@ export default {
     image: {
         insert: "Insert image",
         linkPlaceholder: "Enter image URL",
-        linkInvalid: "Invalid image URL. Please enter a valid address."
+        linkInvalid: "Invalid image URL. Please enter a valid address.",
+        modalTitle: "Upload image",
+        tabUpload: "Upload",
+        tabLink: "From URL",
+        confirm: "Upload",
+        cancel: "Cancel",
+        empty: "Please select at least one image first",
+        delete: "Remove image",
+        chooseFile: "Choose file",
+        fileTypeError: "Unsupported file type: {name} (allowed: {accept})",
+        fileSizeError: "Image exceeds {size}MB: {name}",
+        fileCountError: "You can upload at most {count} images at a time",
+        uploadFailed: "Failed to upload image"
     },
     link: {
         placeholder: "Enter link URL"
