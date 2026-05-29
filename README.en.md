@@ -1,6 +1,6 @@
 # tiptap-editor-vue3
 
-[简体中文](./README.md) | English
+[简体中文](./README.zh-CN.md) | English
 
 > A high-quality rich text editor component library built on [Tiptap 3](https://tiptap.dev/) + Vue 3 + TypeScript + Vite.
 
@@ -21,11 +21,7 @@ pnpm add tiptap-editor-vue3
 yarn add tiptap-editor-vue3
 ```
 
-Required peer dependencies (install if missing):
-
-```bash
-npm install vue@^3 @tiptap/core @tiptap/vue-3 @tiptap/pm naive-ui vue-i18n
-```
+> Requires **Vue 3** in your project (the only external dependency; all other deps — Tiptap, naive-ui, vue-i18n, etc. — are bundled into the dist).
 
 ---
 
