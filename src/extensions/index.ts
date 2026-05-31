@@ -2,6 +2,7 @@ import { Code } from "./code/Code";
 import { CodeBlockLowlight } from "./code/CodeBlockLowlight";
 import { Emojis } from "./emoji/Emoji";
 import { Image } from "./image/Image";
+import { Imports } from "./imports/Imports";
 import { Link } from "./link/Link";
 import { BulletList } from "./list/BulletList";
 import { OrderedList } from "./list/OrderedList";
@@ -51,7 +52,8 @@ export const extensionsArray = [
     TaskList,
     TaskItem,
     Emojis,
-    Clear
+    Clear,
+    Imports
 ];
 
 export * from "./utils/Clear";
@@ -81,3 +83,4 @@ export * from "./marks/TextAlignment";
 export * from "./task/TaskList";
 export * from "./task/TaskItem";
 export * from "./emoji/Emoji";
+export * from "./imports/Imports";

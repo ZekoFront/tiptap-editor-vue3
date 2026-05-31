@@ -84,6 +84,7 @@
         "file-saver": "^2.0.5",
         "hotkeys-js": "^3.13.15",
         "html-docx-js-typescript": "^0.1.5",
+        "mammoth": "^1.12.0",
         "naive-ui": "^2.43.2",
         "unplugin-auto-import": "^21.0.0",
         "unplugin-vue-components": "^32.1.0",
