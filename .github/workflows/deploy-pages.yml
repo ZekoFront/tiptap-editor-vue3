@@ -22,10 +22,10 @@ jobs:
 
             - uses: actions/setup-node@v4
               with:
-                  node-version: 20
+                  node-version: 22 # 已升级至 Node 22，匹配 @intlify 和 vue-i18n 的要求
                   cache: npm
 
-            - run: npm ci
+            - run: npm ci # 提示：请确保你已在本地运行过 npm install 并提交了最新的 package-lock.json
 
             - name: Build playground demo
               run: npm run build:demo
