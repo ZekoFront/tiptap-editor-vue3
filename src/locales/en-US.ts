@@ -30,7 +30,10 @@ export default {
         undo: "Undo",
         redo: "Redo",
         contents: "Outline",
-        exportDocx: "Export DOCX"
+        exportDocx: "Export DOCX",
+        importAttachment: "Import attachment",
+        importWord: "Import Word file",
+        importTxt: "Import TXT file"
     },
     heading: {
         paragraph: "Paragraph",
@@ -90,9 +93,13 @@ export default {
         cancel: "Cancel"
     },
     tableNotice: {
-        nestedNotSupported: "Nested tables are not supported"
+        nestedNotSupported: "Tables don't support nesting yet"
     },
     common: {
-        noTip: "No description"
+        noTip: "No tips",
+        importSuccess: "Successfully imported file content",
+        importError: "Import failed: ",
+        importFormatError: "Format error",
+        fileReadError: "File read error occurred"
     }
-} as const;
+}

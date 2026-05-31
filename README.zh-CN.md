@@ -19,7 +19,7 @@
 | **文字标记** | 加粗、斜体、下划线、删除线、高亮、字体颜色、背景颜色、上标、下标、行内代码 |
 | **块级节点** | 标题（H1–H6）、段落、无序列表、有序列表、**任务列表**（可勾选）、引用块、分隔线、**代码块**（lowlight 语法高亮）、图片、表格、超链接、**Emoji**（`:` 触发） |
 | **布局与行为** | 文本对齐（左 / 中 / 右 / 两端）、行间距、拖拽手柄（拖动块）、RTL 阿拉伯文方向 |
-| **编辑体验** | 顶部工具栏、选区气泡菜单、图片气泡菜单、表格右键菜单、目录侧栏（文档导航）、占位符、字符数限制、撤销 / 重做、清空文档、导出 **DOCX** |
+| **编辑体验** | 顶部工具栏、选区气泡菜单、图片气泡菜单、表格右键菜单、目录侧栏（文档导航）、占位符、字符数限制、撤销 / 重做、清空文档、**导入文档**（TXT、DOC、DOCX）、导出 **DOCX** |
 | **组件级能力** | 只读视图（`TiptapEditorView`）、`useEditor` / `useEditorEvents` Hooks 自行组装、浅色 / 深色 / 系统主题、zh-CN / en-US 国际化、可自定义气泡菜单按钮、CSS 变量主题定制 |
 
 ---
@@ -135,7 +135,7 @@ const { editor } = useEditor({
 | `extensions` | `AnyExtension[]` | `[]` | 自定义扩展数组；不传则使用内置完整扩展集 |
 | `isEditable` | `boolean` | `true` | 是否可编辑 |
 | `isShowToolbar` | `boolean` | `true` | 是否显示顶部工具栏 |
-| `isEnabledContent` | `boolean` | `true` | 是否渲染内容区（关闭时仅工具栏） |
+| `isEnabledContent` | `boolean` | `true` | 渲染内容区（关闭时仅工具栏） |
 | `characterCount` | `number \| string` | `10000` | 字符数限制；超过禁止输入 |
 | `locale` | `'zh-CN' \| 'en-US'` | `'zh-CN'` | 界面语言（工具栏提示、表格菜单、占位符等） |
 | `theme` | `'system' \| 'light' \| 'dark'` | `'system'` | 主题色彩；`system` 跟随操作系统 `prefers-color-scheme` |
@@ -178,6 +178,10 @@ interface EditorUpdatePayload {
 ```
 
 ---
+
+## 导入文档（TXT 和 Word）
+
+编辑器支持通过工具栏中的导入按钮导入 TXT 和 Word（DOC、DOCX）文档的内容。点击导入按钮后，会出现一个下拉菜单，可以选择导入 TXT 文件或 Word 文件。选择文件后，内容会被解析并插入到编辑器中。成功和错误信息会使用本地化的消息进行提示。
 
 ## 图片上传
 

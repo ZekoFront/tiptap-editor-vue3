@@ -17,7 +17,7 @@
                 </svg>
             </button>
         </template>
-        <span>超链接</span>
+        <span>{{ tipText }}</span>
     </NTooltip>
     <n-modal
         v-model:show="isVisible"

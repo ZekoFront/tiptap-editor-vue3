@@ -13,6 +13,7 @@ defineOptions({ name: "ImportButton", inheritAttrs: false });
 
 import { Icons } from "@/assets/icons";
 import { useDiscreteApi } from "@/hooks/useDiscreteApi";
+import { t } from "@/locales";
 import { Editor } from "@tiptap/vue-3";
 import mammoth from "mammoth";
 
@@ -37,17 +38,17 @@ const props = defineProps({
     },
     tipText: {
         type: String,
-        default: "暂无提示"
+        default: () => t("common.noTip")
     }
 });
 
 const options = shallowRef([
     {
-        label: "导入doc文件",
+        label: t("toolbar.importWord"),
         key: "doc"
     },
     {
-        label: "导入txt文件",
+        label: t("toolbar.importTxt"),
         key: "txt"
     }
 ]);
@@ -93,10 +94,10 @@ const importJsonToCanvas = (accept: string, key: string) => {
                         importDocxToTiptap(target.files[0] as File);
                     }
                 }
-                message.success(`导入文件内容成功`);
+                message.success(t("common.importSuccess"));
             } catch (error) {
                 console.error("导入出错:", error);
-                message.error("导入失败: " + (error instanceof Error ? error.message : "格式错误"));
+                message.error(`${t("common.importError")} ${(error instanceof Error ? error.message : t("common.importFormatError"))}`);
             } finally {
                 // 确保在读取完成后移除 input
                 input.remove();
@@ -104,7 +105,7 @@ const importJsonToCanvas = (accept: string, key: string) => {
         };
 
         reader.onerror = () => {
-            message.error("文件读取发生错误");
+            message.error(t("common.fileReadError"));
             input.remove();
         };
 

@@ -30,7 +30,10 @@ export default {
         undo: "撤销",
         redo: "重做",
         contents: "目录",
-        exportDocx: "导出 DOCX"
+        exportDocx: "导出 DOCX",
+        importAttachment: "导入附件",
+        importWord: "导入word文件",
+        importTxt: "导入txt文件"
     },
     heading: {
         paragraph: "正文",
@@ -93,6 +96,10 @@ export default {
         nestedNotSupported: "表格暂时不支持嵌套"
     },
     common: {
-        noTip: "暂无提示"
+        noTip: "暂无提示",
+        importSuccess: "导入文件内容成功",
+        importError: "导入失败: ",
+        importFormatError: "格式错误",
+        fileReadError: "文件读取发生错误"
     }
 } as const;

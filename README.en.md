@@ -19,7 +19,7 @@
 | **Text marks** | Bold, Italic, Underline, Strike, Highlight, Text color, Background color, Subscript, Superscript, Inline code |
 | **Block nodes** | Heading H1–H6, Paragraph, Bullet list, Ordered list, **Task list** (checkable), Blockquote, Horizontal rule, **Code block** (lowlight syntax highlight), Image, Table, Link, **Emoji** (`:` trigger) |
 | **Layout & behaviour** | Text alignment (left / center / right / justify), Line height, Drag handle (move blocks), RTL support |
-| **Editor UX** | Top toolbar, Selection bubble menu, Image bubble menu, Table context menu, Outline / table-of-contents sidebar, Placeholder, Character count limit, Undo / redo, Clear document, Export to **DOCX** |
+| **Editor UX** | Top toolbar, Selection bubble menu, Image bubble menu, Table context menu, Outline / table-of-contents sidebar, Placeholder, Character count limit, Undo / redo, Clear document, **Import documents** (TXT, DOC, DOCX), Export to **DOCX** |
 | **Component-level** | Read-only view (`TiptapEditorView`), `useEditor` / `useEditorEvents` Hooks, Light / dark / system theme, zh-CN / en-US i18n, Customizable bubble menu items, CSS variables for theming |
 
 ---
@@ -152,7 +152,7 @@ const { editor } = useEditor({
 ## Events
 
 | Event | Payload | Description |
-| ----- | ------- | ----------- |
+| ----- | ----- | ----------- |
 | `update:modelValue` | `string \| JSONContent` | Content changed (`v-model` sync). HTML string by default, or JSON when `outputFormat="json"` |
 | `ready` | `editor: Editor` | Fired once the editor instance is ready (equivalent to Tiptap's `create`) |
 | `update` | `{ editor, html, json }` | Content changed; `html` / `json` are pre-computed |
@@ -177,6 +177,11 @@ interface EditorUpdatePayload {
 ```
 
 ---
+
+## Import Documents (TXT, Word)
+
+The editor supports importing content from TXT and Word (DOC, DOCX) files via the import button in the toolbar. When clicked, a dropdown menu appears with options to import TXT or Word files. After selecting a file, the content is parsed and inserted into the editor. Success and error messages are displayed using localized notifications.
+
 
 ## Image upload
 

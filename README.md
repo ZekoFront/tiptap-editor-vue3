@@ -20,7 +20,7 @@
 
 **Layout** — Text alignment (left / center / right / justify) · Line height · Drag handle (move blocks) · RTL support
 
-**Editor UX** — Top toolbar · Selection bubble menu · Image bubble menu · Table context menu · Outline / table-of-contents sidebar · Placeholder · Character count limit · Undo / redo · Clear document · Export to **DOCX**
+**Editor UX** — Top toolbar · Selection bubble menu · Image bubble menu · Table context menu · Outline / table-of-contents sidebar · Placeholder · Character count limit · Undo / redo · Clear document · Export to **DOCX** · **Import TXT and Word documents**
 
 **Component-level** — Read-only view (`TiptapEditorView`) · `useEditor` / `useEditorEvents` Hooks for custom UI · Light / dark / system theme · Chinese / English i18n · Customizable bubble menu items · CSS variables for theming
 
@@ -118,6 +118,10 @@ interface EditorUpdatePayload {
     json: JSONContent;
 }
 ```
+
+## Import Documents (TXT and Word)
+
+The editor supports importing content from TXT and Word documents directly. This feature allows users to easily bring content from external documents into the editor. To use this feature, click on the import button in the toolbar and select either "Import TXT file" or "Import Word file".
 
 ## Image upload
 
