@@ -26,7 +26,6 @@ declare module 'vue' {
     ImageIcon: typeof import('./src/components/image/ImageIcon.vue')['default']
     ImageNodeViewWrapper: typeof import('./src/components/image/ImageNodeViewWrapper.vue')['default']
     Imports: typeof import('./src/components/imports/index.vue')['default']
-    NButton: typeof import('naive-ui')['NButton']
     NDropdown: typeof import('naive-ui')['NDropdown']
     NPopover: typeof import('naive-ui')['NPopover']
     NTooltip: typeof import('naive-ui')['NTooltip']

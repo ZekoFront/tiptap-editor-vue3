@@ -1,4 +1,5 @@
 import install from "./install";
+import "./styles/index.scss";
 
 // 组件导出
 export { default as TiptapEditorVue3 } from "./core/Editor.vue";
